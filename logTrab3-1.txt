@@ -1,0 +1,41 @@
+
+
+LES - Laboratório de Engenharia de Software DI/PUC-Rio
+      Arcabouço de teste de módulos C  (c) 2006
+
+---------------------------------------------
+      Construto sob teste: Trab3-1.exe
+
+      Arquivo de teste:    TesteTabuleiro.script
+
+
+!!!    0  Linha:     1  // Script:    TesteLista.script 
+!!!    0  Linha:     2  // Autor:     BSHMC, RFV, LLAR 
+!!!    0  Linha:     3  // Data:      02/10/2016 
+!!!    0  Linha:     4  // Propósito: Testar o módulo tabuleiro genérico 
+!!!    0  Linha:     5  // 
+    7  == Inicializar valores
+   51  ==Criar o tabuleiro
+   54  ==Inserir Peça bem sucedida
+   58  ==Inserir Peça E tentar obter peça diferente do que foi inserido
+>>>    1  Linha:    60  Condicao de retorno errada tentar obter peca Deveria ser: 'A'  É: 'E'
+<<<    0  Linha:    61  Falha esperada foi recuperada. 
+   63  ==Inserir Peca onde nao ha tabuleiro criado
+   66  ==Inserir Peca onde uma das coordenadas não existe
+   69  ==Inserir Peça Casa Ocupada
+   72  ==Obter Peça bem sucedida
+   75  ==Obter Peca tabuleiro nao existe
+   78  ==Obter Peca coord nao existe
+   81  ==Retirar peca OK
+   84  ==Destruir tabuleiro
+!!!    0  Linha:    87  // fim 
+
+!!! Número de linhas lidas:          87
+!!! Número de casos de teste:        12
+!!! Número comandos corretos:        48
+!!! Número de falhas encontradas:     0
+
+!!! Não foram encontrados problemas
+
+
+!!! Numero de espacos ainda alocados: 0
