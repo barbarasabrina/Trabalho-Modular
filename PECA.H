@@ -2,66 +2,95 @@
 #define PECA_
 /***************************************************************************
 *
-*  $MCD MÛdulo de definiÁ„o: PCA  PeÁa de tabuleiro
+*  $MCD M√≥dulo de defini√ß√£o: PCA  Pe√ßa de tabuleiro
 *
 *  Arquivo gerado:              PECA.h
 *  Letras identificadoras:      PCA
 *
-*  Nome da base de software:    ArcabouÁo para a automaÁ„o de testes de programas redigidos em C
+*  Nome da base de software:    Arcabou√ßo para a automa√ß√£o de testes de programas redigidos em C
 *  Arquivo da base de software: D:\AUTOTEST\PROJETOS\PECA.BSW
 *
-*  Projeto: INF 1301 / 1628 AutomatizaÁ„o dos testes de mÛdulos C
+*  Projeto: INF 1301 / 1628 Automatiza√ß√£o dos testes de m√≥dulos C
 *  Gestor:  LES/DI/PUC-Rio
 *  Autores: avs
 *
-*  $HA HistÛrico de evoluÁ„o:
-*     Vers„o  Autor    Data     ObservaÁıes
-*     4       avs   01/fev/2006 criar linguagem script simbÛlica
-*     3       avs   08/dez/2004 uniformizaÁ„o dos exemplos
-*     2       avs   07/jul/2003 unificaÁ„o de todos os mÛdulos em um sÛ projeto
-*     1       avs   16/abr/2003 inÌcio desenvolvimento
+*  $HA Hist√≥rico de evolu√ß√£o:
+*     Vers√£o  Autor    Data     Observa√ß√µes
+*     4       avs   01/fev/2006 criar linguagem script simb√≥lica
+*     3       avs   08/dez/2004 uniformiza√ß√£o dos exemplos
+*     2       avs   07/jul/2003 unifica√ß√£o de todos os m√≥dulos em um s√≥ projeto
+*     1       avs   16/abr/2003 in√≠cio desenvolvimento
 *
-*  $ED DescriÁ„o do mÛdulo
-*		Implementa uma peÁa de tabuleiro.
-*		Podem existir n peÁas em operaÁ„o simultaneamente.
+*  $ED Descri√ß√£o do m√≥dulo
+*		Implementa uma pe√ßa de tabuleiro.
+*		Podem existir n pe√ßas em opera√ß√£o simultaneamente.
 *
-*		Cada peÁa È homogÍnea quanto ao tipo dos dados que armazena.
-*		Cada elemento de peÁa possui um nome e uma cor.
+*		Cada pe√ßa √© homog√™nea quanto ao tipo dos dados que armazena.
+*		Cada elemento de pe√ßa possui um nome e uma cor.
 *
-*		Os ponteiros para os dados s„o copiados para as peÁas do tabuleiro.
+*		Os ponteiros para os dados s√£o copiados para as pe√ßas do tabuleiro.
 *
-*		O controle da destruiÁ„o da peÁa de uma casa a ser excluÌda
-*       È realizado por uma funÁ„o fornecida para o usu·rio.
+*		O controle da destrui√ß√£o da pe√ßa de uma casa a ser exclu√≠da
+*       √© realizado por uma fun√ß√£o fornecida para o usu√°rio.
 *
-*		A funÁ„o de liberaÁ„o dos valores contidos nos elementos deve
-*       assegurar a liberaÁ„o de todos os espaÁos referÍnciados pelo
+*		A fun√ß√£o de libera√ß√£o dos valores contidos nos elementos deve
+*       assegurar a libera√ß√£o de todos os espa√ßos refer√™nciados pelo
 *       valor contido em cada elemento.
-*       Esta funÁ„o È chamada antes de se desalocar um elemento
-*       de uma peÁa do tabuleiro.
-*       Caso n„o seja necess·rio desalocar o valor referenciado pelo
-*       elemento, o ponteiro para a funÁ„o de liberaÁ„o poder· ser NULL .
-*       Caso a peÁa do tabuleiro seja a ˙nica ‚ncora do valor referenciado,
-*       esta funÁ„o deve promover a destruiÁ„o (free) desse valor e
+*       Esta fun√ß√£o √© chamada antes de se desalocar um elemento
+*       de uma pe√ßa do tabuleiro.
+*       Caso n√£o seja necess√°rio desalocar o valor referenciado pelo
+*       elemento, o ponteiro para a fun√ß√£o de libera√ß√£o poder√° ser NULL .
+*       Caso a pe√ßa do tabuleiro seja a √∫nica √¢ncora do valor referenciado,
+*       esta fun√ß√£o deve promover a destrui√ß√£o (free) desse valor e
 *       de todos os dados nela ancorados.
 *
 ***************************************************************************/
- 
+
 #if defined( PECA_OWN )
-   #define PECA_EXT
+#define PECA_EXT
 #else
-   #define PECA_EXT extern
+#define PECA_EXT extern
 #endif
 
-/***** DeclaraÁıes exportadas pelo mÛdulo *****/
+/***** Declara√ß√µes exportadas pelo m√≥dulo *****/
 
-/* Tipo referÍncia para uma peÁa */
+/* Tipo refer√™ncia para uma peca */
 
-typedef struct PCA_Peca * PCA_tpPeca;
+typedef struct PCA_peca * PCA_tpPeca ;
+
+/***********************************************************************
+*
+*  $TC Tipo de dados: PCA Condi√ß√µes de retorno
+*
+*
+*  $ED Descri√ß√£o do tipo
+*		Condi√ß√µes de retorno das fun√ß√µes do m√≥dulo peca
+*
+***********************************************************************/
+
+typedef enum {
+
+	PCA_CondRetOK = 0,
+	/* Concluiu corretamente */
+
+	PCA_CondRetPecaNaoExiste = 1
+	/* Peca passada como par√¢metro n√£o existe */
+
+
+} PCA_tpCondRet ;
+
+PCA_tpCondRet PCA_ObterCor (PCA_tpPeca peca, char* c);
+
+PCA_tpCondRet PCA_ObterNome (PCA_tpPeca peca, char* n);
+
+PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk, int prim);
+
+PCA_tpCondRet PCA_InicializarPecas (LIS_tppLista * Possiveis);
 
 
 #undef PECA_EXT
 
-/********** Fim do mÛdulo de definiÁ„o: PCA  PeÁa de tabuleiro **********/
+/********** Fim do m√≥dulo de defini√ß√£o: PCA  Pe√ßa de tabuleiro **********/
 
 #else
 #endif
