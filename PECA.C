@@ -1,22 +1,22 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: PCA  Peça de um tabuleiro de xadrez  
+*  $MCI MÃ³dulo de implementaÃ§Ã£o: PCA  PeÃ§a de um tabuleiro de xadrez  
 *
 *  Arquivo gerado:              PECA.c
 *  Letras identificadoras:      PCA
 *
-*  Nome da base de software:    Arcabouço para a automação de testes de programas redigidos em C
+*  Nome da base de software:    ArcabouÃ§o para a automaÃ§Ã£o de testes de programas redigidos em C
 *  Arquivo da base de software: D:\AUTOTEST\PROJETOS\PECA.BSW
 *
-*  Projeto: INF 1301 / 1628 Automatização dos testes de módulos C
+*  Projeto: INF 1301 / 1628 AutomatizaÃ§Ã£o dos testes de mÃ³dulos C
 *  Gestor:  LES/DI/PUC-Rio
 *  Autores: avs
 *
-*  $HA Histórico de evolução:
-*     Versão  Autor    Data     Observações
-*     4       avs   01/fev/2006 criar linguagem script simbólica
-*     3       avs   08/dez/2004 uniformização dos exemplos
-*     2       avs   07/jul/2003 unificação de todos os módulos em um só projeto
-*     1       avs   16/abr/2003 início desenvolvimento
+*  $HA HistÃ³rico de evoluÃ§Ã£o:
+*     VersÃ£o  Autor    Data     ObservaÃ§Ãµes
+*     4       avs   01/fev/2006 criar linguagem script simbÃ³lica
+*     3       avs   08/dez/2004 uniformizaÃ§Ã£o dos exemplos
+*     2       avs   07/jul/2003 unificaÃ§Ã£o de todos os mÃ³dulos em um sÃ³ projeto
+*     1       avs   16/abr/2003 inÃ­cio desenvolvimento
 *
 ***************************************************************************/
 
@@ -34,7 +34,7 @@
 
 /***********************************************************************
 *
-*  $TC Tipo de dados: LIS Descritor da Peça
+*  $TC Tipo de dados: LIS Descritor da PeÃ§a
 *
 *
 ***********************************************************************/
@@ -47,13 +47,92 @@ typedef struct PCA_peca
 
 }PCA_Peca;
 
+typedef struct PCA_movimento
+{
+	int dx;
+	int dy;
+	int atk;
+	int prim;
+} PCA_Mov;
 
-/***** Protótipos das funções encapuladas no módulo *****/
+
+/***** ProtÃ³tipos das funÃ§Ãµes encapuladas no mÃ³dulo *****/
+
+int ComparaMov (PCA_Mov m1, PCA_Mov m2);
+
+/*****  CÃ³digo das funÃ§Ãµes exportadas pelo mÃ³dulo  *****/
+
+PCA_tpCondRet PCA_ObterPeca (LIS_tppLista Possiveis, PCA_tpPeca * res, char nome)
+{
+	PCA_tpCondRet CondRet=0;
+	PCA_Peca * aux;
+
+	while (CondRet==0)                          /* Deve se comeÃ§ar a procura no inÃ­cio da lista de peÃ§as possiveis */
+		CondRet = LIS_irAnt (Possiveis);
+
+	if (CondRet!=LIS_CondRetNoCorrenteEhPrimeiro)
+		return CondRet;
+	
+	do 
+	{
+		CondRet = LIS_ObterNo(Possiveis, &aux);
+		if (CondRet!=0)
+			return CondRet;
+
+		if (aux->nomePeca==nome){
+			*res=aux;
+			return PCA_CondRetOK;
+		}
+
+		CondRet = LIS_IrProximoElemento (Possiveis);
+
+	} while (CondRet!=LIS_CondRetNoCorrenteEhUltimo);
+
+	return PCA_CondRetPecaNaoExiste;
+}
+
+PCA_tpCondRet PCA_ObterCor (PCA_tpPeca peca, char* c)
+{
+	if (peca=NULL)
+		return PCA_CondRetPecaNaoExiste;
+	*c = peca->corPeca;
+	return PCA_CondRetOK;
+}
+
+PCA_tpCondRet PCA_ObterNome (PCA_tpPeca peca, char* n)
+{
+	if (peca=NULL)
+		return PCA_CondRetPecaNaoExiste;
+	*n = peca->corPeca;
+	return PCA_CondRetOK;
+}
+
+PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk, int prim)
+{
+	PCA_Mov mov;
+
+	if (peca=NULL)
+		return PCA_CondRetPecaNaoExiste;
+
+	mov.dx=dx;
+	mov.dy=dy;
+	mov.atk=atk;
+	mov.prim=prim;
 
 
-/*****  Código das funções exportadas pelo módulo  *****/
+
+	
+	
+
+}
+
+PCA_tpCondRet InicializarPecas ();
 
 
-/*****  Código das funções encapsuladas no módulo  *****/
+/*****  CÃ³digo das funÃ§Ãµes encapsuladas no mÃ³dulo  *****/
 
-/********** Fim do módulo de implementação: TAB  Tabuleiro - Matriz 8x8 casas  **********/
+int ComparaMov (PCA_Mov m1, PCA_Mov m2)
+{
+	if ()
+
+/********** Fim do mÃ³dulo de implementaÃ§Ã£o: TAB  Tabuleiro - Matriz 8x8 casas  **********/
