@@ -32,6 +32,7 @@ int main (void){
 	JGO_IniciarJogo (ArqPecasPossiveis, listaPecasPossiveis, pTabuleiro);
 
 	do {
+		JGO_MostrarTabuleiro (pTabuleiro);
 		JGO_RealizarMovimento(listaPecasPossiveis, pTabuleiro);
 		JGO_VerificaCheck(pTabuleiro, &check );
 
