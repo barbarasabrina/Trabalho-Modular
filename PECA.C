@@ -52,22 +52,25 @@ typedef struct PCA_movimento
 	int dx;
 	int dy;
 	int atk;
-	int prim;
 } PCA_Mov;
 
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
+void LiberarPeca (PCA_Peca * Peca);
+
 int ComparaMov (PCA_Mov m1, PCA_Mov m2);
+
+void LiberarMovimento (PCA_Mov * mov);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
-PCA_tpCondRet PCA_ObterPeca (LIS_tppLista Possiveis, PCA_tpPeca * res, char nome)
+PCA_tpCondRet PCA_ObterPeca (LIS_tppLista Possiveis, PCA_tpPeca * resp, char nome, char cor)
 {
 	PCA_tpCondRet CondRet=0;
 	PCA_Peca * aux;
 
-	while (CondRet==0)                          /* Deve se começar a procura no início da lista de peças possiveis */
+	while (CondRet==0)
 		CondRet = LIS_irAnt (Possiveis);
 
 	if (CondRet!=LIS_CondRetNoCorrenteEhPrimeiro)
@@ -79,16 +82,18 @@ PCA_tpCondRet PCA_ObterPeca (LIS_tppLista Possiveis, PCA_tpPeca * res, char nome
 		if (CondRet!=0)
 			return CondRet;
 
-		if (aux->nomePeca==nome){
-			*res=aux;
+		if (aux->nomePeca == nome && aux->corPeca == cor){
+			*resp=aux;
 			return PCA_CondRetOK;
 		}
 
 		CondRet = LIS_IrProximoElemento (Possiveis);
 
-	} while (CondRet!=LIS_CondRetNoCorrenteEhUltimo);
+	} while (CondRet==0);
 
-	return PCA_CondRetPecaNaoExiste;
+	if (CondRet==LIS_CondRetNoCorrenteEhUltimo) return PCA_CondRetPecaNaoExiste;
+
+	return CondRet;
 }
 
 PCA_tpCondRet PCA_ObterCor (PCA_tpPeca peca, char* c)
@@ -107,9 +112,10 @@ PCA_tpCondRet PCA_ObterNome (PCA_tpPeca peca, char* n)
 	return PCA_CondRetOK;
 }
 
-PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk, int prim)
+PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk)
 {
-	PCA_Mov mov;
+	PCA_tpCondRet CondRet=0;
+	PCA_Mov mov, *aux;
 
 	if (peca=NULL)
 		return PCA_CondRetPecaNaoExiste;
@@ -117,22 +123,96 @@ PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk, in
 	mov.dx=dx;
 	mov.dy=dy;
 	mov.atk=atk;
-	mov.prim=prim;
 
+	while (CondRet==0)
+		CondRet = LIS_irAnt (peca->movValido);
 
+	if (CondRet!=LIS_CondRetNoCorrenteEhPrimeiro)
+		return CondRet;
 
-	
-	
+	do 
+	{
+		CondRet = LIS_ObterNo(peca->movValido, &aux);
+		if (CondRet!=0) return CondRet;
 
+		if (ComparaMov(mov, *aux)) return PCA_CondRetOK;
+
+		CondRet = LIS_IrProximoElemento (peca->movValido);
+
+	} while (CondRet==0);
+
+	if (CondRet==LIS_CondRetNoCorrenteEhUltimo) return PCA_CondRetMovimentoInvalido;
+
+	return CondRet;
 }
 
-PCA_tpCondRet InicializarPecas ();
+PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista * Possiveis){
+	FILE* ArqPecasPossiveis;
+	PCA_Peca *pecaTemp;
+	PCA_Mov *movTemp;
+	PCA_tpCondRet CondRet;
+	int pecasRestantes, numLido;
+	char charTemp;
+
+	*Possiveis = LIS_AlocarLista ();
+	CondRet = LIS_CriarLista (LiberarPeca , "PecasPossiveis", *Possiveis); /* Completar com a função que retira elemento*/ 
+	if (CondRet!=0) return CondRet;
+
+	ArqPecasPossiveis = fopen(filename, "r");
+	numLido=fscanf(ArqPecasPossiveis ,"%d%c", &pecasRestantes, &charTemp);
+	if (numLido!=2 || pecasRestantes<0 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
+
+	while (pecasRestantes--){
+
+		pecaTemp = (PCA_Peca*) malloc (sizeof(PCA_Peca));
+		if (pecaTemp == NULL) return PCA_CondRetFaltouMemoria;
+
+		pecaTemp->movValido = LIS_AlocarLista();
+		CondRet = LIS_CriarLista (LiberarMovimento , "MovimentosValidos", pecaTemp->movValido);
+		if (CondRet!=0) return CondRet;
+
+		numLido = fscanf(ArqPecasPossiveis, "%c",&charTemp);
+		if (numLido != 1 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
+
+		numLido = fscanf(ArqPecasPossiveis, "%c%c%c", pecaTemp->nomePeca, &charTemp, pecaTemp->corPeca);
+		if (numLido != 3 || charTemp != ' ') return PCA_CondRetErroNaLeituraDoArquivo;
+
+		do {
+			movTemp = (PCA_Mov*) malloc (sizeof(PCA_Mov));
+			if (movTemp==NULL) return PCA_CondRetFaltouMemoria;
+
+			numLido = fscanf(ArqPecasPossiveis, "%d%d%d%c", movTemp->dx, movTemp->dy, movTemp->atk, &charTemp);
+			if (numLido != 3) return PCA_CondRetErroNaLeituraDoArquivo;
+
+			LIS_InserirNo (pecaTemp->movValido, movTemp);
+
+		} while (charTemp == ',');
+
+
+		LIS_InserirNo (*Possiveis, pecaTemp);
+	}
+
+		
+	return PCA_CondRetOK;
+}
 
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
+void LiberarMovimento (PCA_Mov * mov){
+	free(mov);
+}
+
+void LiberarPeca (PCA_Peca * Peca){
+	LIS_DestruirLista (Peca->movValido);
+	free (Peca);
+}
+
 int ComparaMov (PCA_Mov m1, PCA_Mov m2)
 {
-	if ()
+	if (m1.dx==m2.dx && m1.dy==m2.dy && m1.atk==m2.atk)
+		return 1;
+	return 0;
+}
 
 /********** Fim do módulo de implementação: TAB  Tabuleiro - Matriz 8x8 casas  **********/
