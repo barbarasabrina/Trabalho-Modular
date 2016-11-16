@@ -123,6 +123,27 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 		return TST_CondRetOK;
 
 	} /* fim ativa: Efetuar reset de teste de tabuleiro */
+	
+	/* Testar Mover peça do tabuleiro */
+
+	else if (strcmp(ComandoTeste, MOVER_PECA_CMD) == 0)
+	{
+
+		numLidos = LER_LerParametros("iisisi",
+			&inxTabuleiro, &Linha, Coluna, &LinhaDestino, ColunaDestino , &CondRetEsp);
+
+		if (numLidos != 6)
+		{
+			return TST_CondRetParm;
+		} /* if */
+
+		
+		CondRet = TAB_MoverPeca(vtTabuleiro[inxTabuleiro],Linha,Coluna[0],LinhaDestino, ColunaDestino[0]);
+		
+		return TST_CompararInt(CondRetEsp, CondRet,
+			"Condicao de retorno errada ao tentar mover a peça.");
+
+	} /* fim ativa: Testar Mover peça do tabuleiro */
 
 	/* Testar CriarTabuleiro */
 
