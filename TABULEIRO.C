@@ -124,6 +124,56 @@ TAB_tpTabuleiro TAB_AlocarTabuleiro(int linha, char coluna)
 	return tempTab;
 } /* Fim função: TAB  &Alocar tabuleiro */
 
+/***************************************************************************
+  *
+  *  Função: TAB  &Mover Peca
+  *  ****/
+
+TAB_tpCondRet TAB_MoverPeca(TAB_tpTabuleiro t, int origemI, char origemJ, int destinoI, char destinoJ)
+{
+	TAB_tpCondRet CondRet;
+	void * pecaOrigem = NULL;
+	void * pecaDestino = NULL;
+	
+
+
+	// Testes de Ponteiro
+	if (t == NULL)
+	{
+		return TAB_CondRetTabuleiroNaoExiste;
+	}
+	//*pecaOrigem = (void* )malloc(sizeof(t->casa[origemI][origemJ].Peca));
+	//*pecaDestino = (void* )malloc(sizeof(t->casa[destinoI][destinoJ].Peca));
+
+	//Mover Peça;
+	CondRet = TAB_ObterPeca(t, origemI,origemJ, &pecaOrigem);
+	if (CondRet != 0)
+		return CondRet;
+	if(pecaOrigem==NULL)
+	{
+		return TAB_CondRetPecaNaoExiste;
+	}
+	CondRet = TAB_ObterPeca(t, destinoI, destinoJ, &pecaDestino);
+	if (CondRet != 0)
+		return CondRet;
+	if(pecaDestino!=NULL)
+	{
+		CondRet = TAB_RetirarPeca(t, destinoI, destinoJ);
+		if (CondRet != 0)
+			return CondRet;	
+	}
+	CondRet = TAB_RetirarPeca(t, origemI, origemJ);
+	if (CondRet != 0)
+		return CondRet;
+	
+	CondRet = TAB_InserirPeca(t,destinoI,destinoJ,pecaOrigem);
+	if (CondRet != 0)
+		return  CondRet;
+
+	return TAB_CondRetOK;
+	
+}/* Fim função: TAB &Mover Peça*/
+
 
 /***************************************************************************
 *
