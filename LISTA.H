@@ -133,7 +133,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 ***********************************************************************/
 
    LIS_tpCondRet LIS_CriarLista(
-	   void(*ExcluirValor) (void * pDado), char * idLista, LIS_tppLista pLista);
+	   void(*ExcluirValor) (void * pDado), void * idLista, LIS_tppLista pLista);
 
 /***********************************************************************
 *
@@ -270,7 +270,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 ***********************************************************************/
 
    LIS_tpCondRet LIS_InserirNo( LIS_tppLista pLista ,
-                                          char * pValor        );
+                                          void * pValor        );
 
 /***********************************************************************
 *
@@ -327,7 +327,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *
 ***********************************************************************/
 
-   LIS_tpCondRet LIS_AlterarNoCorrente( LIS_tppLista pLista , char* nValor) ;   
+   LIS_tpCondRet LIS_AlterarNoCorrente( LIS_tppLista pLista , void* nValor) ;   
 
    
 /***********************************************************************
