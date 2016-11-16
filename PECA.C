@@ -1,7 +1,10 @@
+#if ! defined( PECA_ )
+#define PECA_
 /***************************************************************************
-*  $MCI Módulo de implementação: PCA  Peça de um tabuleiro de xadrez  
 *
-*  Arquivo gerado:              PECA.c
+*  $MCD Módulo de definição: PCA  Peça de tabuleiro
+*
+*  Arquivo gerado:              PECA.h
 *  Letras identificadoras:      PCA
 *
 *  Nome da base de software:    Arcabouço para a automação de testes de programas redigidos em C
@@ -18,201 +21,220 @@
 *     2       avs   07/jul/2003 unificação de todos os módulos em um só projeto
 *     1       avs   16/abr/2003 início desenvolvimento
 *
+*  $ED Descrição do módulo
+*		Implementa uma peça de tabuleiro.
+*		Podem existir n peças em operação simultaneamente.
+*
+*		Cada peça é homogênea quanto ao tipo dos dados que armazena.
+*		Cada elemento de peça possui um nome e uma cor.
+*
+*		Os ponteiros para os dados são copiados para as peças do tabuleiro.
+*
+*		O controle da destruição da peça de uma casa a ser excluída
+*       é realizado por uma função fornecida para o usuário.
+*
+*		A função de liberação dos valores contidos nos elementos deve
+*       assegurar a liberação de todos os espaços referênciados pelo
+*       valor contido em cada elemento.
+*       Esta função é chamada antes de se desalocar um elemento
+*       de uma peça do tabuleiro.
+*       Caso não seja necessário desalocar o valor referenciado pelo
+*       elemento, o ponteiro para a função de liberação poderá ser NULL .
+*       Caso a peça do tabuleiro seja a única âncora do valor referenciado,
+*       esta função deve promover a destruição (free) desse valor e
+*       de todos os dados nela ancorados.
+*
 ***************************************************************************/
 
-#include   <stdio.h>
-#include   <string.h>
-#include   <memory.h>
-#include   <malloc.h>
-#include   <assert.h>
-#include   <stdlib.h>
-#include   "LISTA.H"
 
-#define PECA_OWN
-#include "PECA.h"
-#undef PECA_OWN
+
+#if defined( PECA_OWN )
+#define PECA_EXT
+#else
+#define PECA_EXT extern
+#endif
+
+/***** Declarações exportadas pelo módulo *****/
+
+/* Tipo referência para uma peca */
+
+typedef struct PCA_peca * PCA_tpPeca ;
 
 /***********************************************************************
 *
-*  $TC Tipo de dados: LIS Descritor da Peça
+*  $TC Tipo de dados: PCA Condições de retorno
 *
+*
+*  $ED Descrição do tipo
+*		Condições de retorno das funções do módulo peca
 *
 ***********************************************************************/
 
-typedef struct PCA_peca
-{
-	char         nomePeca;
-	char         corPeca;
-	LIS_tppLista movValido;
+typedef enum {
 
-}PCA_Peca;
+	PCA_CondRetOK = 0,
+	/* Concluiu corretamente */
 
-typedef struct PCA_movimento
-{
-	int dx;
-	int dy;
-	int atk;
-} PCA_Mov;
+	PCA_CondRetPecaNaoExiste = 1,
+	/* Peca passada como parâmetro não existe */
 
+	PCA_CondRetErroNaLeituraDoArquivo = 2,
+	/* Arquivo com todas as peças possíveis não está no formato certo */
 
-/***** Protótipos das funções encapuladas no módulo *****/
+	PCA_CondRetFaltouMemoria = 3,
+	/* Faltou espaço na memórica dinâmica */
 
-void LiberarPeca (PCA_Peca * Peca);
-
-int ComparaMov (PCA_Mov m1, PCA_Mov m2);
-
-void LiberarMovimento (PCA_Mov * mov);
-
-/*****  Código das funções exportadas pelo módulo  *****/
-
-PCA_tpCondRet PCA_ObterPeca (LIS_tppLista Possiveis, PCA_tpPeca * resp, char nome, char cor)
-{
-	PCA_tpCondRet CondRet=0;
-	PCA_Peca * aux;
-
-	while (CondRet==0)
-		CondRet = LIS_irAnt (Possiveis);
-
-	if (CondRet!=LIS_CondRetNoCorrenteEhPrimeiro)
-		return CondRet;
-	
-	do 
-	{
-		CondRet = LIS_ObterNo(Possiveis, &aux);
-		if (CondRet!=0)
-			return CondRet;
-
-		if (aux->nomePeca == nome && aux->corPeca == cor){
-			*resp=aux;
-			return PCA_CondRetOK;
-		}
-
-		CondRet = LIS_IrProximoElemento (Possiveis);
-
-	} while (CondRet==0);
-
-	if (CondRet==LIS_CondRetNoCorrenteEhUltimo) return PCA_CondRetPecaNaoExiste;
-
-	return CondRet;
-}
-
-PCA_tpCondRet PCA_ObterCor (PCA_tpPeca peca, char* c)
-{
-	if (peca=NULL)
-		return PCA_CondRetPecaNaoExiste;
-	*c = peca->corPeca;
-	return PCA_CondRetOK;
-}
-
-PCA_tpCondRet PCA_ObterNome (PCA_tpPeca peca, char* n)
-{
-	if (peca=NULL)
-		return PCA_CondRetPecaNaoExiste;
-	*n = peca->corPeca;
-	return PCA_CondRetOK;
-}
-
-PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk)
-{
-	PCA_tpCondRet CondRet=0;
-	PCA_Mov mov, *aux;
-
-	if (peca=NULL)
-		return PCA_CondRetPecaNaoExiste;
-
-	mov.dx=dx;
-	mov.dy=dy;
-	mov.atk=atk;
-
-	while (CondRet==0)
-		CondRet = LIS_irAnt (peca->movValido);
-
-	if (CondRet!=LIS_CondRetNoCorrenteEhPrimeiro)
-		return CondRet;
-
-	do 
-	{
-		CondRet = LIS_ObterNo(peca->movValido, &aux);
-		if (CondRet!=0) return CondRet;
-
-		if (ComparaMov(mov, *aux)) return PCA_CondRetOK;
-
-		CondRet = LIS_IrProximoElemento (peca->movValido);
-
-	} while (CondRet==0);
-
-	if (CondRet==LIS_CondRetNoCorrenteEhUltimo) return PCA_CondRetMovimentoInvalido;
-
-	return CondRet;
-}
-
-PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista * Possiveis){
-	FILE* ArqPecasPossiveis;
-	PCA_Peca *pecaTemp;
-	PCA_Mov *movTemp;
-	PCA_tpCondRet CondRet;
-	int pecasRestantes, numLido;
-	char charTemp;
-
-	*Possiveis = LIS_AlocarLista ();
-	CondRet = LIS_CriarLista (LiberarPeca , "PecasPossiveis", *Possiveis); /* Completar com a função que retira elemento*/ 
-	if (CondRet!=0) return CondRet;
-
-	ArqPecasPossiveis = fopen(filename, "r");
-	numLido=fscanf(ArqPecasPossiveis ,"%d%c", &pecasRestantes, &charTemp);
-	if (numLido!=2 || pecasRestantes<0 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
-
-	while (pecasRestantes--){
-
-		pecaTemp = (PCA_Peca*) malloc (sizeof(PCA_Peca));
-		if (pecaTemp == NULL) return PCA_CondRetFaltouMemoria;
-
-		pecaTemp->movValido = LIS_AlocarLista();
-		CondRet = LIS_CriarLista (LiberarMovimento , "MovimentosValidos", pecaTemp->movValido);
-		if (CondRet!=0) return CondRet;
-
-		numLido = fscanf(ArqPecasPossiveis, "%c",&charTemp);
-		if (numLido != 1 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
-
-		numLido = fscanf(ArqPecasPossiveis, "%c%c%c", pecaTemp->nomePeca, &charTemp, pecaTemp->corPeca);
-		if (numLido != 3 || charTemp != ' ') return PCA_CondRetErroNaLeituraDoArquivo;
-
-		do {
-			movTemp = (PCA_Mov*) malloc (sizeof(PCA_Mov));
-			if (movTemp==NULL) return PCA_CondRetFaltouMemoria;
-
-			numLido = fscanf(ArqPecasPossiveis, "%d%d%d%c", movTemp->dx, movTemp->dy, movTemp->atk, &charTemp);
-			if (numLido != 3) return PCA_CondRetErroNaLeituraDoArquivo;
-
-			LIS_InserirNo (pecaTemp->movValido, movTemp);
-
-		} while (charTemp == ',');
+	PCA_CondRetMovimentoInvalido = 4
+	/* Peca passada como parametro não pode realizar o movimento pedido */
 
 
-		LIS_InserirNo (*Possiveis, pecaTemp);
-	}
+} PCA_tpCondRet ;
 
-		
-	return PCA_CondRetOK;
-}
+/***********************************************************************
+*
+*  $FC Função: PCA  &Obter Peca
+*
+*  $ED Descrição da função
+*		Obtem peça que possui nome e cor iguais aos passados como parametro
+*
+*  $AE Assertiva de Entrada
+*
+*
+*  $AS Assertiva de Saida
+*		Caso a peça exista, a mesma é armazenada no endereço passado pela função anterior
+*       Caso contrário, é retornado uma condição de erro apropriada
+*
+*  $EP Parâmetros
+*		Possiveis - lista de todas as pecas possiveis
+*       resp      - endereço aonde a função deve guardar a peca
+*       nome      - nome da peca desejada
+*       cor       - cor da peca desejada
+*
+*  $FV Valor retornado
+*		PCA_CondRetOK				- Executou OK
+*		PCA_CondRetPecaNaExiste  	- Peca não existe
+*
+***********************************************************************/
+
+PCA_tpCondRet PCA_ObterPeca (LIS_tppLista Possiveis, PCA_tpPeca * resp, char nome, char cor);
+
+/***********************************************************************
+*
+*  $FC Função: PCA  &Obter Cor
+*
+*  $ED Descrição da função
+*		Obtem cor da peca passada como parâmetro
+*
+*  $AE Assertiva de Entrada
+*
+*
+*  $AS Assertiva de Saida
+*		Caso a peça exista, a cor da mesma é armazenada no endereço passado pela função anterior
+*       Caso contrário, é retornado uma condição de erro apropriada
+*
+*  $EP Parâmetros
+*		peca - peca a ser analizada
+*       c    - endereço aonde a função deve guardar a cor da peca
+*
+*  $FV Valor retornado
+*		PCA_CondRetOK				- Executou OK
+*		PCA_CondRetPecaNaExiste  	- Peca não existe
+*
+***********************************************************************/
+
+PCA_tpCondRet PCA_ObterCor (PCA_tpPeca peca, char* c);
 
 
-/*****  Código das funções encapsuladas no módulo  *****/
+/***********************************************************************
+*
+*  $FC Função: PCA  &Obter Nome
+*
+*  $ED Descrição da função
+*		Obtem nome da peca passada como parâmetro
+*
+*  $AE Assertiva de Entrada
+*
+*
+*  $AS Assertiva de Saida
+*		Caso a peça exista, a cor da mesma é armazenada no endereço passado pela função anterior
+*       Caso contrário, é retornado uma condição de erro apropriada
+*
+*  $EP Parâmetros
+*		peca - peca a ser analizada
+*       n    - endereço aonde a função deve guardar o nome da peca
+*
+*  $FV Valor retornado
+*		PCA_CondRetOK				- Executou OK
+*		PCA_CondRetPecaNaExiste	    - Peca não existe
+*
+***********************************************************************/
 
-void LiberarMovimento (PCA_Mov * mov){
-	free(mov);
-}
+PCA_tpCondRet PCA_ObterNome (PCA_tpPeca peca, char* n);
 
-void LiberarPeca (PCA_Peca * Peca){
-	LIS_DestruirLista (Peca->movValido);
-	free (Peca);
-}
 
-int ComparaMov (PCA_Mov m1, PCA_Mov m2)
-{
-	if (m1.dx==m2.dx && m1.dy==m2.dy && m1.atk==m2.atk)
-		return 1;
-	return 0;
-}
+/***********************************************************************
+*
+*  $FC Função: PCA  &Validar Movimento
+*
+*  $ED Descrição da função
+*		Confirma se a peca passada como parâmetro pode realizar o movimento também passado como parâmetro
+*
+*  $AE Assertiva de Entrada
+*
+*
+*  $AS Assertiva de Saida
+*		Caso a peça exista, e possa realizar o movimnto descrito a função deve retornar OK
+*       Caso contrário, é retornado uma condição de erro apropriada
+*
+*  $EP Parâmetros
+*		peca - peca a ser analizada
+*       dx   - deslocamento horizontal da peca no movimento
+*       dy   - deslocamento vertical da peca no movimento
+*       atk  - representa se a peca está atacando outra ou não
+*
+*  $FV Valor retornado
+*		PCA_CondRetOK				 - Executou OK
+*		PCA_CondRetPecaNaExiste	     - Peca não existe
+*       PCA_CondRetMovimentoInvalido - Peca não pode realizar o movimento pedido
+*
+***********************************************************************/
 
-/********** Fim do módulo de implementação: TAB  Tabuleiro - Matriz 8x8 casas  **********/
+PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk);
+
+
+/***********************************************************************
+*
+*  $FC Função: PCA  &InicializarPecas
+*
+*  $ED Descrição da função
+*		Inicializa todas as peças contidas no arquivo cujo nome foi passsado como parâmetro
+*       e as coloca numa lista, cujo endereço é passado para a função anterior
+*
+*  $AE Assertiva de Entrada
+*       O endereço passado como parametro não contém informação útil e pode ser sobrescrito
+*
+*  $AS Assertiva de Saida
+*		Caso o arquivo exista e esteja no formato descrito no LEIAME.TXT,essa função deve
+passar para a anterior uma lista devidamente alocada e preenchida com todas as pecas contidas no arquivo
+*       Caso contrário, é retornado uma condição de erro apropriada
+*
+*  $EP Parâmetros
+*		filename  - nome do arquivo de texto no qual se encontram as descrições das peças
+*       Possiveis - endereço aonde deve ser retornada a lista de pecas possiveis
+*
+*  $FV Valor retornado
+*		PCA_CondRetOK				      - Executou OK
+*		PCA_CondRetFaltouMemoria	      - Nao ouve espaço suficiente para gerar a lista
+*       PCA_CondRetErroNaLeituraDoArquivo - O arquivo nao existe ou nao esta organizado de forma correta
+*
+***********************************************************************/
+
+PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista * Possiveis);
+
+
+#undef PECA_EXT
+
+/********** Fim do módulo de definição: PCA  Peça de tabuleiro **********/
+
+#else
+#endif
