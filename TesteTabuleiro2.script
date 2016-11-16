@@ -1,0 +1,123 @@
+// Script:    TesteLista.script
+// Autor:     BSHMC, RFV, LLAR
+// Data:      02/10/2016
+// Propósito: Testar o módulo tabuleiro genérico
+//
+
+== Inicializar valores
+=declararparm   tabuleiro0  int 0
+=declararparm   tabuleiro1  int 1
+
+=declararparm	linha9		int 0
+=declararparm	linha1		int 1
+=declararparm	linha2		int 2
+=declararparm	linha3		int 3
+=declararparm	linha4		int 4
+=declararparm	linha5		int 5
+=declararparm	linha6		int 6
+=declararparm	linha7		int 7
+=declararparm	linha8		int 8
+
+=declararparm	coluna9		string	"@"
+=declararparm	coluna1		string	"A"
+=declararparm	coluna2		string	"B"
+=declararparm	coluna3		string	"C"
+=declararparm	coluna4		string	"D"
+=declararparm	coluna5		string	"E"
+=declararparm	coluna6		string	"F"
+=declararparm	coluna7		string	"G"
+=declararparm	coluna8		string	"H"
+
+=declararparm   str0    string  "A"
+=declararparm   str1    string  "B"
+=declararparm   str2    string  "C"
+=declararparm   str3    string  "D"
+=declararparm   str4    string  "E"
+=declararparm	str5	string	"Ameacados"
+=declararparm	str6	string	"Ameacantes"
+
+=declararparm   OK             			int  0
+=declararparm   CasaOcupada	   			int  1
+=declararparm   TabuleiroVazio     		int  2
+=declararparm   TabuleiroNaoExiste 		int  3
+=declararparm	CoordNaoExiste			int  4
+=declararparm	PecaNaoExiste			int  5
+=declararparm   FaltouMemoria  			int  6
+
+=declararparm   pNULL          int  0
+=declararparm   pNaoNULL       int  1
+
+
+==Criar o tabuleiro
+=criarTabuleiro		tabuleiro0	linha8	coluna8		OK
+
+
+
+==Inserir Peça bem sucedida
+=inserirPeca		tabuleiro0	linha1	coluna1		str0	OK
+=inserirPeca		tabuleiro0	linha3  coluna3		str1	OK
+
+==Inserir Peca onde nao ha tabuleiro criado
+=inserirPeca		tabuleiro1	linha1	coluna1		str0	TabuleiroNaoExiste
+
+==Inserir Peca onde uma das coordenadas não existe
+=inserirPeca		tabuleiro0	linha9	coluna1		str0	CoordNaoExiste
+
+==Inserir Peça Casa Ocupada
+=inserirPeca		tabuleiro0	linha1	coluna1		str0	CasaOcupada
+
+==Obter Peça bem sucedida
+=obterPeca			tabuleiro0	linha1	coluna1		str0	OK
+
+==Obter Peca tabuleiro nao existe
+=obterPeca			tabuleiro1	linha1	coluna1		str0	TabuleiroNaoExiste 
+
+==Obter Peca coord nao existe
+=obterPeca			tabuleiro0	linha9	coluna9		str0	CoordNaoExiste
+
+==Mover peca tabuleiro inexistente
+=moverPeca tabuleiro1 linha1 coluna1 linha2 coluna3 TabuleiroNaoExiste
+
+==Mover peca OK
+=moverPeca 			tabuleiro0 	linha1 coluna1 	linha2 	coluna2 	OK
+
+==Mover peca inexistente
+=moverPeca 			tabuleiro0 	linha1 coluna1 linha1 	coluna2 	PecaNaoExiste
+
+==Mover peca pra fora do tabuleiro
+=moverPeca			tabuleiro0	linha2 coluna2 linha9 coluna9	CoordNaoExiste
+
+==Mover peca capturando outra OK
+=moverPeca			tabuleiro0	linha2 coluna2 linha3 coluna3 OK
+
+==Retirar peca OK
+=retirarPeca		tabuleiro0	linha3 coluna3	OK
+
+==Retirar peca nao existe
+=retirarPeca		tabuleiro0 linha3 coluna3 PecaNaoExiste
+
+==Retirar coord nao existe
+=retirarPeca		tabuleiro0 linha9 coluna9 CoordNaoExiste
+
+==Destruir tabuleiro inexistente
+=destroiTabuleiro tabuleiro1 TabuleiroNaoExiste
+
+==Destruir tabuleiro ok
+=destroiTabuleiro tabuleiro0 OK
+
+==Inserir para obter lista ameacados OK
+=criarTabuleiro tabuleiro0 linha8 coluna8 OK
+=obterAmeacados		tabuleiro0 linha4 coluna4 str5 OK
+
+==Obter amecados string errada
+=obterAmeacados tabuleiro0 linha3 coluna3 str4 OK
+=recuperar
+
+==Obter lista amecantes OK
+=obterAmeacantes		tabuleiro0	linha4 coluna4	str6 OK
+
+==Obter amecantes string errada
+=obterAmeacantes tabuleiro0 linha3 coluna3 str4 OK
+=recuperar
+
+// fim
