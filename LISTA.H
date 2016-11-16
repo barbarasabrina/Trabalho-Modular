@@ -2,51 +2,51 @@
 #define LISTA_
 /***************************************************************************
 *
-*  $MCD MÛdulo de definiÁ„o: LIS  Lista duplamente encadeada
+*  $MCD M√≥dulo de defini√ß√£o: LIS  Lista duplamente encadeada
 *
 *  Arquivo gerado:              LISTA.h
 *  Letras identificadoras:      LIS
 *
-*  Nome da base de software:    ArcabouÁo para a automaÁ„o de testes de programas redigidos em C
+*  Nome da base de software:    Arcabou√ßo para a automa√ß√£o de testes de programas redigidos em C
 *  Arquivo da base de software: D:\AUTOTEST\PROJETOS\LISTA.BSW
 *
-*  Projeto: INF 1301 / 1628 AutomatizaÁ„o dos testes de mÛdulos C
+*  Projeto: INF 1301 / 1628 Automatiza√ß√£o dos testes de m√≥dulos C
 *  Gestor:  LES/DI/PUC-Rio
 *  Autores: avs
 *
-*  $HA HistÛrico de evoluÁ„o:
-*     Vers„o  Autor    Data     ObservaÁıes
-*     4       avs   01/fev/2006 criar linguagem script simbÛlica
-*     3       avs   08/dez/2004 uniformizaÁ„o dos exemplos
-*     2       avs   07/jul/2003 unificaÁ„o de todos os mÛdulos em um sÛ projeto
-*     1       avs   16/abr/2003 inÌcio desenvolvimento
+*  $HA Hist√≥rico de evolu√ß√£o:
+*     Vers√£o  Autor    Data     Observa√ß√µes
+*     4       avs   01/fev/2006 criar linguagem script simb√≥lica
+*     3       avs   08/dez/2004 uniformiza√ß√£o dos exemplos
+*     2       avs   07/jul/2003 unifica√ß√£o de todos os m√≥dulos em um s√≥ projeto
+*     1       avs   16/abr/2003 in√≠cio desenvolvimento
 *
-*  $ED DescriÁ„o do mÛdulo
-*		Implementa listas genÈricas duplamente encadeadas.
-*		Podem existir n listas em operaÁ„o simultaneamente.
-*		As listas possuem uma cabeÁa encapsulando o seu estado.
+*  $ED Descri√ß√£o do m√≥dulo
+*		Implementa listas gen√©ricas duplamente encadeadas.
+*		Podem existir n listas em opera√ß√£o simultaneamente.
+*		As listas possuem uma cabe√ßa encapsulando o seu estado.
 *
-*		Cada lista È homogÍnea quanto ao tipo dos dados que armazena.
-*		Cada elemento da lista referencia o valor que contÈm.
+*		Cada lista √© homog√™nea quanto ao tipo dos dados que armazena.
+*		Cada elemento da lista referencia o valor que cont√©m.
 *
-*		Os ponteiros para os dados s„o copiados para elementos da lista.
-*       N„o È copiado o valor apontado por estes ponteiros.
+*		Os ponteiros para os dados s√£o copiados para elementos da lista.
+*       N√£o √© copiado o valor apontado por estes ponteiros.
 *
-*		O controle da destruiÁ„o do valor de um elemento a ser excluÌdo
-*       È realizado por uma funÁ„o fornecida pelo usu·rio.
+*		O controle da destrui√ß√£o do valor de um elemento a ser exclu√≠do
+*       √© realizado por uma fun√ß√£o fornecida pelo usu√°rio.
 *
-*		Cada lista referencia uma funÁ„o que determina como devem ser
+*		Cada lista referencia uma fun√ß√£o que determina como devem ser
 *       desalocados os dados nela contidos.
 *
-*		A funÁ„o de liberaÁ„o dos valores contidos nos elementos deve
-*       assegurar a liberaÁ„o de todos os espaÁos referÍnciados pelo
+*		A fun√ß√£o de libera√ß√£o dos valores contidos nos elementos deve
+*       assegurar a libera√ß√£o de todos os espa√ßos refer√™nciados pelo
 *       valor contido em um elemento.
-*       Esta funÁ„o È chamada antes de se desalocar um elemento
+*       Esta fun√ß√£o √© chamada antes de se desalocar um elemento
 *       de uma lista.
-*       Caso n„o seja necess·rio desalocar o valor referenciado pelo
-*       elemento, o ponteiro para a funÁ„o de liberaÁ„o poder· ser NULL .
-*       Caso o elemento da lista seja a ˙nica ‚ncora do valor referenciado,
-*       esta funÁ„o deve promover a destruiÁ„o (free) desse valor e
+*       Caso n√£o seja necess√°rio desalocar o valor referenciado pelo
+*       elemento, o ponteiro para a fun√ß√£o de libera√ß√£o poder√° ser NULL .
+*       Caso o elemento da lista seja a √∫nica √¢ncora do valor referenciado,
+*       esta fun√ß√£o deve promover a destrui√ß√£o (free) desse valor e
 *       de todos os dados nele ancorados.
 *
 ***************************************************************************/
@@ -57,19 +57,19 @@
    #define LISTA_EXT extern
 #endif
 
-/***** DeclaraÁıes exportadas pelo mÛdulo *****/
+/***** Declara√ß√µes exportadas pelo m√≥dulo *****/
 
-/* Tipo referÍncia para uma lista */
+/* Tipo refer√™ncia para uma lista */
 
 typedef struct LIS_tagLista * LIS_tppLista ;
 
 /***********************************************************************
 *
-*  $TC Tipo de dados: LIS CondiÁıes de retorno
+*  $TC Tipo de dados: LIS Condi√ß√µes de retorno
 *
 *
-*  $ED DescriÁ„o do tipo
-*		CondiÁıes de retorno das funÁıes da lista
+*  $ED Descri√ß√£o do tipo
+*		Condi√ß√µes de retorno das fun√ß√µes da lista
 *
 ***********************************************************************/
 
@@ -79,99 +79,97 @@ typedef struct LIS_tagLista * LIS_tppLista ;
                /* Concluiu corretamente */
 
          LIS_CondRetNoNaoExiste = 1,
-               /* NÛ n„o existe na lista */
+               /* Foi atingido o fim de lista */
 
 		 LIS_CondRetListaVazia = 2,
-			  /* A lista n„o contÈm elementos */
+			  /* A lista n√£o cont√©m elementos */
 
          LIS_CondRetListaNaoExiste = 3,
-               /* Lista n„o existe*/
+               /* Lista n√£o existe*/
 
 		 LIS_CondRetNoCorrenteEhUltimo = 4,
-				/* NÛ corrente È o ultimo elemento da lista*/
+				/* N√≥ corrente √© o ultimo elemento da lista*/
 		
 		 LIS_CondRetNoCorrenteEhPrimeiro = 5,
-				/* NÛ corrente È o primeiro elemento da lista*/
+				/* N√≥ corrente √© o primeiro elemento da lista*/
 
          LIS_CondRetFaltouMemoria = 6
-               /* Faltou memÛria ao tentar criar um elemento de lista */
+               /* Faltou mem√≥ria ao tentar criar um elemento de lista */
 
    } LIS_tpCondRet ;
 
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: LIS  &Criar lista
+*  $FC Fun√ß√£o: LIS  &Criar lista
 *
-*  $ED DescriÁ„o da funÁ„o
-*		Cria uma lista genÈrica duplamente encadeada.
-*		Os possÌveis tipos s„o desconhecidos a priori.
-*		A tipagem È implicita.
-*		N„o existe identificador de tipo associado ‡ lista.
+*  $ED Descri√ß√£o da fun√ß√£o
+*		Cria uma lista duplamente encadeada.
+*		√â fornecido um identificador e este √© associado √† lista.
 *
 *  $AS Assertiva de Saida
 *		O ponteiro para lista fornecida como parametro passa a apontar para a lista criada 
-*		cujo identificador s„o os caracteres que foram fornecidos tambÈm como parametro.
-*		Em caso de falta de memÛria, o ponteiro apontar· para um ponteiro nulo.
+*		cujo identificador s√£o os caracteres que foram fornecidos tamb√©m como parametro.
+*		Em caso de falta de mem√≥ria, o ponteiro apontar√° para um ponteiro nulo.
 *
-*  $EP Par‚metros
-*		ExcluirValor  - ponteiro para a funÁ„o que processa a
-*                     exclus„o do valor referenciado pelo elemento
-*                     a ser excluÌdo.
-*                     Ver descriÁ„o do mÛdulo.
-*
-*  $FV Valor retornado
-*		Se executou corretamente retorna o ponteiro para a lista.
-*		Este ponteiro ser· utilizado pelas funÁıes que manipulem esta lista.
-*
-*		Se ocorreu algum erro, por exemplo falta de memÛria ou dados errados,
-*		a funÁ„o retornar· NULL.
-*		N„o ser· dada mais informaÁ„o quanto ao problema ocorrido.
+*  $EP Par√¢metros
+*		ExcluirValor  - ponteiro para a fun√ß√£o que processa a
+*                     exclus√£o do valor referenciado pelo elemento
+*                     a ser exclu√≠do.
+*                     Ver descri√ß√£o do m√≥dulo.
 *
 *  $FV Valor retornado
-*		LIS_CondRetOK				- criaÁ„o de lista bem sucedida
+*		Se executou corretamente retorna o ponteiro para a lista e a condi√ß√£o de retorno de movimenta√ß√£o bem sucedida.
+*		Este ponteiro ser√° utilizado pelas fun√ß√µes que manipulem esta lista.
+*
+*		Se ocorreu algum erro, por exemplo falta de mem√≥ria ou dados errados,
+*		a fun√ß√£o retornar√° NULL e a condi√ß√£o de retorno faltou mem√≥ria.
+*		N√£o ser√° dada mais informa√ß√£o quanto ao problema ocorrido.
+*
+*  $FV Valor retornado
+*		LIS_CondRetOK				- cria√ß√£o de lista bem sucedida
 *		LIS_CondRetFaltouMemoria	- faltou memoria
 *
 ***********************************************************************/
 
    LIS_tpCondRet LIS_CriarLista(
-	   void(*ExcluirValor) (char * pDado), char * idLista, LIS_tppLista pLista);
+	   void(*ExcluirValor) (void * pDado), char * idLista, LIS_tppLista pLista);
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: LIS  &Ir prÛximo elemento
+*  $FC Fun√ß√£o: LIS  &Ir pr√≥ximo elemento
 *
-*  $ED DescriÁ„o da funÁ„o
-*		AvanÁa o elemento corrente para o prÛximo elemento na lista
-*		Se existir um prÛximo elemento, o ponteiro corrente avanÁa.
-*		Se n„o existir um prÛximo elemento, o ponteiro corrente permanece como ultimo
-*		Se nÛ corrente n„o existir, a lista est· vazia
+*  $ED Descri√ß√£o da fun√ß√£o
+*		Avan√ßa o elemento corrente para o pr√≥ximo elemento na lista
+*		Se existir um pr√≥ximo elemento, o ponteiro corrente avan√ßa.
+*		Se n√£o existir um pr√≥ximo elemento, o ponteiro corrente permanece como ultimo
+*		Se n√≥ corrente n√£o existir, a lista est√° vazia
 *
 *  $AE Assertiva de Entrada
 *		A lista existe. 
 *		A lista deve ter pelo menos um elemento. 
-*		Caso contr·rio, a lista est· vazia.
-*		NÛ corrente deve apontar para pelo menos um elemento anterior ao ˙ltimo.
-*		Caso contr·rio, nÛ corrente aponta para ˙ltimo elemento da lista.
-*		Valem as assertivas estruturais de lista duplamente encadeada com cabeÁa.
+*		Caso contr√°rio, a lista est√° vazia.
+*		N√≥ corrente deve apontar para pelo menos um elemento anterior ao √∫ltimo.
+*		Caso contr√°rio, n√≥ corrente aponta para √∫ltimo elemento da lista.
+*		Valem as assertivas estruturais de lista duplamente encadeada com cabe√ßa.
 *
 *  $AS Assertiva de Saida
-*		Valem as assertivas estruturais de lista duplamente encadeada com cabeÁa.		
-*		Nos casos onde h· mais de um elemento na lista e o nÛ estiver em qualquer posiÁ„o 
-*		exceto o ˙ltimo, a movimentaÁ„o foi bem sucedida.
-*		Caso esteja no ˙ltimo elemento ou a lista apenas possuia um elemento, n„o houve movimentaÁ„o
-*		e nÛ È o ˙ltimo elemento da lista.
-*		Caso n„o possua elementos, a lista estava vazia e tambÈm n„o houve movimentaÁ„o.
+*		Valem as assertivas estruturais de lista duplamente encadeada com cabe√ßa.		
+*		Nos casos onde h√° mais de um elemento na lista e o n√≥ estiver em qualquer posi√ß√£o 
+*		exceto o √∫ltimo, a movimenta√ß√£o foi bem sucedida.
+*		Caso esteja no √∫ltimo elemento ou a lista apenas possuia um elemento, n√£o houve movimenta√ß√£o
+*		e n√≥ √© o √∫ltimo elemento da lista.
+*		Caso n√£o possua elementos, a lista estava vazia e tamb√©m n√£o houve movimenta√ß√£o.
 *
 *
-*  $EP Par‚metros
+*  $EP Par√¢metros
 *		pLista  - ponteiro para a lista a ser manipulada
-*		numElem - o n˙mero de elementos a andar
+*		numElem - o n√∫mero de elementos a andar
 *
 *  $FV Valor retornado
-*		CondRetOK						- movimentaÁ„o bem sucedida
+*		CondRetOK						- movimenta√ß√£o bem sucedida
 *		CondRetListaVazia				- lista vazia
-*		CondRetNoCorrenteEhUltimo		- nÛ corrente È o ˙ltimo
+*		CondRetNoCorrenteEhUltimo		- n√≥ corrente √© o √∫ltimo
 *
 ***********************************************************************/
 
@@ -180,29 +178,29 @@ typedef struct LIS_tagLista * LIS_tppLista ;
    
 /***********************************************************************
 *
-*  $FC FunÁ„o: LIS  &Destruir lista
+*  $FC Fun√ß√£o: LIS  &Destruir lista
 *
-*  $ED DescriÁ„o da funÁ„o
-*		DestrÛi a lista fornecida.
-*		O par‚metro ponteiro para a lista n„o È modificado.
-*		Se ocorrer algum erro durante a destruiÁ„o, a lista resultar·
+*  $ED Descri√ß√£o da fun√ß√£o
+*		Destr√≥i a lista fornecida.
+*		O par√¢metro ponteiro para a lista n√£o √© modificado.
+*		Se ocorrer algum erro durante a destrui√ß√£o, a lista resultar√°
 *		estruturalmente incorreta.
-*		OBS. n„o existe previs„o para possÌveis falhas de execuÁ„o.
+*		OBS. n√£o existe previs√£o para poss√≠veis falhas de execu√ß√£o.
 *
 *  $AE Assertiva de Entrada
 *		O ponteiro para a lista fornecida como parametro deve conter uma lista para ser excluida.
-*		Caso contr·rio o ponteiro para lista n„o deve ser tratado para destruiÁ„o.
+*		Caso contr√°rio o ponteiro para lista n√£o deve ser tratado para destrui√ß√£o.
 *
 *  $AS Assertiva de Saida
-*		A lista fornecida como parametro se existia, foi destruÌda. Caso contr·rio, 
-*		a lista j· n„o existe.
+*		A lista fornecida como parametro se existia, foi destru√≠da. Caso contr√°rio, 
+*		a lista j√° n√£o existe.
 *
-*  $EP Par‚metros
+*  $EP Par√¢metros
 *		pLista  - ponteiro para a lista a ser manipulada
 *
 *  $FV Valor retornado
-*		LIS_CondRetOK				- exclus„o OK
-*		LIS_CondRetListaNaExiste	- lista n„o existe
+*		LIS_CondRetOK				- exclus√£o OK
+*		LIS_CondRetListaNaExiste	- lista n√£o existe
 *
 ***********************************************************************/
 
@@ -211,13 +209,13 @@ typedef struct LIS_tagLista * LIS_tppLista ;
  
 /***********************************************************************
 *
-*  $FC FunÁ„o: LIS  &Alocar memoria para lista
+*  $FC Fun√ß√£o: LIS  &Alocar memoria para lista
 *
-*  $ED DescriÁ„o da funÁ„o
-*		Aloca memÛria para uma lista duplamente encadeada com cabeÁa
+*  $ED Descri√ß√£o da fun√ß√£o
+*		Aloca mem√≥ria para uma lista duplamente encadeada com cabe√ßa
 *
 *  $AS Assertiva de Saida
-*		Uma lista devidamente alocada È retornada.
+*		Uma lista devidamente alocada √© retornada.
 *
 *  $FV Valor retornado
 *		LIS_tppLista	-ponteiro para a lista devidamente alocada
@@ -229,22 +227,227 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: LIS  &Esvaziar lista
+*  $FC Fun√ß√£o: LIS  &Esvaziar lista
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *     Elimina todos os elementos, sem contudo eliminar a lista
 *
-*  $EP Par‚metros
+*  $EP Par√¢metros
 *     pLista - ponteiro para a lista a ser esvaziada
 *
 ***********************************************************************/
 
    void LIS_EsvaziarLista(LIS_tppLista pLista);
 
+   /***********************************************************************
+*
+*  $FC Fun√ß√£o: LIS  &Inserir n√≥
+*
+*  $ED Descri√ß√£o da fun√ß√£o
+*     Insere novo elemento ap√≥s o elemento corrente.
+*     Caso a lista esteja vazia, insere o primeiro elemento da lista.
+*
+*
+*  $AE Assertiva de Entrada
+*		A lista existe.
+*		Valem as assertivas estruturais de lista duplamente encadeada com cabe√ßa.
+*
+*  $AS Assertiva de Saida
+*		Valem as assertivas estruturais de lista duplamente encadeada com cabe√ßa.
+*       A lista deve conter pelo menos
+*       A lista deve conter um elemento a mais se comparada com antes da fun√ß√£o
+*       Elemento corrente cont√©m valor igual ao passado como par√¢metro
+*
+*  $EP Par√¢metros
+*        pLista - ponteiro para a lista onde deve ser inserido o elemento
+*        pValor - ponteiro para o valor do novo elemento
+*                 Pode ser NULL
+*
+*  $FV Valor retornado
+*		LIS_CondRetOK				- inser√ß√£o bem sucedida
+*		LIS_CondRetFaltouMemoria	- faltou memoria
+*
+***********************************************************************/
+
+   LIS_tpCondRet LIS_InserirNo( LIS_tppLista pLista ,
+                                          char * pValor        );
+
+/***********************************************************************
+*
+*  $FC Fun√ß√£o: LIS  &Excluir elemento
+*
+*  $ED Descri√ß√£o da fun√ß√£o
+*     Exclui o elemento corrente da lista dada.
+*     Se existir o elemento aa esquerda do corrente ser√° o novo corrente.
+*     Se n√£o existir e existir o elemento √† direita, este se tornar√° corrente.
+*     Se este tamb√©m n√£o existir a lista tornou-se vazia.
+*
+*  $EP Par√¢metros
+*     pLista    - ponteiro para a lista na qual deve excluir.
+*
+*  $AE Assertivas de Entrada
+*		Lista passada como par√¢metro deve existir e possuir pelo menos um elemento.
+*		
+*  $AS Assertivas de Saida
+*		Se a lista existir e possuir um elemento pelo menos, a exclus√£o do n√≥ corrente ser√° bem sucedida.
+*       A lista deve conter um elemento a menos se comparada com antes da fun√ß√£o
+*       Caso o elemento retirado seja o primeiro ou o √∫ltimo, as mudan√ßas correspondentes na cabe√ßa da lista ser√£o feitas
+*
+*  $FV Valor retornado
+*		LIS_CondRetOK				- exclus√£o bem sucedida
+*       LIS_CondRetListaVazia       - lista passada como par√¢metro n√£o continha elemento para excluir
+*
+***********************************************************************/
+
+   LIS_tpCondRet LIS_ExcluirElemento( LIS_tppLista pLista ) ;
+   
+/***********************************************************************
+*
+*  $FC Fun√ß√£o: LIS  &Alterar n√≥ corrente
+*
+*  $ED Descri√ß√£o da fun√ß√£o
+*     Altera o conte√∫do do n√≥ corrente da lista para o conte√∫do informado
+*
+*  $EP Par√¢metros
+*     pLista - ponteiro para a lista de onde se quer o valor
+*     pLista - ponteiro para o valor do novo elemento
+*              Pode ser NULL
+*
+*  $AE Assertivas de Entrada
+*		Lista passada como par√¢metro deve existir e possuir pelo menos um elemento.
+*		
+*  $AS Assertivas de Saida
+*       Somente o elemento corrente deve ter sido alterado
+*		Elemento corrente deve ter valor igual a pValor
+*
+*  $FV Valor retornado
+*		LIS_CondRetOK				- exclus√£o bem sucedida
+*       LIS_CondRetListaVazia       - lista passada como par√¢metro n√£o continha elemento para alterar
+*		LIS_CondRetListaNaExiste	- lista n√£o existe
+*
+***********************************************************************/
+
+   LIS_tpCondRet LIS_AlterarNoCorrente( LIS_tppLista pLista , char* nValor) ;   
+
+   
+/***********************************************************************
+*
+*  $FC Fun√ß√£o: LIS  &Ir para o elemento inicial
+*
+*  $ED Descri√ß√£o da fun√ß√£o
+*     Torna corrente o primeiro elemento da lista.
+*     Faz nada se a lista est√° vazia.
+*
+*  $EP Par√¢metros
+*     pLista - ponteiro para a lista a manipular
+*
+***********************************************************************/
+
+   void IrInicioLista( LIS_tppLista pLista ) ;
+
+
+   /***********************************************************************
+*
+*  $FC Fun√ß√£o: LIS  &Ir Elemento anterior
+*
+*  $ED Descri√ß√£o da fun√ß√£o
+*		Elemento corrente passa ser elemento anterior ao corrente
+*		O par√¢metro ponteiro para a lista n√£o √© modificado.
+*		OBS. n√£o existe previs√£o para poss√≠veis falhas de execu√ß√£o.
+*
+*  $AE Assertiva de Entrada
+*		O ponteiro para a lista fornecida como parametro deve conter uma lista.
+*		Caso contr√°rio o ponteiro para lista n√£o deve ser tratado.
+*
+*  $AS Assertiva de Saida
+*		A lista fornecida como parametro se existia, teve seu elemento corrente trocado, caso contr√°rio 
+*		O n√≥ corrente √© o primeiro.
+*		A lista n√¢o existe.
+*
+*  $EP Par√¢metros
+*		pLista  - ponteiro para a lista a ser manipulada
+*
+*  $FV Valor retornado
+*		LIS_CondRetOK				- Executou OK
+*		LIS_CondRetListaNaExiste	- lista n√£o existe
+*		LIS_CondRetNoEhPrimeiro		- No √© o primeiro da lista
+*
+***********************************************************************/
+
+   LIS_tpCondRet LIS_irAnt (LIS_tppLista pLista);
+
+
+
+
+
+    /***********************************************************************
+*
+*  $FC Fun√ß√£o: LIS  &Obter No da Lista
+*
+*  $ED Descri√ß√£o da fun√ß√£o
+*		Obtem o valor contido no n√≥ da lista e compara com char
+*		O par√¢metro ponteiro para a lista n√£o √© modificado.
+*		OBS. n√£o existe previs√£o para poss√≠veis falhas de execu√ß√£o.
+*
+*  $AE Assertiva de Entrada
+*		O ponteiro para a lista fornecida como parametro deve conter uma lista.
+*		Caso contr√°rio o ponteiro para lista n√£o deve ser tratado.
+*		Char para compara√ß√£o
+*
+*  $AS Assertiva de Saida
+*		O valor obtido pela fun√ß√£o como ponteiro, se achou
+*		A lista n√£o existe.
+*
+*  $EP Par√¢metros
+*		pLista  - ponteiro para a lista a ser manipulada
+*		pvalor  - valor a char a ser comparado com valor do n√≥
+*
+*  $FV Valor retornado
+*		LIS_CondRetOK				- Encontrou OK
+*		LIS_CondRetListaVazia		- lista est√° vazia
+*		LIS_CondRetNaoAchouNo		- No n√£o foi encontrado na lista
+*
+***********************************************************************/
+
+   LIS_tpCondRet LIS_ObterNo(LIS_tppLista pLista, void** pvalor);
+
+
+
+   /***********************************************************************
+*
+*  $FC Fun√ß√£o: LIS  &Obter ID da Lista
+*
+*  $ED Descri√ß√£o da fun√ß√£o
+*		Obtem o ID contido na cabe√ßa da lista e armazena em um ponteiro para char
+*		O par√¢metro ponteiro para a lista n√£o √© modificado.
+*		OBS. n√£o existe previs√£o para poss√≠veis falhas de execu√ß√£o.
+*
+*  $AE Assertiva de Entrada
+*		O ponteiro para a lista fornecida como parametro deve conter uma lista.
+*		Caso contr√°rio o ponteiro para lista n√£o deve ser tratado.
+*		Um ponteiro para char para ser usado para retorno do valor do ID
+*
+*  $AS Assertiva de Saida
+*		O ID obtido pela fun√ß√£o como ponteiro, se achou
+*		A lista n√£o existe.
+*
+*  $EP Par√¢metros
+*		pLista  - ponteiro para a lista a ser manipulada
+*		pvalor  - char usado para armazenar valor do ID
+*
+*  $FV Valor retornado
+*		LIS_CondRetOK				- Encontrou OK
+*		LIS_CondRetListaNaoExiste	- lista n√£o Existe
+*
+***********************************************************************/
+
+
+  LIS_tpCondRet LIS_idLista(LIS_tppLista pLista, void** pvalor);
+   
 
 #undef LISTA_EXT
 
-/********** Fim do mÛdulo de definiÁ„o: LIS  Lista duplamente encadeada **********/
+/********** Fim do m√≥dulo de defini√ß√£o: LIS  Lista duplamente encadeada **********/
 
 #else
 #endif
