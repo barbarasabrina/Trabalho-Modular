@@ -1,0 +1,227 @@
+Argumentação de Corretude
+Leonardo Rocha
+Bárbara Castro
+Rudá Valle
+Função:
+TAB_tpCondRet TAB_CriarTabuleiro(int linha, char coluna)
+{
+	TAB_Tabuleiro * ptabuleiro = TAB_AlocarTabuleiro(linha, coluna);
+	TAB_Casa ** tempCasa;
+	int i, j;
+	
+	if (tempTab == NULL)
+		return TAB_CondRetFaltouMemoria;
+
+	for (i = 0; i < ptabuleiro->linha; i++)
+		for (j = 0; j < ptabuleiro->coluna; j++)
+			ptabuleiro->casa[i][j] = TAB_IniciarCasa();
+	
+	return TAB_CondRetOK;
+}
+
+Reescrevendo a função, deixando-a no formato visto em sala, não deixando nada implícito
+
+TAB_tpCondRet TAB_CriarTabuleiro(int linha, char coluna)
+{
+	ptabuleiro = TAB_AlocarTabuleiro(linha, coluna);
+	
+	if (tempTab == NULL)
+	{
+		return TAB_CondRetFaltouMemoria;
+	}
+	else
+{
+		i=0;
+		while (i < ptabuleiro->linha)
+		{
+			j=0;
+			while (j < ptabuleiro->coluna)
+			{
+				ptabuleiro->casa[i][j] = TAB_IniciarCasa();
+				j++;
+			}
+			i++;
+		}
+		return TAB_CondRetOK;
+}
+}
+
+
+
+
+
+
+
+Assertivas Gerais de Entrada e Saída:
+
+•	TAB_CriarTabuleiro
+$AE Assertivas de entrada
+Linha passada como parâmetro é um número inteiro.
+Coluna passada como parâmetro é uma letra maiúscula, ou algum caractere após as letras maiúsculas na tabela ASCII.
+
+$AS Assertivas de saída
+O tabuleiro é devidamente gerado e suas casas inicializadas, ou, em caso de erro, é retornado um valor relativo ao erro encontrado.
+
+
+•	TAB_AlocarTabuleiro
+$AE Assertivas de entrada
+Linha passada como parâmetro é um número inteiro.
+Coluna passada como parâmetro é uma letra maiúscula, ou algum caractere após as letras maiúsculas na tabela ASCII.
+
+$AS Assertivas de saída
+Um tabuleiro é alocado em memória dinâmica com tamanho definidos pelos valores da coluna e da linha, ou é retornado NULL.
+
+
+•	TAB_IniciarCasa
+$AE Assertivas de entrada
+	
+$AS Assertivas de saída
+	É retornada uma casa devidamente inicializada, com listas de ameaçados e ameaçantes criadas e com Peca=NULL
+
+Divisão em blocos:
+•	Sequência:
+B1:
+ptabuleiro = TAB_AlocarTabuleiro(linha, coluna);
+B2:
+if (tempTab == NULL)
+{
+	return TAB_CondRetFaltouMemoria;
+}
+else
+{
+	i=0;
+	while (i < ptabuleiro->linha)
+	{
+		j=0;
+		while (j < ptabuleiro->coluna)
+		{
+			ptabuleiro->casa[i][j] = TAB_IniciarCasa();
+			j++;
+		}
+		i++;
+	}
+	
+	return TAB_CondRetOK;
+}
+•	Seleção:
+
+B2.1:
+return TAB_CondRetFaltouMemoria;
+
+B2.2:
+i=0;
+while (i < ptabuleiro->linha)
+{
+	j=0;
+	while (j < ptabuleiro->coluna)
+	{
+		ptabuleiro->casa[i][j] = TAB_IniciarCasa();
+		j++;
+	}
+	i++;
+}
+	
+return TAB_CondRetOK;
+
+
+•	Sequência:
+B2.2.1:
+i=0;
+
+B2.2.2:
+while (i < ptabuleiro->linha)
+{
+	j=0;
+	while (j < ptabuleiro->coluna)
+	{
+		ptabuleiro->casa[i][j] = TAB_IniciarCasa();
+		j++;
+	}
+	i++;
+}
+
+B2.2.3:
+return TAB_CondRetOK;
+
+•	Repetição:
+B2.2.2:
+j=0;
+while (j < ptabuleiro->coluna)
+{
+	ptabuleiro->casa[i][j] = TAB_IniciarCasa();
+	j++;
+}
+i++;
+
+•	Sequência:
+B2.2.2.1:
+j=0;
+
+B2.2.2.2:
+while (j < ptabuleiro->coluna)
+{
+	ptabuleiro->casa[i][j] = TAB_IniciarCasa();
+	j++;
+}
+
+B2.2.2.3:
+i++;
+
+•	Repetição:
+B2.2.2.2:
+ptabuleiro->casa[i][j] = TAB_IniciarCasa();
+j++;
+
+•	Sequência:
+B2.2.2.2.1:
+ptabuleiro->casa[i][j] = TAB_IniciarCasa();
+
+B2.2.2.2.2:
+j++;
+
+Detalhação das Assertivas:
+AI1: (Entre B1 e B2)
+- Pela AS de TAB_AlocarTabuleiro, ptabuleiro aponta para um tabuleiro alocado em memória dinâmica, ou é NULL.
+1 – AE && (C==T) + B1 =>AS: (De B2)
+- Pela AE, ptabuleiro pode ser NULL, como (C==T), ptabuleiro é NULL, indicando falta de memória, como e B1 é retornado o erro correspondente a falta de memória, vale a AS.
+2 – AE && (C==F) + B2 =>AS: (De B2)
+- Pela AE, e como (C==F) ptabuleiro aponta para um tabuleiro já criado em memória dinâmica. Nesse caso o segundo bloco (B2.2) é executado, inicializando as casas do tabuleiro, sendo assim, vale a AS.
+AI1: (Entre B2.2.1 e B2.2.2)
+- i aponta para a primeira linha de casas do tabuleiro, ou é maior do que ptabuleiro->linha, caso o tabuleiro não tenha linhas.
+AI2: (Entre B2.2.2 e B2.2.3)
+- i é maior do que ptabuleiro->linha, pois já foram percorridas todas as linhas do tabuleiro.
+AINV (De B2.2.2)
+- i aponta para a primeira linha não percorrida 
+1 – AE => AINV (De B2.2.2)
+- Pela AE, i aponta para a primeira linha do tabuleiro, como nenhuma linha do tabuleiro foi percorrida, vale AINV
+2 – AE && (C==F) => AS (De B2.2.2)
+- Pela AE, o tabuleiro pode não ter linhas, com isso (C==F) pois i=0 que não é menor do que 0, com isso vale AS, pois se o tabuleiro não tem linhas, ele não tem casas, então pode se considerar todas as suas casas como inicializadas.
+
+3 – AE && (C==T) + B => AINV (De B2.2.2)
+- Pela AE, i aponta para a primeira linha do tabuleiro. Como (C==T), esta linha pertence ao tabuleiro, sendo assim, o bloco de código (B2.2.2) será executado, inicializando as casas dessa linha e avançando para a próxima. Vale AINV
+4 – AINV && (C==T) + B => AINV (De B2.2.2)
+-Para que AINV continue valendo, o bloco de código (B2.2.2) deve garantir que todas as casas da linha i foram inicializadas e i deve avançar para a linha seguinte a percorrer.
+5 – AINV && (C==F) => AS (De B2.2.2)
+- No último ciclo, i é maior do que ptabuleiro->linha. Nesse caso, vale AS
+6 – Término
+- Como a cada ciclo todas as casas de uma linha são inicializadas, e o tabuleiro possui um número finito de linhas, a repetição termina em um número finito de passos
+AI1 (Entre B2.2.2.1 e B2.2.2.2)
+- j aponta para a primeira coluna de casas do tabuleiro, ou é maior do que ptabuleiro->coluna, caso o tabuleiro não tenha colunas.
+AI2 (Entre B2.2.2.2 e B2.2.2.3)
+- j é maior do que ptabuleiro->coluna, pois já foram percorridas todas as colunas do tabuleiro, na linha i.
+AINV (De B2.2.2.2)
+- j aponta para a primeira coluna não percorrida da linha i
+1 – AE => AINV (De B2.2.2.2)
+- Pela AE, i aponta para a primeira coluna da linha i, como nenhuma coluna da linha i foi percorrida, vale AINV
+2 – AE && (C==F) => AS (De B2.2.2.2)
+-Pela AE, o tabuleiro pode não ter colunas, com isso (C==F) pois j=0 que não é menor do que 0, com isso vale AS, pois se o tabuleiro não tem colunas, ele não tem casas, então pode se considerar todas as suas casas como inicializadas.
+3 – AE && (C==T) + B => AINV (De B2.2.2.2)
+-Pela AE, j aponta para a primeira coluna da linha i. Como (C==T), esta coluna pertence ao tabuleiro, sendo assim, o bloco de código (B2.2.2.2) será executado, inicializando as casas dessa coluna, na linha i e avançando para a coluna seguinte. Vale AINV
+4 – AINV && (C==T) + B => AINV (De B2.2.2.2)
+- Para que AINV continue valendo, o bloco de código (B2.2.2.2) deve garantir que a casa da coluna j da linha i seja inicializada e j deve avançar para a coluna seguinte a percorrer.
+5 – AINV && (C==F) => AS (De B2.2.2.2)
+- No último ciclo, j é maior do que ptabuleiro->coluna. Nesse caso, vale AS
+6 – Término
+- Como a cada ciclo a casa da coluna j da linha i é inicializada, e o tabuleiro possui um número finito de colunas, a repetição termina em um número finito de passos
+AI: (Entre B2.2.2.2.1 e B2.2.2.2.2)
+- Pela AS da função TAB_IniciarCasa a casa da coluna j, da linha i foi inicializada.
