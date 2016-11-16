@@ -211,6 +211,77 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 			"Condicao de retorno errada ao tentar obter peca");
 
 	} /* fim ativa: Testar Obter peça do tabuleiro */
+	
+	/* Testar Obter ameaçados */
+
+	else if (strcmp(ComandoTeste, OBTER_AMEACADOS_CMD) == 0)
+	{
+
+		numLidos = LER_LerParametros("iissi",
+			&inxTabuleiro, &Linha, Coluna, StringDado, &CondRetEsp);
+
+		if (numLidos != 5)
+		{
+			return TST_CondRetParm;
+		} /* if */
+
+		CondRet = TAB_ObterListaAmeacados(vtTabuleiro[inxTabuleiro], Linha, Coluna[0], &pLista);
+		
+		if (CondRet!=0)
+			return CondRet;
+		
+
+		pDado = (char *)malloc(strlen(StringDado) + 1);
+		strcpy(pDado, StringDado);
+
+		CondRet = LIS_idLista(pLista, &pDado);
+
+	
+
+		if(CondRet == 0)
+		{
+			return TST_CompararString(StringDado , pDado,
+					"Valor retornado nâo foi esperado");
+		}
+
+		return TST_CompararInt(CondRetEsp, CondRet,
+		"Condicao de retorno errada ao Obter Lista de Ameaçados");
+
+	} /* fim ativa: Testar Obter ameaçados */
+
+	/* Testar Obter ameaçantes */
+
+	else if (strcmp(ComandoTeste, OBTER_AMEACANTES_CMD) == 0)
+	{
+
+		numLidos = LER_LerParametros("iissi",
+			&inxTabuleiro, &Linha, Coluna, StringDado, &CondRetEsp);
+
+		if (numLidos != 5)
+		{
+			return TST_CondRetParm;
+		} /* if */
+
+		CondRet = TAB_ObterListaAmeacantes(vtTabuleiro[inxTabuleiro], Linha, Coluna[0], &pLista);
+		if (CondRet!=0)
+			return CondRet;
+
+
+		pDado = (char *)malloc(strlen(StringDado) + 1);
+		strcpy(pDado, StringDado);
+
+		CondRet = LIS_idLista(pLista, &pDado);
+
+		if(CondRet == 0)
+		{
+			return TST_CompararString(StringDado , pDado,
+					"Valor retornado nâo foi esperado");
+		}
+
+		return TST_CompararInt(CondRetEsp, CondRet,
+		"Condicao de retorno errada ao Obter Lista de Ameaçantes");
+
+	} /* fim ativa: Testar Obter ameaçantes */
 
 
 	/* Testar Retirar peça do tabuleiro */
