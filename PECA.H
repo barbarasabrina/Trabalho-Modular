@@ -46,6 +46,8 @@
 *
 ***************************************************************************/
 
+
+
 #if defined( PECA_OWN )
 #define PECA_EXT
 #else
@@ -73,19 +75,161 @@ typedef enum {
 	PCA_CondRetOK = 0,
 	/* Concluiu corretamente */
 
-	PCA_CondRetPecaNaoExiste = 1
+	PCA_CondRetPecaNaoExiste = 1,
 	/* Peca passada como parâmetro não existe */
+
+	PCA_CondRetErroNaLeituraDoArquivo = 2,
+	/* Arquivo com todas as peças possíveis não está no formato certo */
+
+	PCA_CondRetFaltouMemoria = 3,
+	/* Faltou espaço na memórica dinâmica */
+
+	PCA_CondRetMovimentoInvalido = 4
+	/* Peca passada como parametro não pode realizar o movimento pedido */
 
 
 } PCA_tpCondRet ;
 
+/***********************************************************************
+*
+*  $FC Função: PCA  &Obter Peca
+*
+*  $ED Descrição da função
+*		Obtem peça que possui nome e cor iguais aos passados como parametro
+*
+*  $AE Assertiva de Entrada
+*
+*
+*  $AS Assertiva de Saida
+*		Caso a peça exista, a mesma é armazenada no endereço passado pela função anterior
+*       Caso contrário, é retornado uma condição de erro apropriada
+*
+*  $EP Parâmetros
+*		Possiveis - lista de todas as pecas possiveis
+*       resp      - endereço aonde a função deve guardar a peca
+*       nome      - nome da peca desejada
+*       cor       - cor da peca desejada
+*
+*  $FV Valor retornado
+*		PCA_CondRetOK				- Executou OK
+*		PCA_CondRetPecaNaExiste  	- Peca não existe
+*
+***********************************************************************/
+
+PCA_tpCondRet PCA_ObterPeca (LIS_tppLista Possiveis, PCA_tpPeca * resp, char nome, char cor);
+
+/***********************************************************************
+*
+*  $FC Função: PCA  &Obter Cor
+*
+*  $ED Descrição da função
+*		Obtem cor da peca passada como parâmetro
+*
+*  $AE Assertiva de Entrada
+*
+*
+*  $AS Assertiva de Saida
+*		Caso a peça exista, a cor da mesma é armazenada no endereço passado pela função anterior
+*       Caso contrário, é retornado uma condição de erro apropriada
+*
+*  $EP Parâmetros
+*		peca - peca a ser analizada
+*       c    - endereço aonde a função deve guardar a cor da peca
+*
+*  $FV Valor retornado
+*		PCA_CondRetOK				- Executou OK
+*		PCA_CondRetPecaNaExiste  	- Peca não existe
+*
+***********************************************************************/
+
 PCA_tpCondRet PCA_ObterCor (PCA_tpPeca peca, char* c);
+
+
+/***********************************************************************
+*
+*  $FC Função: PCA  &Obter Nome
+*
+*  $ED Descrição da função
+*		Obtem nome da peca passada como parâmetro
+*
+*  $AE Assertiva de Entrada
+*
+*
+*  $AS Assertiva de Saida
+*		Caso a peça exista, a cor da mesma é armazenada no endereço passado pela função anterior
+*       Caso contrário, é retornado uma condição de erro apropriada
+*
+*  $EP Parâmetros
+*		peca - peca a ser analizada
+*       n    - endereço aonde a função deve guardar o nome da peca
+*
+*  $FV Valor retornado
+*		PCA_CondRetOK				- Executou OK
+*		PCA_CondRetPecaNaExiste	    - Peca não existe
+*
+***********************************************************************/
 
 PCA_tpCondRet PCA_ObterNome (PCA_tpPeca peca, char* n);
 
-PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk, int prim);
 
-PCA_tpCondRet PCA_InicializarPecas (LIS_tppLista * Possiveis);
+/***********************************************************************
+*
+*  $FC Função: PCA  &Validar Movimento
+*
+*  $ED Descrição da função
+*		Confirma se a peca passada como parâmetro pode realizar o movimento também passado como parâmetro
+*
+*  $AE Assertiva de Entrada
+*
+*
+*  $AS Assertiva de Saida
+*		Caso a peça exista, e possa realizar o movimnto descrito a função deve retornar OK
+*       Caso contrário, é retornado uma condição de erro apropriada
+*
+*  $EP Parâmetros
+*		peca - peca a ser analizada
+*       dx   - deslocamento horizontal da peca no movimento
+*       dy   - deslocamento vertical da peca no movimento
+*       atk  - representa se a peca está atacando outra ou não
+*
+*  $FV Valor retornado
+*		PCA_CondRetOK				 - Executou OK
+*		PCA_CondRetPecaNaExiste	     - Peca não existe
+*       PCA_CondRetMovimentoInvalido - Peca não pode realizar o movimento pedido
+*
+***********************************************************************/
+
+PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk);
+
+
+/***********************************************************************
+*
+*  $FC Função: PCA  &InicializarPecas
+*
+*  $ED Descrição da função
+*		Inicializa todas as peças contidas no arquivo cujo nome foi passsado como parâmetro
+*       e as coloca numa lista, cujo endereço é passado para a função anterior
+*
+*  $AE Assertiva de Entrada
+*       O endereço passado como parametro não contém informação útil e pode ser sobrescrito
+*
+*  $AS Assertiva de Saida
+*		Caso o arquivo exista e esteja no formato descrito no LEIAME.TXT,essa função deve
+passar para a anterior uma lista devidamente alocada e preenchida com todas as pecas contidas no arquivo
+*       Caso contrário, é retornado uma condição de erro apropriada
+*
+*  $EP Parâmetros
+*		filename  - nome do arquivo de texto no qual se encontram as descrições das peças
+*       Possiveis - endereço aonde deve ser retornada a lista de pecas possiveis
+*
+*  $FV Valor retornado
+*		PCA_CondRetOK				      - Executou OK
+*		PCA_CondRetFaltouMemoria	      - Nao ouve espaço suficiente para gerar a lista
+*       PCA_CondRetErroNaLeituraDoArquivo - O arquivo nao existe ou nao esta organizado de forma correta
+*
+***********************************************************************/
+
+PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista * Possiveis);
 
 
 #undef PECA_EXT
