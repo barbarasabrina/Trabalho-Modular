@@ -247,6 +247,33 @@ TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tpTabuleiro *ptabuleiro)
 	return TAB_CondRetOK;
 } /* Fim função: TAB  &Destruir tabuleiro */
 
+/***************************************************************************
+*
+*  Função: TAB  &Obter lista de ameaçados
+*  ****/
+
+TAB_tpCondRet TAB_ObterListaAmeacados (TAB_tpTabuleiro ptabuleiro, int i, char j, LIS_tppLista *Ameacados) {
+	int lin  = i-1;
+	char col = j-'A';
+
+	*Ameacados = ptabuleiro->casa[lin][col].Ameacados;
+
+	return TAB_CondRetOK;
+} /* Fim função: TAB  &Obter lista de ameaçados */
+
+
+/*  Função: TAB  &Obter lista de ameacantes
+*  ****/
+
+TAB_tpCondRet TAB_ObterListaAmeacantes (TAB_tpTabuleiro ptabuleiro, int i, char j, LIS_tppLista *Ameacantes) {
+	int lin  = i-1;
+	char col = j-'A';
+
+	*Ameacantes = ptabuleiro->casa[lin][col].Ameacantes;
+
+	return TAB_CondRetOK;
+} /* Fim função: TAB  &Obter lista de ameaçantes */
+
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
