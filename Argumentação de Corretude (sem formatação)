@@ -6,7 +6,6 @@ Função:
 TAB_tpCondRet TAB_CriarTabuleiro(int linha, char coluna)
 {
 	TAB_Tabuleiro * ptabuleiro = TAB_AlocarTabuleiro(linha, coluna);
-	TAB_Casa ** tempCasa;
 	int i, j;
 	
 	if (tempTab == NULL)
@@ -23,14 +22,15 @@ Reescrevendo a função, deixando-a no formato visto em sala, não deixando nada
 
 TAB_tpCondRet TAB_CriarTabuleiro(int linha, char coluna)
 {
-	ptabuleiro = TAB_AlocarTabuleiro(linha, coluna);
+	TAB_tabuleiro * ptabuleiro = TAB_AlocarTabuleiro(linha, coluna);
+	int i, j;
 	
 	if (tempTab == NULL)
 	{
 		return TAB_CondRetFaltouMemoria;
 	}
 	else
-{
+	{
 		i=0;
 		while (i < ptabuleiro->linha)
 		{
@@ -43,7 +43,7 @@ TAB_tpCondRet TAB_CriarTabuleiro(int linha, char coluna)
 			i++;
 		}
 		return TAB_CondRetOK;
-}
+	}
 }
 
 
