@@ -252,6 +252,36 @@ TAB_tpCondRet TAB_ObterPeca(TAB_tpTabuleiro ptabuleiro, int linha, char coluna, 
 	return TAB_CondRetOK;
 } /* Fim função: TAB  &Obter peça
 
+/*
+* Função: TAB &exibir lista de ameacantes
+*/
+/*
+TAB_tpCondRet TAB_ExibirListaAmeacantes(TAB_tpTabuleiro ptabuleiro,int i, char j)
+{
+	LIS_tppLista *ameacantes;
+	*ameacantes = LIS_AlocarLista();
+	TAB_ObterListaAmeacantes(ptabuleiro,i,j,ameacantes);
+
+
+}
+*/
+
+/* Fim Função &exibir lista ameacantes*/
+
+/*
+* Função: TAB &exibir lista de ameacados
+*/
+/*
+TAB_tpCondRet TAB_ExibirListaAmeacados(TAB_tpTabuleiro ptabuleiro,int i, char j)
+{
+	LIS_tppLista *ameacados;
+	*ameacados = LIS_AlocarLista();
+	TAB_ObterListaAmeacados(ptabuleiro,i,j,ameacados);
+
+
+}*/
+
+/* Fim Função &exibir lista ameacados*/
 
 /***************************************************************************
 *
