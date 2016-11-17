@@ -71,7 +71,7 @@ void LiberarMovimento (PCA_Mov * mov);
 *
 *  ************************************************************************/
 
-PCA_tpCondRet PCA_ObterPeca (LIS_tppLista Possiveis, PCA_tpPeca * resp, char nome, char cor)
+PCA_tpCondRet PCA_ObterPeca (LIS_tppLista Possiveis, PCA_tpPeca * peca, char nome, char cor)
 {
 	PCA_tpCondRet CondRet=PCA_CondRetOK;
 	PCA_Peca * aux;
@@ -89,7 +89,7 @@ PCA_tpCondRet PCA_ObterPeca (LIS_tppLista Possiveis, PCA_tpPeca * resp, char nom
 			return CondRet;
 
 		if (aux->nomePeca == nome && aux->corPeca == cor){
-			*resp=aux;
+			*peca=aux;
 			return PCA_CondRetOK;
 		}
 
