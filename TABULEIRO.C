@@ -46,6 +46,13 @@ typedef struct TAB_casa
 } TAB_Casa;
 
 
+typedef struct Pos
+{
+	int  i;
+	char j;
+} TAB_Pos;
+
+
 /***********************************************************************
 *
 *  $TC Tipo de dados: TAB Descritor do tabuleiro
@@ -263,11 +270,65 @@ TAB_tpCondRet TAB_ObterListaAmeacantes (TAB_tpTabuleiro ptabuleiro, int i, char 
 	return TAB_CondRetOK;
 } /* Fim função: TAB  &Obter lista de ameaçantes */
 
+/**********************************************
+*** Função: TAB &Exibir Lista Ameacantes
+**********************************************/
+TAB_tpCondRet TAB_ExibirListaAmeacantes(TAB_tpTabuleiro ptabuleiro, int i, char j)
+{
+	LIS_tppLista *Ameacantes;
+	int k = 0;
+	TAB_Pos * pos = (TAB_Pos*)malloc(sizeof(TAB_Pos));
+
+
+	TAB_ObterListaAmeacantes(ptabuleiro, i, j, Ameacantes);
+	if (Ameacantes == NULL)
+	{
+		return TAB_CondRetListaAmeacanteVazia;
+	}
+	IrInicioLista((*Ameacantes));
+
+	while (k==0)
+	{
+		LIS_ObterNo((*Ameacantes), pos);
+		printf("%d %c",pos->i,pos->j);
+		k = LIS_IrProximoElemento((*Ameacantes));
+	}
+	return  TAB_CondRetOK;
+}
+/* Fim Função: &Exibir Lista Ameacantes  */
+
+
+
+/**********************************************
+***** Função: TAB &Exibir Lista Ameacados
+**********************************************/
+TAB_tpCondRet TAB_ExibirListaAmeacados(TAB_tpTabuleiro ptabuleiro, int i, char j){
+	int k = 0;
+	LIS_tppLista *Ameacados;
+	TAB_Pos * pos = (TAB_Pos*)malloc(sizeof(TAB_Pos));
+
+
+	TAB_ObterListaAmeacantes(ptabuleiro, i, j, Ameacados);
+	if (Ameacados == NULL)
+	{
+		return TAB_CondRetListaAmeacanteVazia;
+	}
+	IrInicioLista((*Ameacados));
+
+	while (k == 0)
+	{
+		LIS_ObterNo((*Ameacados), pos);
+		printf("%d %c", pos->i, pos->j);
+		k = LIS_IrProximoElemento((*Ameacados));
+	}
+	return  TAB_CondRetOK;
+}
+
+/* Fim Função: &Exibir Lista Ameacados  */
 
 /***************************************************************************
-  *
   *  Função: TAB  &Mover Peca
-  *  ****/
+  *  **********************************************************************/
 
 TAB_tpCondRet TAB_MoverPeca(TAB_tpTabuleiro t, int origemI, char origemJ, int destinoI, char destinoJ)
 {

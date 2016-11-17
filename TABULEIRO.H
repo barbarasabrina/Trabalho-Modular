@@ -99,8 +99,11 @@ typedef enum {
 	TAB_CondRetFaltouMemoria = 6,
 	/* Faltou memória ao tentar criar um elemento do tabuleiro */
 
-	TAB_CondRetCasaNaoExiste = 7
+	TAB_CondRetCasaNaoExiste = 7,
 	/* Casa não existe, está nula */
+
+	TAB_CondRetListaAmeacanteVazia = 8
+	/* Lista de ameacante está nula*/
 
 
 } TAB_tpCondRet;
@@ -356,6 +359,10 @@ TAB_tpCondRet TAB_ObterListaAmeacantes (TAB_tpTabuleiro ptabuleiro, int i, char 
 ***********************************************************************/
 
 TAB_tpCondRet TAB_ObterListaAmeacados (TAB_tpTabuleiro ptabuleiro, int i, char j, LIS_tppLista *Ameacados);
+
+TAB_tpCondRet TAB_ExibirListaAmeacantes(TAB_tpTabuleiro ptabuleiro, int i, char j);
+
+TAB_tpCondRet TAB_ExibirListaAmeacados(TAB_tpTabuleiro ptabuleiro, int i, char j);
 
 
 
