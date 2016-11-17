@@ -1,22 +1,22 @@
 /***************************************************************************
-*  $MCI M√≥dulo de implementa√ß√£o: TAB  Tabuleiro gen√©rico
+*  $MCI MÛdulo de implementaÁ„o: TAB  Tabuleiro genÈrico
 *
 *  Arquivo gerado:              TABULEIRO.c
 *  Letras identificadoras:      TAB
 *
-*  Nome da base de software:    Arcabou√ßo para a automa√ß√£o de testes de programas redigidos em C
+*  Nome da base de software:    ArcabouÁo para a automaÁ„o de testes de programas redigidos em C
 *  Arquivo da base de software: D:\AUTOTEST\PROJETOS\TABULEIRO.BSW
 *
-*  Projeto: INF 1301 / 1628 Automatiza√ß√£o dos testes de m√≥dulos C
+*  Projeto: INF 1301 / 1628 AutomatizaÁ„o dos testes de mÛdulos C
 *  Gestor:  LES/DI/PUC-Rio
 *  Autores: avs, bshmc, rfv, llar
 *
-*  $HA Hist√≥rico de evolu√ß√£o:
-*     Vers√£o  Autor    Data     Observa√ß√µes
-*     4       avs   01/fev/2006 criar linguagem script simb√≥lica
-*     3       avs   08/dez/2004 uniformiza√ß√£o dos exemplos
-*     2       avs   07/jul/2003 unifica√ß√£o de todos os m√≥dulos em um s√≥ projeto
-*     1       avs   16/abr/2003 in√≠cio desenvolvimento
+*  $HA HistÛrico de evoluÁ„o:
+*     Vers„o  Autor    Data     ObservaÁıes
+*     4       avs   01/fev/2006 criar linguagem script simbÛlica
+*     3       avs   08/dez/2004 uniformizaÁ„o dos exemplos
+*     2       avs   07/jul/2003 unificaÁ„o de todos os mÛdulos em um sÛ projeto
+*     1       avs   16/abr/2003 inÌcio desenvolvimento
 *
 ***************************************************************************/
 
@@ -60,50 +60,42 @@ typedef struct TAB_tabuleiro
 	char coluna;
 }TAB_Tabuleiro;
 
-/***** Prot√≥tipos das fun√ß√µes encapuladas no m√≥dulo *****/
+/***** ProtÛtipos das funÁıes encapuladas no mÛdulo *****/
 
 static TAB_Casa TAB_IniciarCasa();
 void DestruirValorLista(void * pValor);
 void TAB_DestruirCasa(TAB_Casa *casa);
 
-/*****  C√≥digo das fun√ß√µes exportadas pelo m√≥dulo  *****/
+/*****  CÛdigo das funÁıes exportadas pelo mÛdulo  *****/
 
 /***************************************************************************
 *
-*  Fun√ß√£o: TAB  &Criar Tabuleiro
+*  FunÁ„o: TAB  &Criar Tabuleiro
 *  ****/
 TAB_tpCondRet TAB_CriarTabuleiro(TAB_tpTabuleiro ptabuleiro)
 {
-	TAB_Tabuleiro * tempTab = ptabuleiro;
-	TAB_Casa ** tempCasa;
 	int i, j;
-#ifdef _DEBUG
-	assert(ptabuleiro != NULL);
-#endif
 
-	if (tempTab == NULL)
+	if (ptabuleiro == NULL)
 	{
 		return TAB_CondRetFaltouMemoria;
 	} /* if */
-
-	tempCasa = (tempTab->casa);
-
-	for (i = 0; i < tempTab->linha; i++)
+	else
 	{
-		for (j = 0; j < tempTab->coluna; j++)
+		for (i = 0; i < ptabuleiro->linha; i++)
 		{
-			tempCasa[i][j] = TAB_IniciarCasa();
+			for (j = 0; j < ptabuleiro->coluna; j++)
+			{
+				ptabuleiro->casa[i][j] = TAB_IniciarCasa();
+			}
 		}
+		return TAB_CondRetOK;
 	}
-
-	ptabuleiro->casa = tempCasa;
-
-	return TAB_CondRetOK;
-} /* Fim fun√ß√£o: TAB  &Criar tabuleiro */
+} /* Fim funÁ„o: TAB  &Criar tabuleiro */
 
 /***************************************************************************
 *
-*  Fun√ß√£o: TAB  &Alocar Tabuleiro
+*  FunÁ„o: TAB  &Alocar Tabuleiro
 *  ****/
 TAB_tpTabuleiro TAB_AlocarTabuleiro(int linha, char coluna)
 {
@@ -122,62 +114,12 @@ TAB_tpTabuleiro TAB_AlocarTabuleiro(int linha, char coluna)
 	tempTab->coluna = col;
 
 	return tempTab;
-} /* Fim fun√ß√£o: TAB  &Alocar tabuleiro */
-
-/***************************************************************************
-  *
-  *  Fun√ß√£o: TAB  &Mover Peca
-  *  ****/
-
-TAB_tpCondRet TAB_MoverPeca(TAB_tpTabuleiro t, int origemI, char origemJ, int destinoI, char destinoJ)
-{
-	TAB_tpCondRet CondRet;
-	void * pecaOrigem = NULL;
-	void * pecaDestino = NULL;
-	
-
-
-	// Testes de Ponteiro
-	if (t == NULL)
-	{
-		return TAB_CondRetTabuleiroNaoExiste;
-	}
-	//*pecaOrigem = (void* )malloc(sizeof(t->casa[origemI][origemJ].Peca));
-	//*pecaDestino = (void* )malloc(sizeof(t->casa[destinoI][destinoJ].Peca));
-
-	//Mover Pe√ßa;
-	CondRet = TAB_ObterPeca(t, origemI,origemJ, &pecaOrigem);
-	if (CondRet != 0)
-		return CondRet;
-	if(pecaOrigem==NULL)
-	{
-		return TAB_CondRetPecaNaoExiste;
-	}
-	CondRet = TAB_ObterPeca(t, destinoI, destinoJ, &pecaDestino);
-	if (CondRet != 0)
-		return CondRet;
-	if(pecaDestino!=NULL)
-	{
-		CondRet = TAB_RetirarPeca(t, destinoI, destinoJ);
-		if (CondRet != 0)
-			return CondRet;	
-	}
-	CondRet = TAB_RetirarPeca(t, origemI, origemJ);
-	if (CondRet != 0)
-		return CondRet;
-	
-	CondRet = TAB_InserirPeca(t,destinoI,destinoJ,pecaOrigem);
-	if (CondRet != 0)
-		return  CondRet;
-
-	return TAB_CondRetOK;
-	
-}/* Fim fun√ß√£o: TAB &Mover Pe√ßa*/
+} /* Fim funÁ„o: TAB  &Alocar tabuleiro */
 
 
 /***************************************************************************
 *
-*  Fun√ß√£o: TAB  &Inserir Pe√ßa
+*  FunÁ„o: TAB  &Inserir PeÁa
 *  ****/
 
 TAB_tpCondRet TAB_InserirPeca(TAB_tpTabuleiro ptabuleiro, int linha, char coluna, void * peca)
@@ -189,13 +131,13 @@ TAB_tpCondRet TAB_InserirPeca(TAB_tpTabuleiro ptabuleiro, int linha, char coluna
 #ifdef _DEBUG
 	assert(ptabuleiro != NULL);
 #endif	
-	/* trata o caso no qual o tabuleiro n√£o existe */
+	/* trata o caso no qual o tabuleiro n„o existe */
 	if (ptabuleiro == NULL)
 	{
 		return TAB_CondRetTabuleiroNaoExiste;
 	}/* if */
 
-	/* trata o caso no qual as coordenadas informadas n√£o existem */
+	/* trata o caso no qual as coordenadas informadas n„o existem */
 	if (lin<0 || lin >= ptabuleiro->linha || col<0 || col >= ptabuleiro->coluna)
 		return TAB_CondRetCoordNaoExiste;
 
@@ -212,16 +154,16 @@ TAB_tpCondRet TAB_InserirPeca(TAB_tpTabuleiro ptabuleiro, int linha, char coluna
 	}
 
 	return TAB_CondRetOK;
-} /* Fim fun√ß√£o: TAB  &Inserir pe√ßa */
+} /* Fim funÁ„o: TAB  &Inserir peÁa */
 
 /***************************************************************************
 *
-*  Fun√ß√£o: TAB  &Obter Pe√ßa
+*  FunÁ„o: TAB  &Obter PeÁa
 *  ****/
 
 TAB_tpCondRet TAB_ObterPeca(TAB_tpTabuleiro ptabuleiro, int linha, char coluna, void * peca)
 {
-	/* aloca mem√≥ria para um ponteiro temporario receber o ptabuleiro */
+	/* aloca memÛria para um ponteiro temporario receber o ptabuleiro */
 	TAB_Tabuleiro * ptab = (TAB_Tabuleiro *)malloc(sizeof(TAB_Tabuleiro));
 
 	/* transforma a linha fornecida em inteiro e acessa a casa corretamente */
@@ -232,13 +174,13 @@ TAB_tpCondRet TAB_ObterPeca(TAB_tpTabuleiro ptabuleiro, int linha, char coluna, 
 	assert(ptabuleiro != NULL);
 #endif
 
-	/* trata o caso no qual o tabuleiro n√£o existe */
+	/* trata o caso no qual o tabuleiro n„o existe */
 	if (ptabuleiro == NULL)
 	{
 		return TAB_CondRetTabuleiroNaoExiste;
 	}/* if */
 
-	/* trata o caso no qual as coordenadas informadas n√£o existem */
+	/* trata o caso no qual as coordenadas informadas n„o existem */
 	if (lin < 0 || lin >= ptabuleiro->linha || col < 0 || col >= ptabuleiro->coluna)
 	{
 		return TAB_CondRetCoordNaoExiste;
@@ -250,42 +192,12 @@ TAB_tpCondRet TAB_ObterPeca(TAB_tpTabuleiro ptabuleiro, int linha, char coluna, 
 
 
 	return TAB_CondRetOK;
-} /* Fim fun√ß√£o: TAB  &Obter pe√ßa
+} /* Fim funÁ„o: TAB  &Obter peÁa
 
-/*
-* Fun√ß√£o: TAB &exibir lista de ameacantes
-*/
-/*
-TAB_tpCondRet TAB_ExibirListaAmeacantes(TAB_tpTabuleiro ptabuleiro,int i, char j)
-{
-	LIS_tppLista *ameacantes;
-	*ameacantes = LIS_AlocarLista();
-	TAB_ObterListaAmeacantes(ptabuleiro,i,j,ameacantes);
-
-
-}
-*/
-
-/* Fim Fun√ß√£o &exibir lista ameacantes*/
-
-/*
-* Fun√ß√£o: TAB &exibir lista de ameacados
-*/
-/*
-TAB_tpCondRet TAB_ExibirListaAmeacados(TAB_tpTabuleiro ptabuleiro,int i, char j)
-{
-	LIS_tppLista *ameacados;
-	*ameacados = LIS_AlocarLista();
-	TAB_ObterListaAmeacados(ptabuleiro,i,j,ameacados);
-
-
-}*/
-
-/* Fim Fun√ß√£o &exibir lista ameacados*/
 
 /***************************************************************************
 *
-*  Fun√ß√£o: TAB  &Retirar pe√ßa
+*  FunÁ„o: TAB  &Retirar peÁa
 *  ****/
 
 TAB_tpCondRet TAB_RetirarPeca(TAB_tpTabuleiro ptabuleiro, int i, char j) {
@@ -303,33 +215,30 @@ TAB_tpCondRet TAB_RetirarPeca(TAB_tpTabuleiro ptabuleiro, int i, char j) {
 
 	return TAB_CondRetOK;
 
-} /* Fim fun√ß√£o: TAB  &Retirar pe√ßa */
-
+} /* Fim funÁ„o: TAB  &Retirar peÁa */
 
 /***************************************************************************
 *
-*  Fun√ß√£o: TAB  &Destruir tabuleiro
+*  FunÁ„o: TAB  &Destruir tabuleiro
 *  ****/
-TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tpTabuleiro *ptabuleiro)
+TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tpTabuleiro ptabuleiro)
 {
 	int i, j;
-	if (*ptabuleiro == NULL)
+	if (ptabuleiro == NULL)
 		return TAB_CondRetTabuleiroNaoExiste;
 
-	for (i = 0; i<(*ptabuleiro)->linha; i++)
-		for (j = 0; j < (*ptabuleiro)->coluna; j++) {
-			TAB_RetirarPeca((*ptabuleiro), i + 1, j + 'A');
-			TAB_DestruirCasa(&(*ptabuleiro)->casa[i][j]);
-			
-		}
-	*(ptabuleiro) = NULL;
-	free(*ptabuleiro);
-	return TAB_CondRetOK;
-} /* Fim fun√ß√£o: TAB  &Destruir tabuleiro */
+	for (i = 0; i<(ptabuleiro)->linha; i++)
+	for (j = 0; j < (ptabuleiro)->coluna; j++) 
+	{
+		TAB_DestruirCasa(&(ptabuleiro)->casa[i][j]);			
+	}
 
+	return TAB_CondRetOK;
+
+} /* Fim funÁ„o: TAB  &Destruir tabuleiro */
 /***************************************************************************
 *
-*  Fun√ß√£o: TAB  &Obter lista de amea√ßados
+*  FunÁ„o: TAB  &Obter lista de ameaÁados
 *  ****/
 
 TAB_tpCondRet TAB_ObterListaAmeacados (TAB_tpTabuleiro ptabuleiro, int i, char j, LIS_tppLista *Ameacados) {
@@ -339,10 +248,10 @@ TAB_tpCondRet TAB_ObterListaAmeacados (TAB_tpTabuleiro ptabuleiro, int i, char j
 	*Ameacados = ptabuleiro->casa[lin][col].Ameacados;
 
 	return TAB_CondRetOK;
-} /* Fim fun√ß√£o: TAB  &Obter lista de amea√ßados */
+} /* Fim funÁ„o: TAB  &Obter lista de ameaÁados */
 
 
-/*  Fun√ß√£o: TAB  &Obter lista de ameacantes
+/*  FunÁ„o: TAB  &Obter lista de ameacantes
 *  ****/
 
 TAB_tpCondRet TAB_ObterListaAmeacantes (TAB_tpTabuleiro ptabuleiro, int i, char j, LIS_tppLista *Ameacantes) {
@@ -352,14 +261,72 @@ TAB_tpCondRet TAB_ObterListaAmeacantes (TAB_tpTabuleiro ptabuleiro, int i, char 
 	*Ameacantes = ptabuleiro->casa[lin][col].Ameacantes;
 
 	return TAB_CondRetOK;
-} /* Fim fun√ß√£o: TAB  &Obter lista de amea√ßantes */
+} /* Fim funÁ„o: TAB  &Obter lista de ameaÁantes */
 
 
-/*****  C√≥digo das fun√ß√µes encapsuladas no m√≥dulo  *****/
+/***************************************************************************
+  *
+  *  FunÁ„o: TAB  &Mover Peca
+  *  ****/
+
+TAB_tpCondRet TAB_MoverPeca(TAB_tpTabuleiro t, int origemI, char origemJ, int destinoI, char destinoJ)
+{
+	TAB_tpCondRet CondRet;
+	void * pecaOrigem;
+	void * pecaDestino;
+	
+	pecaOrigem= (void*) malloc(sizeof(char));
+	pecaDestino= (void*) malloc(sizeof(char));
+
+	// Testes de Ponteiro
+	if (t == NULL)
+	{
+		return TAB_CondRetTabuleiroNaoExiste;
+	}
+	//*pecaOrigem = (void* )malloc(sizeof(t->casa[origemI][origemJ].Peca));
+	//*pecaDestino = (void* )malloc(sizeof(t->casa[destinoI][destinoJ].Peca));
+
+	//Mover PeÁa;
+	CondRet = TAB_ObterPeca(t, origemI,origemJ, pecaOrigem);
+	if (CondRet != 0)
+		return CondRet;
+	if(pecaOrigem=='\0')
+	{
+		return TAB_CondRetPecaNaoExiste;
+	}
+	CondRet = TAB_ObterPeca(t, destinoI, destinoJ, pecaDestino);
+	if (CondRet != 0)
+		return CondRet;
+	if(pecaDestino!='\0')
+	{
+		CondRet = TAB_RetirarPeca(t, destinoI, destinoJ);
+		if (CondRet != 0)
+			return CondRet;	
+	}
+	CondRet = TAB_RetirarPeca(t, origemI, origemJ);
+	if (CondRet != 0)
+		return CondRet;
+	
+	CondRet = TAB_InserirPeca(t,destinoI,destinoJ,pecaOrigem);
+	if (CondRet != 0)
+		return  CondRet;
+
+	return TAB_CondRetOK;
+	
+}/* Fim funÁ„o: TAB &Mover PeÁa*/
+
+
+
+
+
+
+
+
+/*****  CÛdigo das funÁıes encapsuladas no mÛdulo  *****/
 
 /***************************************************************************
 *
-*  Fun√ß√£o: TAB  &Iniciar Casa do Tabuleiro
+*  FunÁ„o: TAB  &Iniciar Casa do Tabuleiro
 *  ****/
 
 TAB_Casa TAB_IniciarCasa()
@@ -371,16 +338,16 @@ TAB_Casa TAB_IniciarCasa()
 	casa.Ameacantes = LIS_AlocarLista();
 	LIS_CriarLista(DestruirValorLista, "Ameacantes", casa.Ameacantes);
 	return casa;
-} /* Fim fun√ß√£o: TAB  &Iniciar casa do tabuleiro */
+} /* Fim funÁ„o: TAB  &Iniciar casa do tabuleiro */
 
 void DestruirValorLista(void * pValor)
 {
 	free(pValor);
-} /* Fim fun√ß√£o: TLIS -Destruir valor */
+} /* Fim funÁ„o: TLIS -Destruir valor */
 
 /***************************************************************************
 *
-*  Fun√ß√£o: TAB  &Destruir Casa do Tabuleiro
+*  FunÁ„o: TAB  &Destruir Casa do Tabuleiro
 *  ****/
 
 void TAB_DestruirCasa(TAB_Casa *casa)
@@ -388,9 +355,9 @@ void TAB_DestruirCasa(TAB_Casa *casa)
 
 	LIS_DestruirLista(casa->Ameacados);
 	LIS_DestruirLista(casa->Ameacantes);
-	free(casa->Peca);
+	casa->Peca=NULL;
 	//*casa = NULL;
-} /* Fim fun√ß√£o: TAB  &Destruir casa do tabuleiro */
+} /* Fim funÁ„o: TAB  &Destruir casa do tabuleiro */
 
 
-/********** Fim do m√≥dulo de implementa√ß√£o: TAB  Tabuleiro - Matriz 8x8 casas  **********/
+/********** Fim do mÛdulo de implementaÁ„o: TAB  Tabuleiro - Matriz 8x8 casas  **********/

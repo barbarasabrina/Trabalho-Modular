@@ -260,7 +260,7 @@ TAB_tpCondRet TAB_CriarTabuleiro(TAB_tpTabuleiro ptabuleiro);
 *     TAB_CondRetTabuleiroNaoExiste   - Tabuleiro passado não existe
 *
 ***********************************************************************/
-TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tpTabuleiro *ptabuleiro);
+TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tpTabuleiro ptabuleiro);
 
 /***********************************************************************
 *
@@ -285,6 +285,81 @@ TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tpTabuleiro *ptabuleiro);
 ***********************************************************************/
 TAB_tpTabuleiro TAB_AlocarTabuleiro(int linha, char coluna);
 
+
+
+
+
+
+/***********************************************************************
+   *
+   *  $FC Função: TAB  &Obter Lista Ameacantes
+   *
+   *  $ED Descrição da função
+   *		Obtém a lista em que se encontra a lista de casas ameacantes.
+   *
+   *  $AE Assertiva de Entrada
+   *		Um tabuleiro alocado previamente deve existir.
+   *		Devem existir coordenadas válidas referentes à casa no tabuleiro.
+   *		Deve existir uma lista de amecantes valida;
+   *
+   *
+   *  $AS Assertiva de Saída
+   *		São válidas as assertivas de entrada.
+   *		Uma lista contendo os ameacantes será passada por referencia usando um ponteiro para char
+   *		Caso as coordenadas não sejam válidas não ocorrerá passagem por referentcia.
+   *
+   *
+   *  $EP Parâmetros
+   *		ptabuleiro					- ponteiro para o tabuleiro
+   *		linha						- ponteiro para a coordenada linha da casa
+   *		coluna						- ponteiro para a coordenada coluna da casa
+   *		Ameacantes					- ponteiro para a retorno por referencia da lsita de Ameacantes
+   *
+   *
+   *  $FV Valor retornado
+   *		TAB_CondRetOK					- cobteve a lista com sucesso
+   *
+   ***********************************************************************/
+
+TAB_tpCondRet TAB_ObterListaAmeacantes (TAB_tpTabuleiro ptabuleiro, int i, char j, LIS_tppLista *Ameacantes);
+
+
+/***********************************************************************
+*
+*  $FC Função: TAB &Obter lista de ameaçados
+*
+*  $ED Descrição da função
+*     Obtem um ponteiro para a lista de casas ameacadas pela peça presente na coordenada informada 
+*     Caso não exista uma peça nas coordenadas informadas a lista obtida estará vazia
+*
+*  $EP Parâmetros
+*     ptabuleiro - ponteiro para o tabuleiro a ser utilizado
+*     i - Caracter que representa a linha na qual a função deve atuar
+*         Varia entre '1' e '8'
+*     j - Caracter que representa a coluna na qual a função deve atuar
+*         Varia entre 'A' e 'H'
+*     Ameacados - Ponteiro para aonde deve ser guardado o endereço da lista de casas ameacadas
+                  pela peça presente nas coordenadas informadas 
+*
+*  $AE Assertivas de entrada
+*     O tabuleiro passado como parâmetro existe na memória
+*     A coordenada passada como parâmetro faz parte do tabuleiro
+*
+*  $AS Assertivas de saída
+*     O tabuleiro continua existindo
+*     Coordenada passada como parâmetro está vazia
+*     Lista obtida tem sentido lógico
+*
+*  $FV Valor retornado
+*     TAB_CondRetOK              - retirada de peça bem sucedida
+*
+***********************************************************************/
+
+TAB_tpCondRet TAB_ObterListaAmeacados (TAB_tpTabuleiro ptabuleiro, int i, char j, LIS_tppLista *Ameacados);
+
+
+
+TAB_tpCondRet TAB_MoverPeca(TAB_tpTabuleiro t, int origemI, char origemJ, int destinoI, char destinoJ);
 
 #undef TABULEIRO_EXT
 

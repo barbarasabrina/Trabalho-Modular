@@ -42,6 +42,9 @@ static const char OBTER_PECA_CMD[]			= "=obterPeca"			;
 static const char DESTRUIR_TABULEIRO_CMD[]  = "=destroiTabuleiro"	;
 static const char ESVAZIAR_TABULEIRO_CMD[]  = "=esvaziarTabuleiro"	;
 static const char RETIRAR_PECA_CMD[]		= "=retirarPeca"		;
+static const char OBTER_AMEACADOS_CMD[]     = "=obterAmeacados"		;
+static const char OBTER_AMEACANTES_CMD[]    = "=obterAmeacantes"	;
+static const char MOVER_PECA_CMD[]			  = "=moverPeca";
 
 
 #define TRUE  1
@@ -123,27 +126,6 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 		return TST_CondRetOK;
 
 	} /* fim ativa: Efetuar reset de teste de tabuleiro */
-	
-	/* Testar Mover peça do tabuleiro */
-
-	else if (strcmp(ComandoTeste, MOVER_PECA_CMD) == 0)
-	{
-
-		numLidos = LER_LerParametros("iisisi",
-			&inxTabuleiro, &Linha, Coluna, &LinhaDestino, ColunaDestino , &CondRetEsp);
-
-		if (numLidos != 6)
-		{
-			return TST_CondRetParm;
-		} /* if */
-
-		
-		CondRet = TAB_MoverPeca(vtTabuleiro[inxTabuleiro],Linha,Coluna[0],LinhaDestino, ColunaDestino[0]);
-		
-		return TST_CompararInt(CondRetEsp, CondRet,
-			"Condicao de retorno errada ao tentar mover a peça.");
-
-	} /* fim ativa: Testar Mover peça do tabuleiro */
 
 	/* Testar CriarTabuleiro */
 
@@ -224,7 +206,7 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 		
 		if (CondRet == 0)
 		{
-			return TST_CompararChar(StringDado[0], PecaObtida,
+			return TST_CompararChar(StringDado[0], (char)PecaObtida,
 					"Condicao de retorno errada tentar obter peca");			
 		}
 
@@ -232,7 +214,27 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 			"Condicao de retorno errada ao tentar obter peca");
 
 	} /* fim ativa: Testar Obter peça do tabuleiro */
+
 	
+	/* Testar Retirar peça do tabuleiro */
+
+	else if (strcmp(ComandoTeste, RETIRAR_PECA_CMD) == 0)
+	{
+
+		numLidos = LER_LerParametros("iisi",
+			&inxTabuleiro, &Linha, Coluna, &CondRetEsp);
+
+		if (numLidos != 4)
+		{
+			return TST_CondRetParm;
+		} /* if */
+
+		return TST_CompararInt(CondRetEsp, TAB_RetirarPeca(vtTabuleiro[inxTabuleiro], Linha, Coluna[0]),
+			"Condicao de retorno errada ao retirar peca");
+
+	} /* fim ativa: Testar Retirar peça do tabuleiro */
+
+
 	/* Testar Obter ameaçados */
 
 	else if (strcmp(ComandoTeste, OBTER_AMEACADOS_CMD) == 0)
@@ -305,23 +307,29 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 	} /* fim ativa: Testar Obter ameaçantes */
 
 
-	/* Testar Retirar peça do tabuleiro */
+	/* Testar Mover peça do tabuleiro */
 
-	else if (strcmp(ComandoTeste, RETIRAR_PECA_CMD) == 0)
+	else if (strcmp(ComandoTeste, MOVER_PECA_CMD) == 0)
 	{
 
-		numLidos = LER_LerParametros("iisi",
-			&inxTabuleiro, &Linha, Coluna, &CondRetEsp);
+		numLidos = LER_LerParametros("iisisi",
+			&inxTabuleiro, &Linha, Coluna, &LinhaDestino, ColunaDestino , &CondRetEsp);
 
-		if (numLidos != 4)
+		if (numLidos != 6)
 		{
 			return TST_CondRetParm;
 		} /* if */
 
-		return TST_CompararInt(CondRetEsp, TAB_RetirarPeca(vtTabuleiro[inxTabuleiro], Linha, Coluna[0]),
-			"Condicao de retorno errada ao retirar peca");
+		
+		CondRet = TAB_MoverPeca(vtTabuleiro[inxTabuleiro],Linha,Coluna[0],LinhaDestino, ColunaDestino[0]);
+		
+		return TST_CompararInt(CondRetEsp, CondRet,
+			"Condicao de retorno errada ao tentar mover a peça.");
 
-	} /* fim ativa: Testar Retirar peça do tabuleiro */
+	} /* fim ativa: Testar Mover peça do tabuleiro */
+
+
+
 
 
 
