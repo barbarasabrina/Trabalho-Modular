@@ -45,8 +45,7 @@
 *       de todos os dados nela ancorados.
 *
 ***************************************************************************/
-
-
+#include "LISTA.H"
 
 #if defined( PECA_OWN )
 #define PECA_EXT
