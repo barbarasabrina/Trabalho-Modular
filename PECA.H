@@ -91,7 +91,7 @@ typedef enum {
 
 /***********************************************************************
 *
-*  $FC Função: PCA  &Obter Peca
+*  $FC Função: PCA  &Pegar Peca da Lista de Pecas possiveis
 *
 *  $ED Descrição da função
 *		Obtem peça que possui nome e cor iguais aos passados como parametro
@@ -115,7 +115,7 @@ typedef enum {
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_ObterPeca (LIS_tppLista Possiveis, PCA_tpPeca * resp, char nome, char cor);
+PCA_tpCondRet PCA_PegarPecaDaLista (LIS_tppLista Possiveis, PCA_tpPeca * resp, char nome, char cor);
 
 /***********************************************************************
 *
