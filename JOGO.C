@@ -102,10 +102,11 @@ void JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas)
 	char  j, *nome, *cor;
 	PCA_tpPeca *peca = (PCA_tpPeca*)malloc(PCA_tpPeca);
 
-	LIS_ObterNo(pecas,peca);
+	
 
 	while (pecas!=NULL)
 	{
+		LIS_ObterNo(pecas, peca);
 		PCA_ObterCor(peca,cor);
 		PCA_ObterNome(peca,nome);
 		while (peca != NULL)
@@ -128,6 +129,7 @@ void JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas)
 				}
 			}
 		}
+		LIS_IrProximoElemento(pecas);
 
 	}
 }/* Fim função: TAB &Montar Tabuleiro Modificado*/
