@@ -99,7 +99,7 @@ JGO_tpCondRet JGO_MostrarTabuleiro (TAB_tpTabuleiro ptabuleiro)
 void JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas)
 {
 	int i,k;
-	char  j, *nome, *cor;
+	char  j, nome, cor;
 	PCA_tpPeca *peca = (PCA_tpPeca*)malloc(PCA_tpPeca);
 
 	
@@ -107,8 +107,8 @@ void JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas)
 	while (pecas!=NULL)
 	{
 		LIS_ObterNo(pecas, peca);
-		PCA_ObterCor(peca,cor);
-		PCA_ObterNome(peca,nome);
+		PCA_ObterCor(peca,&cor);
+		PCA_ObterNome(peca,&nome);
 		while (peca != NULL)
 		{
 			printf("onde por a peça %c de cor %c", cor, nome);
