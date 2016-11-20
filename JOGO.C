@@ -132,7 +132,98 @@ void JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas)
 		LIS_IrProximoElemento(pecas);
 
 	}
-}/* Fim função: TAB &Montar Tabuleiro Modificado*/
+}/* Fim função: JGO &Montar Tabuleiro Modificado*/
+
+
+/***************************************************************************
+*
+*  Função: JGO  &Realizar movimento no Tabuleiro
+*  ****/
+
+JGO_tpCondRet JGO_RealizarMovimento(LIS_tppLista listaPecasPossiveis, TAB_tpTabuleiro pTabuleiro)
+{
+	int linhaOrigem = 0, linhaDestino = 0;
+	char colunaOrigem = '\0', colunaDestino = '\0';
+	
+	JGO_LerComando(pTabuleiro, &linhaOrigem, &colunaOrigem, &linhaDestino, &colunaDestino);
+
+	return TAB_MoverPeca(pTabuleiro, linhaOrigem, colunaOrigem, linhaDestino, colunaDestino);
+
+}/* Fim função: JGO &Realizar movimento no Tabuleiro */
+
+
+/***************************************************************************
+*
+*  Função: JGO  &Montar Tabuleiro Padrão
+*  ****/
+
+void JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas)
+{
+	int i,j;
+	PCA_tpPeca * peca;
+
+	//Insere todos os peões brancos
+	PCA_PegarPecaDaLista(pecas, peca, 'P', 'B');
+	for (j = 'A'; j < 'I';j++)
+	{
+		TAB_InserirPeca(ptabuleiro, 2, j, peca);
+	}
+
+	//Insere todos os peões pretos
+	PCA_PegarPecaDaLista(pecas, peca, 'P', 'P');
+	for (j = 'A'; j < 'I'; j++)
+	{
+		TAB_InserirPeca(ptabuleiro, 7, j, peca);
+	}
+
+	//Insere todas as torres brancas
+	PCA_PegarPecaDaLista(pecas, peca, 'T', 'B');
+	TAB_InserirPeca(ptabuleiro, 1, 'A', peca);
+	TAB_InserirPeca(ptabuleiro, 1, 'H', peca);
+	
+	//Insere todas as torres pretas
+	PCA_PegarPecaDaLista(pecas, peca, 'T', 'P');
+	TAB_InserirPeca(ptabuleiro, 8, 'A', peca);
+	TAB_InserirPeca(ptabuleiro, 8, 'H', peca);
+
+	//Insere todos os cavalos brancos
+	PCA_PegarPecaDaLista(pecas, peca, 'C', 'B');
+	TAB_InserirPeca(ptabuleiro, 1, 'B', peca);
+	TAB_InserirPeca(ptabuleiro, 1, 'G', peca);
+
+	//Insere todos os cavalos pretos
+	PCA_ObterPCA_PegarPecaDaListaPeca(pecas, peca, 'C', 'P');
+	TAB_InserirPeca(ptabuleiro, 8, 'B', peca);
+	TAB_InserirPeca(ptabuleiro, 8, 'G', peca);
+	
+	//Insere todos os bispos brancos
+	PCA_ObtePCA_PegarPecaDaListarPeca(pecas, peca, 'B', 'B');
+	TAB_InserirPeca(ptabuleiro, 1, 'C', peca);
+	TAB_InserirPeca(ptabuleiro, 1, 'F', peca);
+	
+	//Insere todos os bispos pretos
+	PCA_PegarPecaDaLista(pecas, peca, 'B', 'P');
+	TAB_InserirPeca(ptabuleiro, 8, 'C', peca);
+	TAB_InserirPeca(ptabuleiro, 8, 'F', peca);
+	
+	//Insere a rainha branca
+	PCA_PegarPecaDaLista(pecas, peca, 'D', 'B');
+	TAB_InserirPeca(ptabuleiro, 1, 'E', peca);
+	
+	//Insere a rainha preta
+	PCA_PegarPecaDaLista(pecas, peca, 'D', 'P');
+	TAB_InserirPeca(ptabuleiro, 8, 'E', peca);
+	
+	//Insere o rei branco
+	PCA_ObterPPCA_PegarPecaDaListaeca(pecas, peca, 'R', 'B');
+	TAB_InserirPeca(ptabuleiro, 1, 'D', peca);
+	
+	//Insere o rei preto
+	PCA_PegarPecaDaLista(pecas, peca, 'R', 'P');
+	TAB_InserirPeca(ptabuleiro, 8, 'D', peca);		
+}/* Fim função: JGO &Montar Tabuleiro Padrão */
+
+
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
