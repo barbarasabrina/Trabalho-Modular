@@ -154,6 +154,39 @@ JGO_tpCondRet JGO_RealizarMovimento(LIS_tppLista listaPecasPossiveis, TAB_tpTabu
 
 /***************************************************************************
 *
+*  Função: TAB  &Montar Tabuleiro Modificado
+*  ****/
+
+void JGO_LerComando(TAB_tpTabuleiro ptabuleiro, int* linhaOrigem, char* colunaOrigem, int* linhaDestino, char* colunaDestinho)
+{
+	int linha = -1;
+	char coluna = '\0';
+
+	printf("\nInforme a linha da coordenada de Origem da peca:\n");
+
+	scanf(" %d", &linha);
+	*linhaOrigem = linha;
+	
+	printf("\nInforme a coluna da coordenada de Origem da peca:\n");
+
+	scanf(" %c", &coluna);
+	*colunaOrigem = coluna;
+
+	printf("\nInforme a linha da coordenada de Destino da peca:\n");
+
+	scanf("%d", &linha);
+	*linhaDestino = linha;
+
+	printf("\nInforme a coluna da coordenada de Destino da peca:\n");
+
+	scanf(" %c", &coluna);
+	*colunaDestinho = coluna;
+
+	system("PAUSE");
+}
+
+/***************************************************************************
+*
 *  Função: JGO  &Montar Tabuleiro Padrão
 *  ****/
 
