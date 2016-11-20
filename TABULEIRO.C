@@ -89,12 +89,16 @@ TAB_tpCondRet TAB_CriarTabuleiro(TAB_tpTabuleiro ptabuleiro)
 	} /* if */
 	else
 	{
-		for (i = 0; i < ptabuleiro->linha; i++)
+		i = 0;
+		while ( i < ptabuleiro->linha )
 		{
-			for (j = 0; j < ptabuleiro->coluna; j++)
+			j = 0;
+			while ( j < ptabuleiro->coluna )
 			{
 				ptabuleiro->casa[i][j] = TAB_IniciarCasa();
+				j++;
 			}
+			i++;
 		}
 		return TAB_CondRetOK;
 	}
