@@ -26,6 +26,7 @@
 #include   <malloc.h>
 #include   <assert.h>
 #include   <stdlib.h>
+#include "PECA.H"
 
 #define TABULEIRO_OWN
 #include "TABULEIRO.h"
@@ -408,7 +409,7 @@ void atualizarListasCasaInserir(TAB_Tabuleiro *ptabuleiro, int lin, char col)
 				atk = 0;
 			else
 				atk = 1;
-			resp = validarMovimento (ptabuleiro->casa[lin-1][col-'A'].Peca, i-lin, j-col, atk);
+			resp = PCA_ValidarMovimento(ptabuleiro->casa[lin-1][col-'A'].Peca, i-lin, j-col, atk); 
 			if (resp) {
 				pos=(TAB_Pos*)malloc(sizeof(TAB_Pos));
 				pos->i=i;
@@ -421,6 +422,26 @@ void atualizarListasCasaInserir(TAB_Tabuleiro *ptabuleiro, int lin, char col)
 				LIS_InserirNo (ptabuleiro->casa[i][j].Ameacantes, pos);
 			}
 		}
+	}
+}
+
+/***************************************************************************
+*
+*  Função: TAB  &Retirar pos da lista
+*  ****/
+
+void RetirarPosDaLista(LIS_tppLista lista, TAB_Pos *pos)
+{
+	LIS_tpCondRet CondRet = LIS_CondRetOK;
+	TAB_Pos *aux;
+
+	IrInicioLista(lista);
+
+	while (CondRet == 0) {
+		LIS_ObterNo(lista, &aux);
+		if (aux->i == pos->i && aux->j == pos->j)
+			LIS_ExcluirElemento(lista);
+		CondRet = LIS_IrProximoElemento(lista);
 	}
 }
 
@@ -451,25 +472,7 @@ void atualizarListasCasaRetirar(TAB_Tabuleiro *ptabuleiro, int lin, char col)
 
 }
 
-/***************************************************************************
-*
-*  Função: TAB  &Retirar pos da lista
-*  ****/
 
-void RetirarPosDaLista(LIS_tppLista lista, TAB_Pos *pos)
-{
-	LIS_tpCondRet CondRet = LIS_CondRetOK;
-	TAB_Pos *aux;
-
-	IrInicioLista(lista);
-
-	while (CondRet==0) {
-		LIS_ObterNo (lista, &aux);
-		if (aux->i == pos->i && aux->j == pos->j)
-			LIS_ExcluirElemento(lista);
-		CondRet=LIS_IrProximoElemento(lista);
-	}
-}
 
 
 
