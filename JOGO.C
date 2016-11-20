@@ -80,7 +80,7 @@ JGO_tpCondRet JGO_MostrarTabuleiro (TAB_tpTabuleiro ptabuleiro)
 		for (j='A'; j<='H'; j++){
 			TAB_ObterPeca(ptabuleiro, i, j, &peca);
 			if (peca==NULL)
-				printf(" --- |");
+				printf("  v  |");
 			else {
 				PCA_ObterNome(peca, &nome);
 				PCA_ObterCor(peca, &cor);
