@@ -40,7 +40,7 @@
 
 typedef struct tagElemLista {
 
-	char * pValor;
+	void * pValor;
 	/* Ponteiro para o valor contido no elemento */
 
 	struct tagElemLista * pAnt;
