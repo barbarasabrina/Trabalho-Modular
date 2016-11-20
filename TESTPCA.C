@@ -78,14 +78,11 @@ static const char VALIDAR_MOVIMENTO_CMD  [ ] = "=validarMovimento"	;
 
       TST_tpCondRet CondRet ;
 
-      char   StringDado[  DIM_VALOR ] ;
       char   nomeDado, nomeRecebido ;
 	  char   corDada,  corRecebida  ;
 	  int dx, dy, atk;
 
       int ValEsp = -1 ;
-
-      int i ;
 
       int numElem = -1 ;
 
@@ -107,7 +104,7 @@ static const char VALIDAR_MOVIMENTO_CMD  [ ] = "=validarMovimento"	;
             } /* if */
 
 			
-			CondRet = PCA_InicializarPecas(FILENAME, ListaPecasPossiveis);
+			CondRet = PCA_InicializarPecas(FILENAME, &ListaPecasPossiveis);
 						
 			return TST_CompararInt(CondRetEsp, CondRet,
 				"Condicao de retorno errada ao inicializar pecas.");
