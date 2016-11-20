@@ -30,7 +30,7 @@
 #include    "Lista.h"
 
 static const char INICIALIZAR_PECAS_CMD  [ ] = "=inicializarPecas"	;
-static const char OBTER_PECA_CMD         [ ] = "=obterPeca"			;
+static const char PEGAR_PECA_CMD         [ ] = "=pegarPecaDaLista"	;
 static const char OBTER_COR_CMD          [ ] = "=obterCor"			;
 static const char OBTER_NOME_CMD         [ ] = "=obterNome"			;
 static const char VALIDAR_MOVIMENTO_CMD  [ ] = "=validarMovimento"	;
@@ -62,7 +62,7 @@ static const char VALIDAR_MOVIMENTO_CMD  [ ] = "=validarMovimento"	;
 *     Comandos disponíveis:
 *
 *     =inicializarPecas
-*     =obterPeca
+*     =pegarPecaDaLista
 *     =obterCor
 *     =obterNome
 *     =validarMovimento
@@ -88,7 +88,7 @@ static const char VALIDAR_MOVIMENTO_CMD  [ ] = "=validarMovimento"	;
 
 	  PCA_tpPeca PecaCorrente = NULL;
 
-	  LIS_tppLista ListaPecasPossiveis;
+	  LIS_tppLista ListaPecasPossiveis = NULL;
 
 
       /* Testar InicializarPecas */
@@ -111,9 +111,9 @@ static const char VALIDAR_MOVIMENTO_CMD  [ ] = "=validarMovimento"	;
 
          } /* fim ativa: Testar InicializarPecas */
 
-      /* Testar Obter Peca*/
+      /* Testar pegar peca da lista*/
 
-         else if ( strcmp( ComandoTeste , OBTER_PECA_CMD ) == 0 )
+         else if ( strcmp( ComandoTeste , PEGAR_PECA_CMD ) == 0 )
          {
 
             numLidos = LER_LerParametros( "icc" ,
@@ -124,7 +124,7 @@ static const char VALIDAR_MOVIMENTO_CMD  [ ] = "=validarMovimento"	;
                return TST_CondRetParm ;
             } /* if */
 
-			CondRet = PCA_ObterPeca (ListaPecasPossiveis ,&PecaCorrente, nomeDado, corDada);
+			CondRet = PCA_PegarPecaDaLista (ListaPecasPossiveis ,&PecaCorrente, nomeDado, corDada);
 
            return TST_CompararInt(CondRetEsp, CondRet,
 				"Condicao de retorno errada ao obter peca.");
