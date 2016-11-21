@@ -157,7 +157,7 @@ TAB_tpCondRet TAB_InserirPeca(TAB_tpTabuleiro ptabuleiro, int linha, char coluna
 	if (ptabuleiro->casa[lin][col].Peca == NULL)
 	{
 		ptabuleiro->casa[lin][col].Peca = malloc(sizeof(peca));
-		
+
 		strcpy(ptabuleiro->casa[lin][col].Peca, peca);
 	}
 	else
@@ -207,10 +207,10 @@ TAB_tpCondRet TAB_ObterPeca(TAB_tpTabuleiro ptabuleiro, int linha, char coluna, 
 } /* Fim função: TAB  &Obter peça
 
 
-/***************************************************************************
-*
-*  Função: TAB  &Retirar peça
-*  ****/
+  /***************************************************************************
+  *
+  *  Função: TAB  &Retirar peça
+  *  ****/
 
 TAB_tpCondRet TAB_RetirarPeca(TAB_tpTabuleiro ptabuleiro, int i, char j) {
 	int lin = i - 1;
@@ -240,12 +240,12 @@ TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tpTabuleiro ptabuleiro)
 		return TAB_CondRetTabuleiroNaoExiste;
 
 	for (i = 0; i<(ptabuleiro)->linha; i++)
-	for (j = 0; j < (ptabuleiro)->coluna; j++) 
-	{
-		TAB_DestruirCasa(&(ptabuleiro)->casa[i][j]);			
-	}
+		for (j = 0; j < (ptabuleiro)->coluna; j++) 
+		{
+			TAB_DestruirCasa(&(ptabuleiro)->casa[i][j]);			
+		}
 
-	return TAB_CondRetOK;
+		return TAB_CondRetOK;
 
 } /* Fim função: TAB  &Destruir tabuleiro */
 /***************************************************************************
@@ -334,15 +334,15 @@ TAB_tpCondRet TAB_ExibirListaAmeacados(TAB_tpTabuleiro ptabuleiro, int i, char j
 /* Fim Função: &Exibir Lista Ameacados  */
 
 /***************************************************************************
-  *  Função: TAB  &Mover Peca
-  *  **********************************************************************/
+*  Função: TAB  &Mover Peca
+*  **********************************************************************/
 
 TAB_tpCondRet TAB_MoverPeca(TAB_tpTabuleiro t, int origemI, char origemJ, int destinoI, char destinoJ)
 {
 	TAB_tpCondRet CondRet;
 	void * pecaOrigem;
 	void * pecaDestino;
-	
+
 	pecaOrigem= (void*) malloc(sizeof(char));
 	pecaDestino= (void*) malloc(sizeof(char));
 
@@ -355,7 +355,7 @@ TAB_tpCondRet TAB_MoverPeca(TAB_tpTabuleiro t, int origemI, char origemJ, int de
 	//*pecaDestino = (void* )malloc(sizeof(t->casa[destinoI][destinoJ].Peca));
 
 	//Mover Peça;
-	CondRet = TAB_ObterPeca(t, origemI,origemJ, pecaOrigem);
+	CondRet = TAB_ObterPeca(t, origemI,origemJ, pecaOrigem); 
 	if (CondRet != 0)
 		return CondRet;
 	if(pecaOrigem=='\0')
@@ -369,18 +369,27 @@ TAB_tpCondRet TAB_MoverPeca(TAB_tpTabuleiro t, int origemI, char origemJ, int de
 	{
 		CondRet = TAB_RetirarPeca(t, destinoI, destinoJ);
 		if (CondRet != 0)
-			return CondRet;	
+			return CondRet;
+		CondRet = PCA_ValidarMovimento(pecaOrigem,(destinoI-origemI),(destinoJ-origemJ),1);
+		if(CondRet !=0)
+			return CondRet;
+	}
+	else if(pecaDestino == '\0')
+	{
+		CondRet = PCA_ValidarMovimento(pecaOrigem,(destinoI-origemI),(destinoJ-origemJ),0);
+		if(CondRet !=0)
+			return CondRet;
 	}
 	CondRet = TAB_RetirarPeca(t, origemI, origemJ);
 	if (CondRet != 0)
 		return CondRet;
-	
+
 	CondRet = TAB_InserirPeca(t,destinoI,destinoJ,pecaOrigem);
 	if (CondRet != 0)
 		return  CondRet;
 
 	return TAB_CondRetOK;
-	
+
 }/* Fim função: TAB &Mover Peça*/
 
 
