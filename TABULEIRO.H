@@ -320,7 +320,7 @@ TAB_tpTabuleiro TAB_AlocarTabuleiro(int linha, char coluna);
    *
    *
    *  $FV Valor retornado
-   *		TAB_CondRetOK					- cobteve a lista com sucesso
+   *		TAB_CondRetOK					- obteve a lista com sucesso
    *
    ***********************************************************************/
 
@@ -354,13 +354,70 @@ TAB_tpCondRet TAB_ObterListaAmeacantes (TAB_tpTabuleiro ptabuleiro, int i, char 
 *     Lista obtida tem sentido lógico
 *
 *  $FV Valor retornado
-*     TAB_CondRetOK              - retirada de peça bem sucedida
+*     TAB_CondRetOK              - lista obtida com sucesso
 *
 ***********************************************************************/
 
 TAB_tpCondRet TAB_ObterListaAmeacados (TAB_tpTabuleiro ptabuleiro, int i, char j, LIS_tppLista *Ameacados);
 
+/***********************************************************************
+*
+*  $FC Função: TAB &Exibir lista de ameaçantes
+*
+*  $ED Descrição da função
+*     Exibe a lista de casas que ameaçaam a casa pesquisada
+*
+*  $EP Parâmetros
+*     ptabuleiro - ponteiro para o tabuleiro a ser utilizado
+*     i - Caracter que representa a linha na qual a função deve atuar
+*         Varia entre '1' e '8'
+*     j - Caracter que representa a coluna na qual a função deve atuar
+*         Varia entre 'A' e 'H' 
+*
+*  $AE Assertivas de entrada
+*     O tabuleiro passado como parâmetro existe na memória
+*     A coordenada passada como parâmetro faz parte do tabuleiro
+*
+*  $AS Assertivas de saída
+*     O tabuleiro continua existindo
+*     Coordenada passada como parâmetro está vazia
+*     Lista obtida tem sentido lógico
+*	  Lista é impressa
+*
+*  $FV Valor retornado
+*     TAB_CondRetOK              - lista impressa com sucesso
+*
+***********************************************************************/
+
 TAB_tpCondRet TAB_ExibirListaAmeacantes(TAB_tpTabuleiro ptabuleiro, int i, char j);
+/***********************************************************************
+*
+*  $FC Função: TAB &Exibir lista de ameaçados
+*
+*  $ED Descrição da função
+*     Exibe a lista de casas ameaçadas pela casa pesquisada
+*
+*  $EP Parâmetros
+*     ptabuleiro - ponteiro para o tabuleiro a ser utilizado
+*     i - Caracter que representa a linha na qual a função deve atuar
+*         Varia entre '1' e '8'
+*     j - Caracter que representa a coluna na qual a função deve atuar
+*         Varia entre 'A' e 'H' 
+*
+*  $AE Assertivas de entrada
+*     O tabuleiro passado como parâmetro existe na memória
+*     A coordenada passada como parâmetro faz parte do tabuleiro
+*
+*  $AS Assertivas de saída
+*     O tabuleiro continua existindo
+*     Coordenada passada como parâmetro está vazia
+*     Lista obtida tem sentido lógico
+*	  Lista é impressa
+*
+*  $FV Valor retornado
+*     TAB_CondRetOK              - lista impressa com sucesso
+*
+***********************************************************************/
 
 TAB_tpCondRet TAB_ExibirListaAmeacados(TAB_tpTabuleiro ptabuleiro, int i, char j);
 
