@@ -1,0 +1,24 @@
+// Script:    TestePeca.script
+// Autor:     BSHMC, RFV, LLAR
+// Data:      20/nov/2016
+// Propósito: Testar o módulo peca
+//
+
+== Inicializar valores
+
+=declararparm   str0    string  "bshm"
+
+=declararparm   OK             			int  0
+=declararparm   PecaNaoExiste	   		int  1
+=declararparm   ErrArquivo     			int  2
+=declararparm   FaltouMemoria 			int  3
+=declararparm	MovimentoInvalido		int  4
+
+=declararparm   pNULL          int  0
+=declararparm   pNaoNULL       int  1
+
+== Pegar pecas do arquivo OK
+=inicializarPecas OK
+
+
+// fim
