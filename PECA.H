@@ -228,7 +228,7 @@ passar para a anterior uma lista devidamente alocada e preenchida com todas as p
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista * Possiveis);
+PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista Possiveis);
 
 
 #undef PECA_EXT
