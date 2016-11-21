@@ -76,7 +76,9 @@ JGO_tpCondRet JGO_MostrarTabuleiro (TAB_tpTabuleiro ptabuleiro)
 	char nome, cor;
 	int i;
 	char j;
-
+	
+	if (ptabuleiro == NULL)
+		return JGO_CondRetTabuleiroNaoExiste
 
 	for (i=1; i<=8; i++){
 		printf("|");
@@ -92,6 +94,9 @@ JGO_tpCondRet JGO_MostrarTabuleiro (TAB_tpTabuleiro ptabuleiro)
 		}
 		printf("\n");
 	}
+	
+	return JGO_CondRetOK
+		
 }/* Fim função: TAB &Mostrar Tabuleiro*/
 
 /***************************************************************************
