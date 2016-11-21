@@ -44,7 +44,9 @@ static const char ESVAZIAR_TABULEIRO_CMD[]  = "=esvaziarTabuleiro"	;
 static const char RETIRAR_PECA_CMD[]		= "=retirarPeca"		;
 static const char OBTER_AMEACADOS_CMD[]     = "=obterAmeacados"		;
 static const char OBTER_AMEACANTES_CMD[]    = "=obterAmeacantes"	;
-static const char MOVER_PECA_CMD[]			  = "=moverPeca";
+static const char MOVER_PECA_CMD[]			= "=moverPeca";
+static const char EXIBIR_AMEACADOS_CMD[]	= "=exibirAmeacados";
+static const char EXIBIR_AMEACANTES_CMD[]	= "=exibirAmeacantes";
 
 
 #define TRUE  1
@@ -305,6 +307,56 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 		"Condicao de retorno errada ao Obter Lista de Ameaçantes");
 
 	} /* fim ativa: Testar Obter ameaçantes */
+
+	/* Testar Exibir ameaçados */
+
+	else if (strcmp(ComandoTeste, EXIBIR_AMEACADOS_CMD) == 0)
+	{
+
+		numLidos = LER_LerParametros("iisi",
+			&inxTabuleiro, &Linha, Coluna, &CondRetEsp);
+
+		if (numLidos != 5)
+		{
+			return TST_CondRetParm;
+		} /* if */
+
+		CondRet = TAB_ExibirListaAmeacados(vtTabuleiro[inxTabuleiro], Linha, Coluna[0]);
+		
+		if (CondRet!=0)
+			return CondRet;
+
+
+
+		return TST_CompararInt(CondRetEsp, CondRet,
+		"Condicao de retorno errada ao Obter Lista de Ameaçados");
+
+	} /* fim ativa: Testar Exibir ameaçados */
+
+	/* Testar Exibir ameaçantes */
+
+	else if (strcmp(ComandoTeste, EXIBIR_AMEACANTES_CMD) == 0)
+	{
+
+		numLidos = LER_LerParametros("iisi",
+			&inxTabuleiro, &Linha, Coluna, &CondRetEsp);
+
+		if (numLidos != 5)
+		{
+			return TST_CondRetParm;
+		} /* if */
+
+		CondRet = TAB_ExibirListaAmeacantes(vtTabuleiro[inxTabuleiro], Linha, Coluna[0]);
+		
+		if (CondRet!=0)
+			return CondRet;
+
+
+
+		return TST_CompararInt(CondRetEsp, CondRet,
+		"Condicao de retorno errada ao Obter Lista de Ameaçados");
+
+	} /* fim ativa: Testar Exibir ameaçantes */
 
 
 	/* Testar Mover peça do tabuleiro */

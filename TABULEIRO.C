@@ -280,7 +280,7 @@ TAB_tpCondRet TAB_ObterListaAmeacantes (TAB_tpTabuleiro ptabuleiro, int i, char 
 **********************************************/
 TAB_tpCondRet TAB_ExibirListaAmeacantes(TAB_tpTabuleiro ptabuleiro, int i, char j)
 {
-	LIS_tppLista *Ameacantes;
+	LIS_tppLista *Ameacantes = NULL;
 	int k = 0;
 	TAB_Pos * pos = (TAB_Pos*)malloc(sizeof(TAB_Pos));
 
@@ -309,7 +309,7 @@ TAB_tpCondRet TAB_ExibirListaAmeacantes(TAB_tpTabuleiro ptabuleiro, int i, char 
 **********************************************/
 TAB_tpCondRet TAB_ExibirListaAmeacados(TAB_tpTabuleiro ptabuleiro, int i, char j){
 	int k = 0;
-	LIS_tppLista *Ameacados;
+	LIS_tppLista *Ameacados = NULL;
 	TAB_Pos * pos = (TAB_Pos*)malloc(sizeof(TAB_Pos));
 
 
@@ -325,6 +325,8 @@ TAB_tpCondRet TAB_ExibirListaAmeacados(TAB_tpTabuleiro ptabuleiro, int i, char j
 		LIS_ObterNo((*Ameacados), pos);
 		printf("%d %c", pos->i, pos->j);
 		k = LIS_IrProximoElemento((*Ameacados));
+		if(k!=0)
+			return k;
 	}
 	return  TAB_CondRetOK;
 }
