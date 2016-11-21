@@ -57,7 +57,7 @@ typedef struct PCA_movimento
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
-void LiberarPeca (PCA_Peca * Peca);
+void LiberarPeca (void * Peca);
 
 int ComparaMov (PCA_Mov m1, PCA_Mov m2);
 
@@ -171,27 +171,32 @@ PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk)
 	return CondRet;
 }
 
+
+
+
 /***************************************************************************
 *
 *  Função: LIS  &Inicializar Pecas
 *
 *  ************************************************************************/
 
-PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista * Possiveis){
+PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista *Possiveis){
 	FILE* ArqPecasPossiveis;
 	PCA_Peca *pecaTemp;
 	PCA_Mov *movTemp;
 	PCA_tpCondRet CondRet;
 	int pecasRestantes, numLido;
 	char charTemp;
+	LIS_tppLista temp;
 
-	*Possiveis = LIS_AlocarLista ();
-	CondRet = LIS_CriarLista (LiberarPeca , "PecasPossiveis", *Possiveis); /* Completar com a função que retira elemento*/ 
-	if (CondRet!=0) return CondRet;
+	temp = LIS_AlocarLista();
+	CondRet = LIS_CriarLista ( LiberarPeca , "Pecas Possiveis", temp);
+	/*if (CondRet!=0) return CondRet;
+
 
 	ArqPecasPossiveis = fopen(filename, "r");
 	numLido=fscanf(ArqPecasPossiveis ,"%d%c", &pecasRestantes, &charTemp);
-	if (numLido!=2 || pecasRestantes<0 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
+	if (numLido!=2 || pecasRestantes<=0 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
 
 	while (pecasRestantes--){
 
@@ -223,9 +228,11 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista * Possiveis){
 		LIS_InserirNo (*Possiveis, pecaTemp);
 	}
 
-		
+		*/
 	return PCA_CondRetOK;
 }
+
+
 
 
 /*****  Código das funções encapsuladas no módulo  *****/
@@ -234,10 +241,11 @@ void LiberarMovimento (PCA_Mov * mov){
 	free(mov);
 }
 
-void LiberarPeca (PCA_Peca * Peca){
-	LIS_DestruirLista (Peca->movValido);
-	free (Peca);
+void LiberarPeca (PCA_Peca* peca){
+	LIS_DestruirLista(peca->movValido);
+	free(peca);
 }
+
 
 int ComparaMov (PCA_Mov m1, PCA_Mov m2)
 {
