@@ -71,7 +71,7 @@ void LiberarMovimento (PCA_Mov * mov);
 *
 *  ************************************************************************/
 
-PCA_tpCondRet PCA_ObterPeca (LIS_tppLista Possiveis, PCA_tpPeca * peca, char nome, char cor)
+PCA_tpCondRet PCA_PegarPecaDaLista (LIS_tppLista Possiveis, PCA_tpPeca * peca, char nome, char cor)
 {
 	PCA_tpCondRet CondRet=PCA_CondRetOK;
 	PCA_Peca * aux;

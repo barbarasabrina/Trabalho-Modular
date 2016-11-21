@@ -96,9 +96,10 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 		inxLista = -1,
 		inxTabuleiro = -1,
 		numLidos = -1,
-		CondRetEsp = -1;
+		CondRetEsp = -1,
+		CondRet = -1,
+		check = -1;
 
-	TST_tpCondRet CondRet;
 
 	char StringDado[DIM_VALOR];
 	char * pDado;
@@ -114,8 +115,7 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 	StringDado[0] = 0;
 
 	StringObtido[0] = 0;
-
-
+	
 	/* Efetuar reset de teste de jogo */
 
 	if (strcmp(ComandoTeste, RESET_JOGO_CMD) == 0)
@@ -143,7 +143,7 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 			return TST_CondRetParm;
 		} /* if */
 
-		CondRet = JGO_IniciarJogo(&StringDado, vtLista[inxLista], vtTabuleiro[inxTabuleiro]);
+		CondRet = JGO_IniciarJogo(StringDado, vtLista[inxLista], vtTabuleiro[inxTabuleiro]);
 
 		return TST_CompararInt(CondRetEsp, CondRet,
 			"Condicao de retorno errada ao Iniciar Jogo.");
@@ -196,22 +196,23 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 
 	else if (strcmp(ComandoTeste, VERIFICAR_CHECK_CMD) == 0)
 	{
-
-		numLidos = LER_LerParametros("isi",
-			&inxTabuleiro, StringDado, &CondRetEsp);
+		int checkRecebido = -1;
+		numLidos = LER_LerParametros("iii",
+			&inxTabuleiro, &check, &CondRetEsp);
 
 		if (numLidos != 3)
 		{
 			return TST_CondRetParm;
 		} /* if */
 
-		pDado = (char*)malloc(sizeof(StringDado));
+		/*pDado = (char*)malloc(sizeof(StringDado));*/
+		
 
-		CondRet = JGO_VerificaCheck(vtTabuleiro[inxTabuleiro], pDado);
+		CondRet = JGO_VerificaCheck(vtTabuleiro[inxTabuleiro], &checkRecebido);
 
 		if (CondRet == 0)
 		{
-			return TST_CompararString(StringDado, pDado,
+			return TST_CompararInt(check, checkRecebido,
 				"Condicao de retorno errada tentar obter o check/check mate do jogo");
 		}
 
@@ -233,7 +234,7 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 		} /* if */
 
 		
-		CondRet = JGO_RealizarMovimento(&vtLista[inxLista], &vtTabuleiro[inxTabuleiro]);		
+		CondRet = JGO_RealizarMovimento(vtLista[inxLista], vtTabuleiro[inxTabuleiro]);		
 
 		return TST_CompararInt(CondRetEsp, CondRet,
 			"Condicao de retorno errada ao tentar realizar o movimento no jogo");

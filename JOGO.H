@@ -51,6 +51,8 @@
 *       de todos os dados nele ancorados.
 *
 ***************************************************************************/
+#include "LISTA.H"
+#include "TABULEIRO.H"
 
 #if defined( JOGO_OWN )
 #define JOGO_EXT
@@ -174,7 +176,7 @@ JGO_tpCondRet JGO_CriarJogo(
 *
 ***********************************************************************/
 
-JGO_tpCondRet JGO_IniciarJogo(char* filename, LIS_tppLista listaPecasPossiveis, TAB_tpTabuleiro pTabuleiro);
+JGO_tpCondRet JGO_IniciarJogo(char * filename, LIS_tppLista listaPecasPossiveis, TAB_tpTabuleiro pTabuleiro);
 
 
 /***********************************************************************
@@ -219,7 +221,7 @@ JGO_tpCondRet JGO_FinalizarJogo(JGO_tppJogo pJogo);
 *
 ***********************************************************************/
 
-JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, char * check);
+JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check);
 
 /***********************************************************************
 *

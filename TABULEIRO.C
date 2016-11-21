@@ -455,7 +455,7 @@ void atualizarListasCasaRetirar(TAB_Tabuleiro *ptabuleiro, int lin, char col)
 	LIS_tppLista Ameacados =  ptabuleiro->casa[lin][col].Ameacados;
 	TAB_tpCondRet CondRet = TAB_CondRetOK;
 	TAB_Pos *pos;
-	int atk, resp;
+	int atk=-1, resp=-1;
 	void *peca;
 
 	IrInicioLista(Ameacados);

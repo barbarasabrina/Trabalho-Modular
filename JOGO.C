@@ -35,6 +35,11 @@
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
+static void JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas);
+static void JGO_LerComando(TAB_tpTabuleiro ptabuleiro, int* linhaOrigem, char* colunaOrigem, int* linhaDestino, char* colunaDestinho);
+static void JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas);
+
+
 /*****  Código das funções exportadas pelo módulo  *****/
 
 
@@ -45,9 +50,7 @@
 
 JGO_tpCondRet JGO_IniciarJogo (char* filename, LIS_tppLista listaPecasPossiveis, TAB_tpTabuleiro pTabuleiro){
 
-	char resp;
-	LIS_tppLista listaPecasPossiveis;
-	TAB_tpTabuleiro pTabuleiro;
+	char resp = '\0';
 
 	pTabuleiro = TAB_AlocarTabuleiro(8, 'H');
 	TAB_CriarTabuleiro (pTabuleiro);
@@ -56,9 +59,9 @@ JGO_tpCondRet JGO_IniciarJogo (char* filename, LIS_tppLista listaPecasPossiveis,
 	printf("Padrão? S:N");
 	scanf("%d", resp);
 	if (resp == 'S')
-		JGO_MontarTabPadrao();//Sabrina
+		JGO_MontarTabPadrao(pTabuleiro, listaPecasPossiveis);//Sabrina
 	else
-		JGO_MontarTabMod();//RUDA 
+		JGO_MontarTabMod(pTabuleiro, listaPecasPossiveis);//RUDA 
 
 }/* Fim função: TAB &Iniciar Jogo*/
 
@@ -100,9 +103,7 @@ void JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas)
 {
 	int i,k;
 	char  j, nome, cor;
-	PCA_tpPeca *peca = (PCA_tpPeca*)malloc(PCA_tpPeca);
-
-	
+	PCA_tpPeca *peca = (PCA_tpPeca *)malloc(sizeof(PCA_tpPeca));	
 
 	while (pecas!=NULL)
 	{
@@ -124,7 +125,7 @@ void JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas)
 				else if (k == 4)
 				{
 					printf("coordenada nao existe tente novamente\n");
-					scanf("%d %c", &i &j);
+					scanf("%d %c", &i, &j);
 					k = TAB_InserirPeca(ptabuleiro, i, j, peca);
 				}
 			}
@@ -144,7 +145,7 @@ JGO_tpCondRet JGO_RealizarMovimento(LIS_tppLista listaPecasPossiveis, TAB_tpTabu
 {
 	int linhaOrigem = 0, linhaDestino = 0;
 	char colunaOrigem = '\0', colunaDestino = '\0';
-	
+
 	JGO_LerComando(pTabuleiro, &linhaOrigem, &colunaOrigem, &linhaDestino, &colunaDestino);
 
 	return TAB_MoverPeca(pTabuleiro, linhaOrigem, colunaOrigem, linhaDestino, colunaDestino);
@@ -166,7 +167,7 @@ void JGO_LerComando(TAB_tpTabuleiro ptabuleiro, int* linhaOrigem, char* colunaOr
 
 	scanf(" %d", &linha);
 	*linhaOrigem = linha;
-	
+
 	printf("\nInforme a coluna da coordenada de Origem da peca:\n");
 
 	scanf(" %c", &coluna);
@@ -192,8 +193,8 @@ void JGO_LerComando(TAB_tpTabuleiro ptabuleiro, int* linhaOrigem, char* colunaOr
 
 void JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas)
 {
-	int i,j;
-	PCA_tpPeca * peca;
+	int j;
+	PCA_tpPeca * peca = (PCA_tpPeca*)malloc(sizeof(PCA_tpPeca));
 
 	//Insere todos os peões brancos
 	PCA_PegarPecaDaLista(pecas, peca, 'P', 'B');
@@ -213,7 +214,7 @@ void JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas)
 	PCA_PegarPecaDaLista(pecas, peca, 'T', 'B');
 	TAB_InserirPeca(ptabuleiro, 1, 'A', peca);
 	TAB_InserirPeca(ptabuleiro, 1, 'H', peca);
-	
+
 	//Insere todas as torres pretas
 	PCA_PegarPecaDaLista(pecas, peca, 'T', 'P');
 	TAB_InserirPeca(ptabuleiro, 8, 'A', peca);
@@ -225,37 +226,46 @@ void JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas)
 	TAB_InserirPeca(ptabuleiro, 1, 'G', peca);
 
 	//Insere todos os cavalos pretos
-	PCA_ObterPCA_PegarPecaDaListaPeca(pecas, peca, 'C', 'P');
+	PCA_PegarPecaDaLista(pecas, peca, 'C', 'P');
 	TAB_InserirPeca(ptabuleiro, 8, 'B', peca);
 	TAB_InserirPeca(ptabuleiro, 8, 'G', peca);
-	
+
 	//Insere todos os bispos brancos
-	PCA_ObtePCA_PegarPecaDaListarPeca(pecas, peca, 'B', 'B');
+	PCA_PegarPecaDaLista(pecas, peca, 'B', 'B');
 	TAB_InserirPeca(ptabuleiro, 1, 'C', peca);
 	TAB_InserirPeca(ptabuleiro, 1, 'F', peca);
-	
+
 	//Insere todos os bispos pretos
 	PCA_PegarPecaDaLista(pecas, peca, 'B', 'P');
 	TAB_InserirPeca(ptabuleiro, 8, 'C', peca);
 	TAB_InserirPeca(ptabuleiro, 8, 'F', peca);
-	
+
 	//Insere a rainha branca
 	PCA_PegarPecaDaLista(pecas, peca, 'D', 'B');
 	TAB_InserirPeca(ptabuleiro, 1, 'E', peca);
-	
+
 	//Insere a rainha preta
 	PCA_PegarPecaDaLista(pecas, peca, 'D', 'P');
 	TAB_InserirPeca(ptabuleiro, 8, 'E', peca);
-	
+
 	//Insere o rei branco
-	PCA_ObterPPCA_PegarPecaDaListaeca(pecas, peca, 'R', 'B');
+	PCA_PegarPecaDaLista(pecas, peca, 'R', 'B');
 	TAB_InserirPeca(ptabuleiro, 1, 'D', peca);
-	
+
 	//Insere o rei preto
 	PCA_PegarPecaDaLista(pecas, peca, 'R', 'P');
 	TAB_InserirPeca(ptabuleiro, 8, 'D', peca);		
 }/* Fim função: JGO &Montar Tabuleiro Padrão */
 
+JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check)
+{
+
+}
+
+JGO_tpCondRet JGO_FinalizarJogo(JGO_tppJogo pJogo)
+{
+
+}
 
 
 /*****  Código das funções encapsuladas no módulo  *****/
