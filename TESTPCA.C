@@ -1,11 +1,11 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: PCA  Peça de um tabuleiro de xadrez  
+*  $MCI Módulo de implementação: TPCA Teste Pecas de tabuleiro
 *
-*  Arquivo gerado:              PECA.c
-*  Letras identificadoras:      PCA
+*  Arquivo gerado:              TestPCA.c
+*  Letras identificadoras:      TPCA
 *
 *  Nome da base de software:    Arcabouço para a automação de testes de programas redigidos em C
-*  Arquivo da base de software: D:\AUTOTEST\PROJETOS\PECA.BSW
+*  Arquivo da base de software: D:\AUTOTEST\PROJETOS\LISTA.BSW
 *
 *  Projeto: INF 1301 / 1628 Automatização dos testes de módulos C
 *  Gestor:  LES/DI/PUC-Rio
@@ -13,237 +13,202 @@
 *
 *  $HA Histórico de evolução:
 *     Versão  Autor    Data     Observações
-*     4       avs   01/fev/2006 criar linguagem script simbólica
-*     3       avs   08/dez/2004 uniformização dos exemplos
-*     2       avs   07/jul/2003 unificação de todos os módulos em um só projeto
-*     1       avs   16/abr/2003 início desenvolvimento
+*     1       llar  16/nov/2016 início desenvolvimento
 *
 ***************************************************************************/
 
-#include   <stdio.h>
-#include   <string.h>
-#include   <memory.h>
-#include   <malloc.h>
-#include   <assert.h>
-#include   <stdlib.h>
+#include    <string.h>
+#include    <stdio.h>
+#include    <malloc.h>
+
+#include    "TST_Espc.h"
+
+#include    "Generico.h"
+#include    "LerParm.h"
+
+#include    "Peca.h"
 #include    "Lista.h"
 
-#define PECA_OWN
-#include "PECA.H"
-#undef PECA_OWN
+static const char INICIALIZAR_PECAS_CMD  [ ] = "=inicializarPecas"	;
+static const char PEGAR_PECA_CMD         [ ] = "=pegarPecaDaLista"	;
+static const char OBTER_COR_CMD          [ ] = "=obterCor"			;
+static const char OBTER_NOME_CMD         [ ] = "=obterNome"			;
+static const char VALIDAR_MOVIMENTO_CMD  [ ] = "=validarMovimento"	;
 
-/***********************************************************************
-*
-*  $TC Tipo de dados: LIS Descritor da Peça
-*
-*
-***********************************************************************/
+#define TRUE  1
+#define FALSE 0
 
-typedef struct PCA_peca
-{
-	char         nomePeca;
-	char         corPeca;
-	LIS_tppLista movValido;
+#define VAZIO     0
+#define NAO_VAZIO 1
 
-}PCA_Peca;
+#define DIM_VALOR 100
 
-typedef struct PCA_movimento
-{
-	int dx;
-	int dy;
-	int atk;
-} PCA_Mov;
-
+#define FILENAME "PecasPossiveis.txt"
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
-void LiberarPeca (PCA_Peca * Peca);
-
-int ComparaMov (PCA_Mov m1, PCA_Mov m2);
-
-void LiberarMovimento (PCA_Mov * mov);
-
 /*****  Código das funções exportadas pelo módulo  *****/
 
-/***************************************************************************
-*
-*  Função: PCA  &Obter Peca
-*
-*  ************************************************************************/
 
-PCA_tpCondRet PCA_PegarPecaDaLista (LIS_tppLista Possiveis, PCA_tpPeca * peca, char nome, char cor)
+/***********************************************************************
+*
+*  $FC Função: TPCA &Testar peca
+*
+*  $ED Descrição da função
+*     Testa os métodos utilizando o arquivo "PecasPossiveis.txt" 
+*
+*     Comandos disponíveis:
+*
+*     =inicializarPecas
+*     =pegarPecaDaLista
+*     =obterCor
+*     =obterNome
+*     =validarMovimento
+*
+***********************************************************************/
+
+TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 {
-	PCA_tpCondRet CondRet=PCA_CondRetOK;
-	PCA_Peca * aux;
 
-	while (CondRet==0)
-		CondRet = LIS_irAnt (Possiveis);
+	FILE* aux = fopen("resultados.txt", "w");
 
-	if (CondRet!=LIS_CondRetNoCorrenteEhPrimeiro)
-		return CondRet;
-	
-	do 
+	int numLidos   = -1 ,
+		CondRetEsp = -1  ;
+
+	TST_tpCondRet CondRet ;
+
+	char   nomeDado, nomeRecebido ,
+		corDada,  corRecebida  ;
+
+	int dx, dy, atk;
+
+	int ValEsp = -1 ;
+
+	int numElem = -1 ;
+
+	PCA_tpPeca PecaCorrente = NULL;
+
+	LIS_tppLista ListaPecasPossiveis = NULL;
+
+
+	/* Testar Inicializar Pecas */
+
+	if ( strcmp( ComandoTeste , INICIALIZAR_PECAS_CMD ) == 0 )
 	{
-		CondRet = LIS_ObterNo(Possiveis, &aux);
-		if (CondRet!=0)
-			return CondRet;
+		numLidos = LER_LerParametros( "i" ,
+			&CondRetEsp ) ;
 
-		if (aux->nomePeca == nome && aux->corPeca == cor){
-			*peca=aux;
-			return PCA_CondRetOK;
-		}
 
-		CondRet = LIS_IrProximoElemento (Possiveis);
+		fprintf(aux, "Entrou no inicializar peca\n");
 
-	} while (CondRet==0);
+		if ( numLidos != 1 )
+		{
+			return TST_CondRetParm ;
+		} /* if */
 
-	if (CondRet==LIS_CondRetNoCorrenteEhUltimo)
-		return PCA_CondRetPecaNaoExiste;
+		fprintf(aux, "Numero certo de parametros\n");
 
-	return CondRet;
-}
+		CondRet = PCA_InicializarPecas(FILENAME, ListaPecasPossiveis);
 
-/***************************************************************************
-*
-*  Função: PCA  &Obter Cor
-*
-*  ************************************************************************/
+		fprintf(aux, "InicializarPecas retornou %d\n", CondRet);
 
-PCA_tpCondRet PCA_ObterCor (PCA_tpPeca peca, char* c)
-{
-	if (peca=NULL)
-		return PCA_CondRetPecaNaoExiste;
-	*c = peca->corPeca;
-	return PCA_CondRetOK;
-}
+		return TST_CompararInt(CondRetEsp, CondRet,
+			"Condicao de retorno errada ao inicializar pecas.");
 
-/***************************************************************************
-*
-*  Função: PCA  &Obter Nome
-*
-*  ************************************************************************/
+	} /* fim ativa: Testar InicializarPecas */
 
-PCA_tpCondRet PCA_ObterNome (PCA_tpPeca peca, char* n)
-{
-	if (peca=NULL)
-		return PCA_CondRetPecaNaoExiste;
-	*n = peca->corPeca;
-	return PCA_CondRetOK;
-}
+	/* Testar pegar peca da lista*/
 
-/***************************************************************************
-*
-*  Função: PCA &Validar Movimento
-*
-*  ************************************************************************/
-
-PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk)
-{
-	PCA_tpCondRet CondRet=PCA_CondRetOK;
-	PCA_Mov mov, *aux;
-
-	if (peca=NULL)
-		return PCA_CondRetPecaNaoExiste;
-
-	mov.dx=dx;
-	mov.dy=dy;
-	mov.atk=atk;
-
-	while (CondRet==0)
-		CondRet = LIS_irAnt (peca->movValido);
-
-	if (CondRet!=LIS_CondRetNoCorrenteEhPrimeiro)
-		return CondRet;
-
-	do 
+	else if ( strcmp( ComandoTeste , PEGAR_PECA_CMD ) == 0 )
 	{
-		CondRet = LIS_ObterNo(peca->movValido, &aux);
-		if (CondRet!=0) return CondRet;
 
-		if (ComparaMov(mov, *aux)) return PCA_CondRetOK;
+		numLidos = LER_LerParametros( "icc" ,
+			&CondRetEsp, &nomeDado, &corDada ) ;
 
-		CondRet = LIS_IrProximoElemento (peca->movValido);
+		if ( numLidos != 3 )
+		{
+			return TST_CondRetParm ;
+		} /* if */
 
-	} while (CondRet==0);
+		CondRet = PCA_PegarPecaDaLista (ListaPecasPossiveis ,&PecaCorrente, nomeDado, corDada);
 
-	if (CondRet==LIS_CondRetNoCorrenteEhUltimo) return PCA_CondRetMovimentoInvalido;
+		return TST_CompararInt(CondRetEsp, CondRet,
+			"Condicao de retorno errada ao obter peca.");
 
-	return CondRet;
-}
+	} /* fim ativa: Testar Obter Peca */
 
-/***************************************************************************
-*
-*  Função: LIS  &Inicializar Pecas
-*
-*  ************************************************************************/
+	/* Testar Obter Cor */
 
-PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista * Possiveis){
-	FILE* ArqPecasPossiveis;
-	PCA_Peca *pecaTemp;
-	PCA_Mov *movTemp;
-	PCA_tpCondRet CondRet;
-	int pecasRestantes, numLido;
-	char charTemp;
+	else if ( strcmp( ComandoTeste , OBTER_COR_CMD ) == 0 )
+	{
 
-	*Possiveis = LIS_AlocarLista ();
-	CondRet = LIS_CriarLista (LiberarPeca , "PecasPossiveis", *Possiveis); /* Completar com a função que retira elemento*/ 
-	if (CondRet!=0) return CondRet;
+		numLidos = LER_LerParametros( "ci" ,
+			&corDada, &CondRetEsp ) ;
 
-	ArqPecasPossiveis = fopen(filename, "r");
-	numLido=fscanf(ArqPecasPossiveis ,"%d%c", &pecasRestantes, &charTemp);
-	if (numLido!=2 || pecasRestantes<0 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
+		if  ( numLidos != 2 )
+		{
+			return TST_CondRetParm ;
+		} /* if */
 
-	while (pecasRestantes--){
+		CondRet = PCA_ObterCor (PecaCorrente, &corRecebida) ;
 
-		pecaTemp = (PCA_Peca*) malloc (sizeof(PCA_Peca));
-		if (pecaTemp == NULL) return PCA_CondRetFaltouMemoria;
+		if (CondRet != 0)
+			return TST_CompararInt(CondRetEsp, CondRet, "Condicao de retorno errada ao obter cor da peca");
 
-		pecaTemp->movValido = LIS_AlocarLista();
-		CondRet = LIS_CriarLista (LiberarMovimento , "MovimentosValidos", pecaTemp->movValido);
-		if (CondRet!=0) return CondRet;
+		return TST_CompararChar(corDada, corRecebida,
+			"Cor recebida diferente da cor dada.");;
 
-		numLido = fscanf(ArqPecasPossiveis, "%c",&charTemp);
-		if (numLido != 1 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
+	} /* fim ativa: Obter Cor */
 
-		numLido = fscanf(ArqPecasPossiveis, "%c%c%c", pecaTemp->nomePeca, &charTemp, pecaTemp->corPeca);
-		if (numLido != 3 || charTemp != ' ') return PCA_CondRetErroNaLeituraDoArquivo;
+	/* Testar Obter Nome */
 
-		do {
-			movTemp = (PCA_Mov*) malloc (sizeof(PCA_Mov));
-			if (movTemp==NULL) return PCA_CondRetFaltouMemoria;
+	else if ( strcmp( ComandoTeste , OBTER_NOME_CMD ) == 0 )
+	{
 
-			numLido = fscanf(ArqPecasPossiveis, "%d%d%d%c", movTemp->dx, movTemp->dy, movTemp->atk, &charTemp);
-			if (numLido != 3) return PCA_CondRetErroNaLeituraDoArquivo;
+		numLidos = LER_LerParametros( "ci" ,
+			&nomeDado, &CondRetEsp ) ;
 
-			LIS_InserirNo (pecaTemp->movValido, movTemp);
+		if  ( numLidos != 2 )
+		{
+			return TST_CondRetParm ;
+		} /* if */
 
-		} while (charTemp == ',');
+		CondRet = PCA_ObterCor (PecaCorrente, &nomeRecebido) ;
 
+		if (CondRet != 0)
+			return TST_CompararInt(CondRetEsp, CondRet, "Condicao de retorno errada ao obter nome da peca");
 
-		LIS_InserirNo (*Possiveis, pecaTemp);
-	}
+		return TST_CompararChar(nomeDado, nomeRecebido,
+			"Nome recebido diferente do nome dado.");;
 
-		
-	return PCA_CondRetOK;
-}
+	} /* fim ativa: Obter Nome */
+
+	/* Testar Validar Movimento */
+
+	else if ( strcmp( ComandoTeste , VALIDAR_MOVIMENTO_CMD ) == 0 )
+	{
+
+		numLidos = LER_LerParametros( "iiii" ,
+			&dx , &dy, &atk, &CondRetEsp ) ;
+
+		if ( numLidos != 3 )
+		{
+			return TST_CondRetParm ;
+		} /* if */
+
+		CondRet = PCA_ValidarMovimento(PecaCorrente, dx, dy, atk) ;
+
+		return TST_CompararInt( CondRetEsp , CondRet ,
+			"Condicao de retorno errada ao validar movimento."                   ) ;
+
+	} /* fim ativa: Testar validar movimento */
+
+	return TST_CondRetNaoConhec ;
+
+} /* Fim função: TLIS &Testar peca */
 
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
-void LiberarMovimento (PCA_Mov * mov){
-	free(mov);
-}
 
-void LiberarPeca (PCA_Peca * Peca){
-	LIS_DestruirLista (Peca->movValido);
-	free (Peca);
-}
-
-int ComparaMov (PCA_Mov m1, PCA_Mov m2)
-{
-	if (m1.dx==m2.dx && m1.dy==m2.dy && m1.atk==m2.atk)
-		return 1;
-	return 0;
-}
-
-/********** Fim do módulo de implementação: PCA Peça de Tabuleiro **********/
+/********** Fim do módulo de implementação: TPCA Teste peca **********/
