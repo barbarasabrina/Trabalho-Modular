@@ -45,7 +45,6 @@
 *       de todos os dados nela ancorados.
 *
 ***************************************************************************/
-#include "LISTA.H"
 
 #if defined( PECA_OWN )
 #define PECA_EXT
@@ -58,6 +57,7 @@
 /* Tipo referência para uma peca */
 
 typedef struct PCA_peca * PCA_tpPeca ;
+typedef struct PCA_vetPeca * PCA_tpVetPeca ;
 
 /***********************************************************************
 *
@@ -91,7 +91,7 @@ typedef enum {
 
 /***********************************************************************
 *
-*  $FC Função: PCA  &Pegar Peca da Lista de Pecas possiveis
+*  $FC Função: PCA  &Pegar Peca do Vetor de Pecas possiveis
 *
 *  $ED Descrição da função
 *		Obtem peça que possui nome e cor iguais aos passados como parametro
@@ -104,7 +104,7 @@ typedef enum {
 *       Caso contrário, é retornado uma condição de erro apropriada
 *
 *  $EP Parâmetros
-*		Possiveis - lista de todas as pecas possiveis
+*		Possiveis - vetor com todas as pecas possiveis
 *       resp      - endereço aonde a função deve guardar a peca
 *       nome      - nome da peca desejada
 *       cor       - cor da peca desejada
@@ -115,7 +115,7 @@ typedef enum {
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_PegarPecaDaLista (LIS_tppLista Possiveis, PCA_tpPeca * resp, char nome, char cor);
+PCA_tpCondRet PCA_PegarPecaDoVetor (PCA_tpVetPeca Possiveis, PCA_tpPeca * peca, char nome, char cor);
 
 /***********************************************************************
 *
@@ -207,7 +207,7 @@ PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk);
 *
 *  $ED Descrição da função
 *		Inicializa todas as peças contidas no arquivo cujo nome foi passsado como parâmetro
-*       e as coloca numa lista, cujo endereço é passado para a função anterior
+*       e os coloca num vetor, cujo endereço é passado como parâmetro
 *
 *  $AE Assertiva de Entrada
 *       O endereço passado como parametro não contém informação útil e pode ser sobrescrito
@@ -219,17 +219,39 @@ passar para a anterior uma lista devidamente alocada e preenchida com todas as p
 *
 *  $EP Parâmetros
 *		filename  - nome do arquivo de texto no qual se encontram as descrições das peças
-*       Possiveis - endereço aonde deve ser retornada a lista de pecas possiveis
+*       Possiveis - endereço aonde deve ser retornada o vetor de pecas possiveis
 *
 *  $FV Valor retornado
 *		PCA_CondRetOK				      - Executou OK
-*		PCA_CondRetFaltouMemoria	      - Nao ouve espaço suficiente para gerar a lista
+*		PCA_CondRetFaltouMemoria	      - Nao ouve espaço suficiente para gerar no vetor
 *       PCA_CondRetErroNaLeituraDoArquivo - O arquivo nao existe ou nao esta organizado de forma correta
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista Possiveis);
+PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_tpVetPeca Possiveis, FILE * teste);
 
+/***********************************************************************
+*
+*  $FC Função: PCA  &Destruir Vetor de Pecas
+*
+*  $ED Descrição da função
+*		Libera um vetor de pecas
+*
+*  $AE Assertiva de Entrada
+*       O endereço passado como parâmetro é um vetor de pecas devidamente alocado
+*
+*  $AS Assertiva de Saida
+*		O vetor é devidamente liberado, junto com todas as pecas que se encontram dentro do mesmo
+*
+*  $EP Parâmetros
+*       Possiveis - endereço do vetor que deve ser destruído
+*
+*  $FV Valor retornado
+*		PCA_CondRetOK				      - Executou OK
+*
+***********************************************************************/
+
+PCA_tpCondRet PCA_DestruirVetPecas (PCA_tpVetPeca Possiveis);
 
 #undef PECA_EXT
 
