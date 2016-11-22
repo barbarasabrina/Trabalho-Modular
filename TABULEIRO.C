@@ -377,7 +377,7 @@ TAB_tpCondRet TAB_ExibirListaAmeacados(TAB_tpTabuleiro ptabuleiro, int i, char j
 /* Fim Função: &Exibir Lista Ameacados  */
 
 /***************************************************************************
-*  Função: TAB  &Mover Peca
+*  Função: TAB  &Peca
 *  **********************************************************************/
 
 TAB_tpCondRet TAB_MoverPeca(TAB_tpTabuleiro t, int origemI, char origemJ, int destinoI, char destinoJ)
@@ -410,10 +410,12 @@ TAB_tpCondRet TAB_MoverPeca(TAB_tpTabuleiro t, int origemI, char origemJ, int de
 		return CondRet;
 	if(pecaDestino!='\0')
 	{
+		CondRet =PCA_ValidarMovimento(pecaOrigem,(destinoI-origemI),(destinoJ-origemJ),1);
+		if(CondRet != 0)
+			return TAB_CondRetMovimentoInvalido;
 		CondRet = TAB_RetirarPeca(t, destinoI, destinoJ);
 		if (CondRet != 0)
 			return CondRet;
-		CondRet = PCA_ValidarMovimento(pecaOrigem,(destinoI-origemI),(destinoJ-origemJ),1);
 		if(CondRet !=0)
 			return CondRet;
 	}
