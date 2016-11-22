@@ -233,8 +233,8 @@ TAB_tpCondRet TAB_RetirarPeca(TAB_tpTabuleiro ptabuleiro, int i, char j) {
 *
 *  Função: TAB  &Destruir tabuleiro
 *  ****/
-TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tpTabuleiro ptabuleiro)
-{
+TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tpTabuleiro * ptabuleiro)
+{/*
 	int i, j;
 	if (ptabuleiro == NULL)
 		return TAB_CondRetTabuleiroNaoExiste;
@@ -245,8 +245,51 @@ TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tpTabuleiro ptabuleiro)
 			TAB_DestruirCasa(&(ptabuleiro)->casa[i][j]);			
 		}
 
-		return TAB_CondRetOK;
+		return TAB_CondRetOK;*/
+	
+	int i,j;
+	TAB_tpTabuleiro ptabuleiroTemp = *ptabuleiro;
+	i = 0;
 
+
+	if(ptabuleiroTemp==NULL)
+	{
+		return TAB_CondRetTabuleiroNaoExiste;
+	}
+	
+	while ( i < (ptabuleiroTemp)->linha )
+	{
+		j = 0;
+		while ( j < (ptabuleiroTemp)->coluna )
+		{
+			(ptabuleiroTemp->casa[i][j]).Ameacados=NULL;
+			(ptabuleiroTemp->casa[i][j]).Ameacantes=NULL;
+			(ptabuleiroTemp->casa[i][j]).Peca=NULL;
+			j++;
+		}
+		i++;
+	}
+
+	for (i = 0; i < ptabuleiroTemp->linha; i++)
+	{
+		ptabuleiroTemp->casa[i] = NULL;
+	}
+
+	ptabuleiroTemp->linha = 0;
+	ptabuleiroTemp->coluna = '\0';
+
+	ptabuleiroTemp=NULL;
+
+	free(ptabuleiroTemp);
+
+	*ptabuleiro = ptabuleiroTemp;
+
+	if(*ptabuleiro!=NULL )
+	{
+		printf("\nDEU RUIM!!!");
+	}
+
+	return TAB_CondRetOK;
 } /* Fim função: TAB  &Destruir tabuleiro */
 /***************************************************************************
 *
