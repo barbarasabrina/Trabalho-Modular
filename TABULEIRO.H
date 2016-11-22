@@ -8,48 +8,48 @@
 
 /***************************************************************************
 *
-*  $MCD MÛdulo de definiÁ„o: TAB  Tabuleiro genÈrico
+*  $MCD M√≥dulo de defini√ß√£o: TAB  Tabuleiro gen√©rico
 *
 *  Arquivo gerado:              TABULEIRO.h
 *  Letras identificadoras:      TAB
 *
-*  Nome da base de software:    ArcabouÁo para a automaÁ„o de testes de programas redigidos em C
+*  Nome da base de software:    Arcabou√ßo para a automa√ß√£o de testes de programas redigidos em C
 *  Arquivo da base de software: D:\AUTOTEST\PROJETOS\TABULEIRO.BSW
 *
-*  Projeto: INF 1301 / 1628 AutomatizaÁ„o dos testes de mÛdulos C
+*  Projeto: INF 1301 / 1628 Automatiza√ß√£o dos testes de m√≥dulos C
 *  Gestor:  LES/DI/PUC-Rio
 *  Autores: avs, bshmc, rfv, llar
 *
-*  $HA HistÛrico de evoluÁ„o:
-*     Vers„o  Autor    Data     ObservaÁıes
-*	 5	bshmc,rfv,llar  10/10/2016 implementaÁ„o do muodulo de tabuleiro
-*     4       avs   01/fev/2006 criar linguagem script simbÛlica
-*     3       avs   08/dez/2004 uniformizaÁ„o dos exemplos
-*     2       avs   07/jul/2003 unificaÁ„o de todos os mÛdulos em um sÛ projeto
-*     1       avs   16/abr/2003 inÌcio desenvolvimento
+*  $HA Hist√≥rico de evolu√ß√£o:
+*     Vers√£o  Autor    Data     Observa√ß√µes
+*	 5	bshmc,rfv,llar  10/10/2016 implementa√ß√£o do muodulo de tabuleiro
+*     4       avs   01/fev/2006 criar linguagem script simb√≥lica
+*     3       avs   08/dez/2004 uniformiza√ß√£o dos exemplos
+*     2       avs   07/jul/2003 unifica√ß√£o de todos os m√≥dulos em um s√≥ projeto
+*     1       avs   16/abr/2003 in√≠cio desenvolvimento
 *
-*  $ED DescriÁ„o do mÛdulo
-*		Implementa tabuleiros genÈricos.
-*		Podem existir n tabuleiros em operaÁ„o simultaneamente.
+*  $ED Descri√ß√£o do m√≥dulo
+*		Implementa tabuleiros gen√©ricos.
+*		Podem existir n tabuleiros em opera√ß√£o simultaneamente.
 *
-*		Cada tabuleiro È homogÍneo quanto ao tipo dos dados que armazena.
-*		Cada elemento do tabuleiro È chamado de casa e cada casa possui informaÁ„o da peÁa que contÈm, caso exista, e uma lista de peÁas ameaÁantes e de peÁas de ameaÁadas.
+*		Cada tabuleiro √© homog√™neo quanto ao tipo dos dados que armazena.
+*		Cada elemento do tabuleiro √© chamado de casa e cada casa possui informa√ß√£o da pe√ßa que cont√©m, caso exista, e uma lista de pe√ßas amea√ßantes e de pe√ßas de amea√ßadas.
 *
-*		O controle da destruiÁ„o da peÁa de uma casa a ser excluÌda
-*       È realizado por uma funÁ„o fornecida para o usu·rio.
+*		O controle da destrui√ß√£o da pe√ßa de uma casa a ser exclu√≠da
+*       √© realizado por uma fun√ß√£o fornecida para o usu√°rio.
 *
-*		Cado tabuleiro referencia uma funÁ„o que determina como devem ser
+*		Cado tabuleiro referencia uma fun√ß√£o que determina como devem ser
 *       desalocados os dados nela contidos.
 *
-*		A funÁ„o de liberaÁ„o dos valores contidos nos elementos deve
-*       assegurar a liberaÁ„o de todos os espaÁos referÍnciados pelo
+*		A fun√ß√£o de libera√ß√£o dos valores contidos nos elementos deve
+*       assegurar a libera√ß√£o de todos os espa√ßos refer√™nciados pelo
 *       valor contido em cada elemento.
-*       Esta funÁ„o È chamada antes de se desalocar um elemento
+*       Esta fun√ß√£o √© chamada antes de se desalocar um elemento
 *       de um tabuleiro.
-*       Caso n„o seja necess·rio desalocar o valor referenciado pelo
-*       elemento, o ponteiro para a funÁ„o de liberaÁ„o poder· ser NULL .
-*       Caso a casa do tabuleiro seja a ˙nica ‚ncora do valor referenciado,
-*       esta funÁ„o deve promover a destruiÁ„o (free) desse valor e
+*       Caso n√£o seja necess√°rio desalocar o valor referenciado pelo
+*       elemento, o ponteiro para a fun√ß√£o de libera√ß√£o poder√° ser NULL .
+*       Caso a casa do tabuleiro seja a √∫nica √¢ncora do valor referenciado,
+*       esta fun√ß√£o deve promover a destrui√ß√£o (free) desse valor e
 *       de todos os dados nele ancorados.
 *
 ***************************************************************************/
@@ -60,87 +60,87 @@
 #define TABULEIRO_EXT extern
 #endif
 
-/***** DeclaraÁıes exportadas pelo mÛdulo *****/
+/***** Declara√ß√µes exportadas pelo m√≥dulo *****/
 
-/* Tipo referÍncia para um tabuleiro */
+/* Tipo refer√™ncia para um tabuleiro */
 
 typedef struct TAB_tabuleiro * TAB_tpTabuleiro;
 
 /***********************************************************************
 *
-*  $TC Tipo de dados: TAB CondiÁıes de retorno
+*  $TC Tipo de dados: TAB Condi√ß√µes de retorno
 *
 *
-*  $ED DescriÁ„o do tipo
-*		CondiÁıes de retorno das funÁıes do tabuleiro
+*  $ED Descri√ß√£o do tipo
+*		Condi√ß√µes de retorno das fun√ß√µes do tabuleiro
 *
 ***********************************************************************/
 
 typedef enum {
 
 	TAB_CondRetOK = 0,
-	/* MovimentaÁ„o bem sucedida */
+	/* Movimenta√ß√£o bem sucedida */
 
 	TAB_CondRetCasaOcupada = 1,
-	/* A casa do tabuleiro se encontra cheia, j· ocupada */
+	/* A casa do tabuleiro se encontra cheia, j√° ocupada */
 
 	TAB_CondRetTabuleiroVazio = 2,
-	/* O tabuleiro n„o contÈm peÁa em nenhuma casa */
+	/* O tabuleiro n√£o cont√©m pe√ßa em nenhuma casa */
 
 	TAB_CondRetTabuleiroNaoExiste = 3,
-	/* Tabuleiro n„o existe */
+	/* Tabuleiro n√£o existe */
 
 	TAB_CondRetCoordNaoExiste = 4,
-	/* Coordenadas n„o existem no tabuleiro */
+	/* Coordenadas n√£o existem no tabuleiro */
 
 	TAB_CondRetPecaNaoExiste = 5,
-	/* N„o h· peÁa na casa do tabuleiro ou a identificaÁ„o da peÁa fornecida n„o existe */
+	/* N√£o h√° pe√ßa na casa do tabuleiro ou a identifica√ß√£o da pe√ßa fornecida n√£o existe */
 
 	TAB_CondRetFaltouMemoria = 6,
-	/* Faltou memÛria ao tentar criar um elemento do tabuleiro */
+	/* Faltou mem√≥ria ao tentar criar um elemento do tabuleiro */
 
 	TAB_CondRetCasaNaoExiste = 7,
-	/* Casa n„o existe, est· nula */
+	/* Casa n√£o existe, est√° nula */
 
 	TAB_CondRetListaAmeacanteVazia = 8
-	/* Lista de ameacante est· nula*/
+	/* Lista de ameacante est√° nula*/
 
 
 } TAB_tpCondRet;
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: TAB  &Inserir peÁa no tabuleiro
+*  $FC Fun√ß√£o: TAB  &Inserir pe√ßa no tabuleiro
 *
-*  $ED DescriÁ„o da funÁ„o
-*		Insere uma peÁa no tabuleiro.
+*  $ED Descri√ß√£o da fun√ß√£o
+*		Insere uma pe√ßa no tabuleiro.
 *
 *  $AE Assertiva de Entrada
 *		Deve existir um tabuleiro.
 *		Deve existir a coordenada para a casa no tabuleiro (linha e coluna).
-*		Deve existir uma peÁa a ser inserida no tabuleiro.
+*		Deve existir uma pe√ßa a ser inserida no tabuleiro.
 *
 *  $AS Assertiva de Saida
-*		S„o v·lidas as assertivas de entrada.
-*		A casa ,cuja coordenada foi informada, È preenchida com o valor de identificaÁ„o da peÁa.
-*		Em caso de falta de memÛria, o ponteiro apontar· para um ponteiro nulo.
+*		S√£o v√°lidas as assertivas de entrada.
+*		A casa ,cuja coordenada foi informada, √© preenchida com o valor de identifica√ß√£o da pe√ßa.
+*		Em caso de falta de mem√≥ria, o ponteiro apontar√° para um ponteiro nulo.
 *
 *
-*  $EP Par‚metros
+*  $EP Par√¢metros
 *		ptabuleiro					- ponteiro para o tabuleiro
 *		linha						- ponteiro para a coordenada linha da casa
 *		coluna						- ponteiro para a coordenada coluna da casa
-*		peca						- ponteiro para a peÁa
+*		peca						- ponteiro para a pe√ßa
 *
 *  $FV Valor retornado
-*		Se executou corretamente retorna o ponteiro para o tabuleiro e a condiÁ„o de movimentaÁ„o bem sucedida.
-*		Este ponteiro ser· utilizado pelas funÁıes que manipulem este tabuleiro.
+*		Se executou corretamente retorna o ponteiro para o tabuleiro e a condi√ß√£o de movimenta√ß√£o bem sucedida.
+*		Este ponteiro ser√° utilizado pelas fun√ß√µes que manipulem este tabuleiro.
 *
 *  $FV Valor retornado
-*		TAB_CondRetOK					- criaÁ„o de tabuleiro bem sucedida
-*		TAB_CondRetTabuleiroNaoExiste	- tabuleiro n„o existe
-*		TAB_CondRetCoordNaoExiste		- coordenadas n„o existem
-*		TAB_CondRetCasaOcupada			- casa j· est· ocupada
+*		TAB_CondRetOK					- cria√ß√£o de tabuleiro bem sucedida
+*		TAB_CondRetTabuleiroNaoExiste	- tabuleiro n√£o existe
+*		TAB_CondRetCoordNaoExiste		- coordenadas n√£o existem
+*		TAB_CondRetCasaOcupada			- casa j√° est√° ocupada
 *
 ***********************************************************************/
 
@@ -148,34 +148,34 @@ TAB_tpCondRet TAB_InserirPeca(TAB_tpTabuleiro ptabuleiro, int linha, char coluna
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: TAB  &Obter PeÁa
+*  $FC Fun√ß√£o: TAB  &Obter Pe√ßa
 *
-*  $ED DescriÁ„o da funÁ„o
-*		ObtÈm a peÁa que se encontra nas coordenadas da casa do tabuleiro.
+*  $ED Descri√ß√£o da fun√ß√£o
+*		Obt√©m a pe√ßa que se encontra nas coordenadas da casa do tabuleiro.
 *
 *  $AE Assertiva de Entrada
 *		Deve existir um tabuleiro.
-*		Devem existir coordenadas v·lidas referentes ‡ casa no tabuleiro(linha e coluna).
+*		Devem existir coordenadas v√°lidas referentes √† casa no tabuleiro(linha e coluna).
 *
 *
-*  $AS Assertiva de SaÌda
-*		S„o v·lidas as assertivas de entrada.
-*		Uma identificaÁ„o de peÁa ser· obtida caso as informaÁıes da linha e coluna da casa
-*		no tabuleiro sejam v·lidas e exista uma peÁa na respectiva casa.
-*		Caso n„o exista peÁa na casa informada, ser· obtido da funÁ„o um ponteiro nulo.
+*  $AS Assertiva de Sa√≠da
+*		S√£o v√°lidas as assertivas de entrada.
+*		Uma identifica√ß√£o de pe√ßa ser√° obtida caso as informa√ß√µes da linha e coluna da casa
+*		no tabuleiro sejam v√°lidas e exista uma pe√ßa na respectiva casa.
+*		Caso n√£o exista pe√ßa na casa informada, ser√° obtido da fun√ß√£o um ponteiro nulo.
 *
 *
-*  $EP Par‚metros
+*  $EP Par√¢metros
 *		ptabuleiro					- ponteiro para o tabuleiro
 *		linha						- ponteiro para a coordenada linha da casa
 *		coluna						- ponteiro para a coordenada coluna da casa
-*		peca						- ponteiro para a peÁa do tabuleiro
+*		peca						- ponteiro para a pe√ßa do tabuleiro
 *
 *
 *  $FV Valor retornado
-*		TAB_CondRetOK					- criaÁ„o de tabuleiro bem sucedida
-*		TAB_CondRetTabuleiroNaoExiste	- tabuleiro n„o existe
-*		TAB_CondRetCoordNaoExiste		- coordenadas n„o existem
+*		TAB_CondRetOK					- cria√ß√£o de tabuleiro bem sucedida
+*		TAB_CondRetTabuleiroNaoExiste	- tabuleiro n√£o existe
+*		TAB_CondRetCoordNaoExiste		- coordenadas n√£o existem
 *
 ***********************************************************************/
 
@@ -184,35 +184,35 @@ TAB_tpCondRet TAB_ObterPeca(TAB_tpTabuleiro ptabuleiro, int linha, char coluna, 
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: TAB &Retirar peÁa
+*  $FC Fun√ß√£o: TAB &Retirar pe√ßa
 *
-*  $ED DescriÁ„o da funÁ„o
-*     Retira uma peÁa de uma coordenada do tabuleiro.
-*     Qual o tipo de peÁa presente È desconhecido a priori.
-*     Caso n„o exista peÁa nas coordenadas enviadas a funÁ„o n„o retorna mensagem de erro.
+*  $ED Descri√ß√£o da fun√ß√£o
+*     Retira uma pe√ßa de uma coordenada do tabuleiro.
+*     Qual o tipo de pe√ßa presente √© desconhecido a priori.
+*     Caso n√£o exista pe√ßa nas coordenadas enviadas a fun√ß√£o n√£o retorna mensagem de erro.
 *
 *
-*  $EP Par‚metros
+*  $EP Par√¢metros
 *     t - Ponteiro para o tabuleiro a ser utilizado
-*     i - Caracter que representa a linha na qual a funÁ„o deve atuar
+*     i - Caracter que representa a linha na qual a fun√ß√£o deve atuar
 *         Varia entre '1' e '8'
-*     j - Caracter que representa a coluna na qual a funÁ„o deve atuar
+*     j - Caracter que representa a coluna na qual a fun√ß√£o deve atuar
 *         Varia entre 'A' e 'H'
 *
 *  $AE Assertivas de entrada
-*     O tabuleiro passado como par‚metro existe na memÛria
-*     A coordenada passada como par‚metro faz parte do tabuleiro
-*     Existe uma peÁa nas coordenadas passadas
+*     O tabuleiro passado como par√¢metro existe na mem√≥ria
+*     A coordenada passada como par√¢metro faz parte do tabuleiro
+*     Existe uma pe√ßa nas coordenadas passadas
 *
-*  $AS Assertivas de saÌda
+*  $AS Assertivas de sa√≠da
 *     O tabuleiro continua existindo
-*     Coordenada passada como par‚metro est· vazia
-*     Nenhuma casa est· ameaÁada pela casa passada como par‚metro
+*     Coordenada passada como par√¢metro est√° vazia
+*     Nenhuma casa est√° amea√ßada pela casa passada como par√¢metro
 *
 *  $FV Valor retornado
-*     TAB_CondRetOK              - retirada de peÁa bem sucedida
-*     TAB_CondRetNaoExisteCoord  - coordenadas n„o existem
-*     TAB_CondRetPecaNaoExiste   - coordenadas n„o possuem peÁa
+*     TAB_CondRetOK              - retirada de pe√ßa bem sucedida
+*     TAB_CondRetNaoExisteCoord  - coordenadas n√£o existem
+*     TAB_CondRetPecaNaoExiste   - coordenadas n√£o possuem pe√ßa
 *
 ***********************************************************************/
 TAB_tpCondRet TAB_RetirarPeca(TAB_tpTabuleiro ptabuleiro, int i, char j);
@@ -220,23 +220,23 @@ TAB_tpCondRet TAB_RetirarPeca(TAB_tpTabuleiro ptabuleiro, int i, char j);
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: TAB &Criar tabuleiro
+*  $FC Fun√ß√£o: TAB &Criar tabuleiro
 *
-*  $ED DescriÁ„o da funÁ„o
-*     Obtem um ponteiro para um tabuleiro genÈrico.
+*  $ED Descri√ß√£o da fun√ß√£o
+*     Obtem um ponteiro para um tabuleiro gen√©rico.
 *
-*  $EP Par‚metros
+*  $EP Par√¢metros
 *     ptabuleiro - ponteiro para o tabuleiro a ser criado
 *
 *  $AE Assertivas de entrada
-*     O tabuleiro passado como par‚metro deve existir e estar alocado.
+*     O tabuleiro passado como par√¢metro deve existir e estar alocado.
 *
-*  $AS Assertivas de saÌda
-*     O tabuleiro È devidamente criado e suas casas iniciadas.
+*  $AS Assertivas de sa√≠da
+*     O tabuleiro √© devidamente criado e suas casas iniciadas.
 *
 *  $FV Valor retornado
 *     TAB_CondRetOK              - Tabuleiro criado de forma bem sucedida
-*     TAB_CondRetFaltouMemoria   - faltou memÛria
+*     TAB_CondRetFaltouMemoria   - faltou mem√≥ria
 *
 ***********************************************************************/
 TAB_tpCondRet TAB_CriarTabuleiro(TAB_tpTabuleiro ptabuleiro);
@@ -244,43 +244,43 @@ TAB_tpCondRet TAB_CriarTabuleiro(TAB_tpTabuleiro ptabuleiro);
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: TAB &Destruir tabuleiro
+*  $FC Fun√ß√£o: TAB &Destruir tabuleiro
 *
-*  $ED DescriÁ„o da funÁ„o
-*     Esvazia todas as casas de um tabuleiro e libera ele da memÛria.
+*  $ED Descri√ß√£o da fun√ß√£o
+*     Esvazia todas as casas de um tabuleiro e libera ele da mem√≥ria.
 *
-*  $EP Par‚metros
-*     ptabuleiro - ponteiro para o tabuleiro a ser destruÌdo
+*  $EP Par√¢metros
+*     ptabuleiro - ponteiro para o tabuleiro a ser destru√≠do
 *
 *  $AE Assertivas de entrada
-*     O tabuleiro passado como par‚metro deve existir e estar alocado.
+*     O tabuleiro passado como par√¢metro deve existir e estar alocado.
 *
-*  $AS Assertivas de saÌda
-*     O tabuleiro È devidamente destruÌdo.
+*  $AS Assertivas de sa√≠da
+*     O tabuleiro √© devidamente destru√≠do.
 *
 *  $FV Valor retornado
-*     TAB_CondRetOK                   - Tabuleiro destruÌdo sem problema
-*     TAB_CondRetTabuleiroNaoExiste   - Tabuleiro passado n„o existe
+*     TAB_CondRetOK                   - Tabuleiro destru√≠do sem problema
+*     TAB_CondRetTabuleiroNaoExiste   - Tabuleiro passado n√£o existe
 *
 ***********************************************************************/
-TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tpTabuleiro ptabuleiro);
+TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tpTabuleiro * ptabuleiro);
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: TAB &Alocar tabuleiro
+*  $FC Fun√ß√£o: TAB &Alocar tabuleiro
 *
-*  $ED DescriÁ„o da funÁ„o
-*     Aloca devidamente um tabuleiro genÈrico.
+*  $ED Descri√ß√£o da fun√ß√£o
+*     Aloca devidamente um tabuleiro gen√©rico.
 *
-*  $EP Par‚metros
-*	  linha				- um n˙mero inteiro do total de linhas do tabuleiro
+*  $EP Par√¢metros
+*	  linha				- um n√∫mero inteiro do total de linhas do tabuleiro
 *	  coluna			- uma letra que informa o total de colunas do tabuleiro
 *
 *  $AE Assertivas de entrada
 *     Deve existir a linha e a coluna que definem o tamanho do tabuleiro.
 *
-*  $AS Assertivas de saÌda
-*     Um tabuleiro È criado com tamanho definidos pelos valores da coluna e da linha.
+*  $AS Assertivas de sa√≠da
+*     Um tabuleiro √© criado com tamanho definidos pelos valores da coluna e da linha.
 *
 *  $FV Valor retornado
 *     TAB_tpTabuleiro		- ponteiro para o tabuleiro
@@ -295,24 +295,24 @@ TAB_tpTabuleiro TAB_AlocarTabuleiro(int linha, char coluna);
 
 /***********************************************************************
    *
-   *  $FC FunÁ„o: TAB  &Obter Lista Ameacantes
+   *  $FC Fun√ß√£o: TAB  &Obter Lista Ameacantes
    *
-   *  $ED DescriÁ„o da funÁ„o
-   *		ObtÈm a lista em que se encontra a lista de casas ameacantes.
+   *  $ED Descri√ß√£o da fun√ß√£o
+   *		Obt√©m a lista em que se encontra a lista de casas ameacantes.
    *
    *  $AE Assertiva de Entrada
    *		Um tabuleiro alocado previamente deve existir.
-   *		Devem existir coordenadas v·lidas referentes ‡ casa no tabuleiro.
+   *		Devem existir coordenadas v√°lidas referentes √† casa no tabuleiro.
    *		Deve existir uma lista de amecantes valida;
    *
    *
-   *  $AS Assertiva de SaÌda
-   *		S„o v·lidas as assertivas de entrada.
-   *		Uma lista contendo os ameacantes ser· passada por referencia usando um ponteiro para char
-   *		Caso as coordenadas n„o sejam v·lidas n„o ocorrer· passagem por referentcia.
+   *  $AS Assertiva de Sa√≠da
+   *		S√£o v√°lidas as assertivas de entrada.
+   *		Uma lista contendo os ameacantes ser√° passada por referencia usando um ponteiro para char
+   *		Caso as coordenadas n√£o sejam v√°lidas n√£o ocorrer√° passagem por referentcia.
    *
    *
-   *  $EP Par‚metros
+   *  $EP Par√¢metros
    *		ptabuleiro					- ponteiro para o tabuleiro
    *		linha						- ponteiro para a coordenada linha da casa
    *		coluna						- ponteiro para a coordenada coluna da casa
@@ -329,29 +329,29 @@ TAB_tpCondRet TAB_ObterListaAmeacantes (TAB_tpTabuleiro ptabuleiro, int i, char 
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: TAB &Obter lista de ameaÁados
+*  $FC Fun√ß√£o: TAB &Obter lista de amea√ßados
 *
-*  $ED DescriÁ„o da funÁ„o
-*     Obtem um ponteiro para a lista de casas ameacadas pela peÁa presente na coordenada informada 
-*     Caso n„o exista uma peÁa nas coordenadas informadas a lista obtida estar· vazia
+*  $ED Descri√ß√£o da fun√ß√£o
+*     Obtem um ponteiro para a lista de casas ameacadas pela pe√ßa presente na coordenada informada 
+*     Caso n√£o exista uma pe√ßa nas coordenadas informadas a lista obtida estar√° vazia
 *
-*  $EP Par‚metros
+*  $EP Par√¢metros
 *     ptabuleiro - ponteiro para o tabuleiro a ser utilizado
-*     i - Caracter que representa a linha na qual a funÁ„o deve atuar
+*     i - Caracter que representa a linha na qual a fun√ß√£o deve atuar
 *         Varia entre '1' e '8'
-*     j - Caracter que representa a coluna na qual a funÁ„o deve atuar
+*     j - Caracter que representa a coluna na qual a fun√ß√£o deve atuar
 *         Varia entre 'A' e 'H'
-*     Ameacados - Ponteiro para aonde deve ser guardado o endereÁo da lista de casas ameacadas
-                  pela peÁa presente nas coordenadas informadas 
+*     Ameacados - Ponteiro para aonde deve ser guardado o endere√ßo da lista de casas ameacadas
+                  pela pe√ßa presente nas coordenadas informadas 
 *
 *  $AE Assertivas de entrada
-*     O tabuleiro passado como par‚metro existe na memÛria
-*     A coordenada passada como par‚metro faz parte do tabuleiro
+*     O tabuleiro passado como par√¢metro existe na mem√≥ria
+*     A coordenada passada como par√¢metro faz parte do tabuleiro
 *
-*  $AS Assertivas de saÌda
+*  $AS Assertivas de sa√≠da
 *     O tabuleiro continua existindo
-*     Coordenada passada como par‚metro est· vazia
-*     Lista obtida tem sentido lÛgico
+*     Coordenada passada como par√¢metro est√° vazia
+*     Lista obtida tem sentido l√≥gico
 *
 *  $FV Valor retornado
 *     TAB_CondRetOK              - lista obtida com sucesso
@@ -362,27 +362,27 @@ TAB_tpCondRet TAB_ObterListaAmeacados (TAB_tpTabuleiro ptabuleiro, int i, char j
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: TAB &Exibir lista de ameaÁantes
+*  $FC Fun√ß√£o: TAB &Exibir lista de amea√ßantes
 *
-*  $ED DescriÁ„o da funÁ„o
-*     Exibe a lista de casas que ameaÁaam a casa pesquisada
+*  $ED Descri√ß√£o da fun√ß√£o
+*     Exibe a lista de casas que amea√ßaam a casa pesquisada
 *
-*  $EP Par‚metros
+*  $EP Par√¢metros
 *     ptabuleiro - ponteiro para o tabuleiro a ser utilizado
-*     i - Caracter que representa a linha na qual a funÁ„o deve atuar
+*     i - Caracter que representa a linha na qual a fun√ß√£o deve atuar
 *         Varia entre '1' e '8'
-*     j - Caracter que representa a coluna na qual a funÁ„o deve atuar
+*     j - Caracter que representa a coluna na qual a fun√ß√£o deve atuar
 *         Varia entre 'A' e 'H' 
 *
 *  $AE Assertivas de entrada
-*     O tabuleiro passado como par‚metro existe na memÛria
-*     A coordenada passada como par‚metro faz parte do tabuleiro
+*     O tabuleiro passado como par√¢metro existe na mem√≥ria
+*     A coordenada passada como par√¢metro faz parte do tabuleiro
 *
-*  $AS Assertivas de saÌda
+*  $AS Assertivas de sa√≠da
 *     O tabuleiro continua existindo
-*     Coordenada passada como par‚metro est· vazia
-*     Lista obtida tem sentido lÛgico
-*	  Lista È impressa
+*     Coordenada passada como par√¢metro est√° vazia
+*     Lista obtida tem sentido l√≥gico
+*	  Lista √© impressa
 *
 *  $FV Valor retornado
 *     TAB_CondRetOK              - lista impressa com sucesso
@@ -392,27 +392,27 @@ TAB_tpCondRet TAB_ObterListaAmeacados (TAB_tpTabuleiro ptabuleiro, int i, char j
 TAB_tpCondRet TAB_ExibirListaAmeacantes(TAB_tpTabuleiro ptabuleiro, int i, char j);
 /***********************************************************************
 *
-*  $FC FunÁ„o: TAB &Exibir lista de ameaÁados
+*  $FC Fun√ß√£o: TAB &Exibir lista de amea√ßados
 *
-*  $ED DescriÁ„o da funÁ„o
-*     Exibe a lista de casas ameaÁadas pela casa pesquisada
+*  $ED Descri√ß√£o da fun√ß√£o
+*     Exibe a lista de casas amea√ßadas pela casa pesquisada
 *
-*  $EP Par‚metros
+*  $EP Par√¢metros
 *     ptabuleiro - ponteiro para o tabuleiro a ser utilizado
-*     i - Caracter que representa a linha na qual a funÁ„o deve atuar
+*     i - Caracter que representa a linha na qual a fun√ß√£o deve atuar
 *         Varia entre '1' e '8'
-*     j - Caracter que representa a coluna na qual a funÁ„o deve atuar
+*     j - Caracter que representa a coluna na qual a fun√ß√£o deve atuar
 *         Varia entre 'A' e 'H' 
 *
 *  $AE Assertivas de entrada
-*     O tabuleiro passado como par‚metro existe na memÛria
-*     A coordenada passada como par‚metro faz parte do tabuleiro
+*     O tabuleiro passado como par√¢metro existe na mem√≥ria
+*     A coordenada passada como par√¢metro faz parte do tabuleiro
 *
-*  $AS Assertivas de saÌda
+*  $AS Assertivas de sa√≠da
 *     O tabuleiro continua existindo
-*     Coordenada passada como par‚metro est· vazia
-*     Lista obtida tem sentido lÛgico
-*	  Lista È impressa
+*     Coordenada passada como par√¢metro est√° vazia
+*     Lista obtida tem sentido l√≥gico
+*	  Lista √© impressa
 *
 *  $FV Valor retornado
 *     TAB_CondRetOK              - lista impressa com sucesso
@@ -427,7 +427,7 @@ TAB_tpCondRet TAB_MoverPeca(TAB_tpTabuleiro t, int origemI, char origemJ, int de
 
 #undef TABULEIRO_EXT
 
-/********** Fim do mÛdulo de definiÁ„o: TAB  Tabuleiro duplamente encadeada **********/
+/********** Fim do m√≥dulo de defini√ß√£o: TAB  Tabuleiro duplamente encadeada **********/
 
 #else
 #endif
