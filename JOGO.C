@@ -55,7 +55,7 @@ JGO_tpCondRet JGO_IniciarJogo (char* filename, LIS_tppLista listaPecasPossiveis,
 	pTabuleiro = TAB_AlocarTabuleiro(8, 'H');
 	TAB_CriarTabuleiro (pTabuleiro);
 
-	PCA_InicializarPecas(filename, &listaPecasPossiveis);
+	PCA_InicializarPecas(filename, &listaPecasPossiveis, NULL);
 	printf("Padrão? S:N");
 	scanf("%d", resp);
 	if (resp == 'S')
