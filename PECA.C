@@ -26,7 +26,6 @@
 #include   <malloc.h>
 #include   <assert.h>
 #include   <stdlib.h>
-#include    "Lista.h"
 
 #define PECA_OWN
 #include "PECA.H"
@@ -38,21 +37,27 @@
 *
 *
 ***********************************************************************/
-
-typedef struct PCA_peca
-{
-	char         nomePeca;
-	char         corPeca;
-	LIS_tppLista movValido;
-
-}PCA_Peca;
-
 typedef struct PCA_movimento
 {
 	int dx;
 	int dy;
 	int atk;
 } PCA_Mov;
+
+typedef struct PCA_peca
+{
+	char		nomePeca;
+	char		corPeca;
+	int			nMov;
+	PCA_Mov*	movValido;
+
+}PCA_Peca;
+
+typedef struct PCA_vetPeca
+{
+	int n;
+	PCA_Peca * peca;
+} PCA_VetPeca;
 
 
 /***** Protótipos das funções encapuladas no módulo *****/
@@ -71,37 +76,22 @@ void LiberarMovimento (PCA_Mov * mov);
 *
 *  ************************************************************************/
 
-PCA_tpCondRet PCA_PegarPecaDaLista (LIS_tppLista Possiveis, PCA_tpPeca * peca, char nome, char cor)
+PCA_tpCondRet PCA_PegarPecaDoVetor (PCA_VetPeca * Possiveis, PCA_tpPeca * peca, char nome, char cor)
 {
-	PCA_tpCondRet CondRet=PCA_CondRetOK;
-	PCA_Peca * aux;
+	int i;
 
-	while (CondRet==0)
-		CondRet = LIS_irAnt (Possiveis);
-
-	if (CondRet!=LIS_CondRetNoCorrenteEhPrimeiro)
-		return CondRet;
+	if (Possiveis == NULL || Possiveis->peca == NULL)
+		return PCA_CondRetPecaNaoExiste;
 	
-	do 
-	{
-		CondRet = LIS_ObterNo(Possiveis, &aux);
-		if (CondRet!=0)
-			return CondRet;
-
-		if (aux->nomePeca == nome && aux->corPeca == cor){
-			*peca=aux;
+	for (i=0; i<Possiveis->n; i++)
+		if (Possiveis->peca[i].nomePeca == nome && Possiveis->peca[i].corPeca == cor){
+			*peca = &Possiveis->peca[i];
 			return PCA_CondRetOK;
 		}
 
-		CondRet = LIS_IrProximoElemento (Possiveis);
-
-	} while (CondRet==0);
-
-	if (CondRet==LIS_CondRetNoCorrenteEhUltimo)
-		return PCA_CondRetPecaNaoExiste;
-
-	return CondRet;
+	return PCA_CondRetPecaNaoExiste;
 }
+
 
 /***************************************************************************
 *
@@ -139,8 +129,8 @@ PCA_tpCondRet PCA_ObterNome (PCA_tpPeca peca, char* n)
 
 PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk)
 {
-	PCA_tpCondRet CondRet=PCA_CondRetOK;
 	PCA_Mov mov, *aux;
+	int i;
 
 	if (peca=NULL)
 		return PCA_CondRetPecaNaoExiste;
@@ -149,29 +139,11 @@ PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk)
 	mov.dy=dy;
 	mov.atk=atk;
 
-	while (CondRet==0)
-		CondRet = LIS_irAnt (peca->movValido);
-
-	if (CondRet!=LIS_CondRetNoCorrenteEhPrimeiro)
-		return CondRet;
-
-	do 
-	{
-		CondRet = LIS_ObterNo(peca->movValido, &aux);
-		if (CondRet!=0) return CondRet;
-
-		if (ComparaMov(mov, *aux)) return PCA_CondRetOK;
-
-		CondRet = LIS_IrProximoElemento (peca->movValido);
-
-	} while (CondRet==0);
-
-	if (CondRet==LIS_CondRetNoCorrenteEhUltimo) return PCA_CondRetMovimentoInvalido;
-
-	return CondRet;
+	for (i=0; i<peca->nMov; i++)
+		if ( ComparaMov(mov, peca->movValido[i]) )
+			return PCA_CondRetOK;
+	return PCA_CondRetMovimentoInvalido;
 }
-
-
 
 
 /***************************************************************************
@@ -180,68 +152,66 @@ PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk)
 *
 *  ************************************************************************/
 
-PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista *Possiveis, FILE * teste){
+PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_VetPeca *Possiveis, FILE * teste){
 	FILE* ArqPecasPossiveis;
-	PCA_Peca *pecaTemp;
-	PCA_Mov *movTemp;
 	PCA_tpCondRet CondRet;
-	int pecasRestantes, numLido;
+	int i, j, numLido;
 	char charTemp;
-	LIS_tppLista temp;
-
-	temp = LIS_AlocarLista();
-	CondRet = LIS_CriarLista ( LiberarPeca , "Pecas Possiveis", temp);
-	if (CondRet!=0) return CondRet;
-
 
 	ArqPecasPossiveis = fopen(filename, "r");
-	numLido=fscanf(ArqPecasPossiveis ,"%d%c", &pecasRestantes, &charTemp);
-	fprintf(teste, "Leu a primeira linha do arquivo, PecasRestantes:%d\n", pecasRestantes);
-	if (numLido!=2 || pecasRestantes<=0 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
+	numLido=fscanf(ArqPecasPossiveis ,"%d%c", &Possiveis->n, &charTemp);														/* Ler numero de pecas */
+	fprintf(teste, "Leu a primeira linha do arquivo, Total de pecas:%d\n", Possiveis->n);
+	if (numLido!=2 || Possiveis->n<=0 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
 
-	while (pecasRestantes--){
+	Possiveis->peca= (PCA_Peca*)malloc(Possiveis->n*sizeof(PCA_Peca));
+	if (Possiveis->peca==NULL) return PCA_CondRetFaltouMemoria;
 
-		pecaTemp = (PCA_Peca*) malloc (sizeof(PCA_Peca));
-		if (pecaTemp == NULL) return PCA_CondRetFaltouMemoria;
 
-		pecaTemp->movValido = LIS_AlocarLista();
-		CondRet = LIS_CriarLista (LiberarMovimento , "MovimentosValidos", pecaTemp->movValido);
+	for (i=0; i<Possiveis->n; i++){	/* Para cada peca */
 
-		if (CondRet!=0) return CondRet;
-		numLido = fscanf(ArqPecasPossiveis, "%c",&charTemp);
+		numLido = fscanf(ArqPecasPossiveis, "%c",&charTemp);																	/* Ler separador de pecas (\n) */
 		fprintf(teste, "Leu o enter %d\n", charTemp);
 		if (numLido != 1 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
-		numLido = fscanf(ArqPecasPossiveis, "%c%c%c", &pecaTemp->nomePeca, &charTemp, &pecaTemp->corPeca);
 
-		fprintf(teste, "Leu o nome (%c), o chartemp (%c) e cor da peca (%c)\n", pecaTemp->nomePeca, charTemp, pecaTemp->corPeca);
-		
+		numLido = fscanf(ArqPecasPossiveis, "%c%c%c", &Possiveis->peca[i].nomePeca, &charTemp, &Possiveis->peca[i].corPeca);	/* Ler nome e cor da peca */
+		fprintf(teste, "Leu o nome (%c), o espaco (%c) e cor da peca (%c)\n", Possiveis->peca[i].nomePeca, charTemp, Possiveis->peca[i].corPeca);
 		if (numLido != 3 || charTemp != ' ') return PCA_CondRetErroNaLeituraDoArquivo;
-		do {
+
+		numLido = fscanf(ArqPecasPossiveis, "%c%d", &charTemp, &Possiveis->peca[i].nMov);										/* Ler quantidade de movimentos da peca */
+		fprintf(teste, "Leu o espaco (%c), e o numero de movimentos (%d)\n", charTemp, Possiveis->peca[i].nMov);
+		if (numLido != 2 || charTemp != ' ') return PCA_CondRetErroNaLeituraDoArquivo;
+
+		Possiveis->peca[i].movValido = (PCA_Mov*) malloc (Possiveis->peca[i].nMov * sizeof(PCA_Mov));
+		if (Possiveis->peca[i].movValido==NULL) return PCA_CondRetFaltouMemoria;
+
+		for (j=0; j<Possiveis->peca[i].nMov; j++){	/* Para cada movimento da peca */
 			
-			movTemp = (PCA_Mov*) malloc (sizeof(PCA_Mov));
-			
-			if (movTemp==NULL) return PCA_CondRetFaltouMemoria;
-			numLido = fscanf(ArqPecasPossiveis, "%d%d%d%c", &movTemp->dx, &movTemp->dy, &movTemp->atk, &charTemp);
-			fprintf(teste, "Leu o movimento (%d %d %d)\n", movTemp->dx, movTemp->dy, movTemp->atk);
-			if (numLido != 4)
-				return PCA_CondRetErroNaLeituraDoArquivo;
-			fprintf(teste,"%c\n",charTemp);
-			if(charTemp != ',' )
-				return PCA_CondRetErroNaLeituraDoArquivo;
+			numLido = fscanf(ArqPecasPossiveis, "%d%d%d%c", &Possiveis->peca[i].movValido[j].dx, &Possiveis->peca[i].movValido[j].dy, &Possiveis->peca[i].movValido[j].atk, &charTemp);	/* Ler movimento */
+			fprintf(teste, "Leu o movimento (%d %d %d) e o charTemp(%c)\n", Possiveis->peca[i].movValido[j].dx, Possiveis->peca[i].movValido[j].dy, Possiveis->peca[i].movValido[j].atk, charTemp);
+			if (numLido != 4) return PCA_CondRetErroNaLeituraDoArquivo;
 
-			LIS_InserirNo (pecaTemp->movValido, movTemp);
-
-		} while (charTemp == ',');
-
-
-		LIS_InserirNo (*Possiveis, pecaTemp);
-	}
-
-		
+		}
+	}		
 	return PCA_CondRetOK;
 }
 
 
+/***************************************************************************
+*
+*  Função: LIS  &Destruir Vetor de Pecas
+*
+*  ************************************************************************/
+
+PCA_tpCondRet PCA_DestruirVetPecas (PCA_VetPeca *Possiveis) {
+	int i, j;
+
+	for (i=0; i<Possiveis->n; i++)
+		free(Possiveis->peca[i].movValido);
+	free (Possiveis);
+
+	return PCA_CondRetOK;
+
+}
 
 
 /*****  Código das funções encapsuladas no módulo  *****/
@@ -251,7 +221,7 @@ void LiberarMovimento (PCA_Mov * mov){
 }
 
 void LiberarPeca (PCA_Peca* peca){
-	LIS_DestruirLista(peca->movValido);
+	free(peca->movValido);
 	free(peca);
 }
 
