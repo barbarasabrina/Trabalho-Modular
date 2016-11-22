@@ -160,7 +160,7 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_VetPeca *Possiveis, FILE
 
 	ArqPecasPossiveis = fopen(filename, "r");
 	numLido=fscanf(ArqPecasPossiveis ,"%d%c", &Possiveis->n, &charTemp);														/* Ler numero de pecas */
-	fprintf(teste, "Leu a primeira linha do arquivo, Total de pecas:%d\n", Possiveis->n);
+	if (teste!=NULL) fprintf(teste, "Leu a primeira linha do arquivo, Total de pecas:%d\n", Possiveis->n);
 	if (numLido!=2 || Possiveis->n<=0 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
 
 	Possiveis->peca= (PCA_Peca*)malloc(Possiveis->n*sizeof(PCA_Peca));
@@ -170,15 +170,15 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_VetPeca *Possiveis, FILE
 	for (i=0; i<Possiveis->n; i++){	/* Para cada peca */
 
 		numLido = fscanf(ArqPecasPossiveis, "%c",&charTemp);																	/* Ler separador de pecas (\n) */
-		fprintf(teste, "Leu o enter %d\n", charTemp);
+		if (teste!=NULL) fprintf(teste, "Leu o enter %d\n", charTemp);
 		if (numLido != 1 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
 
 		numLido = fscanf(ArqPecasPossiveis, "%c%c%c", &Possiveis->peca[i].nomePeca, &charTemp, &Possiveis->peca[i].corPeca);	/* Ler nome e cor da peca */
-		fprintf(teste, "Leu o nome (%c), o espaco (%c) e cor da peca (%c)\n", Possiveis->peca[i].nomePeca, charTemp, Possiveis->peca[i].corPeca);
+		if (teste!=NULL) fprintf(teste, "Leu o nome (%c), o espaco (%c) e cor da peca (%c)\n", Possiveis->peca[i].nomePeca, charTemp, Possiveis->peca[i].corPeca);
 		if (numLido != 3 || charTemp != ' ') return PCA_CondRetErroNaLeituraDoArquivo;
 
 		numLido = fscanf(ArqPecasPossiveis, "%c%d", &charTemp, &Possiveis->peca[i].nMov);										/* Ler quantidade de movimentos da peca */
-		fprintf(teste, "Leu o espaco (%c), e o numero de movimentos (%d)\n", charTemp, Possiveis->peca[i].nMov);
+		if (teste!=NULL) fprintf(teste, "Leu o espaco (%c), e o numero de movimentos (%d)\n", charTemp, Possiveis->peca[i].nMov);
 		if (numLido != 2 || charTemp != ' ') return PCA_CondRetErroNaLeituraDoArquivo;
 
 		Possiveis->peca[i].movValido = (PCA_Mov*) malloc (Possiveis->peca[i].nMov * sizeof(PCA_Mov));
@@ -187,7 +187,7 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_VetPeca *Possiveis, FILE
 		for (j=0; j<Possiveis->peca[i].nMov; j++){	/* Para cada movimento da peca */
 			
 			numLido = fscanf(ArqPecasPossiveis, "%d%d%d%c", &Possiveis->peca[i].movValido[j].dx, &Possiveis->peca[i].movValido[j].dy, &Possiveis->peca[i].movValido[j].atk, &charTemp);	/* Ler movimento */
-			fprintf(teste, "Leu o movimento (%d %d %d) e o charTemp(%c)\n", Possiveis->peca[i].movValido[j].dx, Possiveis->peca[i].movValido[j].dy, Possiveis->peca[i].movValido[j].atk, charTemp);
+			if (teste!=NULL) fprintf(teste, "Leu o movimento (%d %d %d) e o charTemp(%c)\n", Possiveis->peca[i].movValido[j].dx, Possiveis->peca[i].movValido[j].dy, Possiveis->peca[i].movValido[j].atk, charTemp);
 			if (numLido != 4) return PCA_CondRetErroNaLeituraDoArquivo;
 
 		}
