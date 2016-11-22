@@ -27,10 +27,9 @@
 #include    "LerParm.h"
 
 #include    "Peca.h"
-#include    "Lista.h"
 
 static const char INICIALIZAR_PECAS_CMD  [ ] = "=inicializarPecas"	;
-static const char PEGAR_PECA_CMD         [ ] = "=pegarPecaDaLista"	;
+static const char PEGAR_PECA_CMD         [ ] = "=pegarPecaDoVetor"	;
 static const char OBTER_COR_CMD          [ ] = "=obterCor"			;
 static const char OBTER_NOME_CMD         [ ] = "=obterNome"			;
 static const char VALIDAR_MOVIMENTO_CMD  [ ] = "=validarMovimento"	;
@@ -60,7 +59,7 @@ static const char VALIDAR_MOVIMENTO_CMD  [ ] = "=validarMovimento"	;
 *     Comandos disponíveis:
 *
 *     =inicializarPecas
-*     =pegarPecaDaLista
+*     =pegarPecaDoVetor
 *     =obterCor
 *     =obterNome
 *     =validarMovimento
@@ -88,7 +87,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 	PCA_tpPeca PecaCorrente = NULL;
 
-	LIS_tppLista ListaPecasPossiveis = NULL;
+	PCA_tpVetPeca VetPecasPossiveis = NULL;
 
 
 	/* Testar Inicializar Pecas */
@@ -108,7 +107,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 		fprintf(aux, "Numero certo de parametros\n");
 
-		CondRet = PCA_InicializarPecas(FILENAME, ListaPecasPossiveis, aux);
+		CondRet = PCA_InicializarPecas(FILENAME, VetPecasPossiveis, aux);
 
 		fprintf(aux, "InicializarPecas retornou %d\n", CondRet);
 
@@ -117,7 +116,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 	} /* fim ativa: Testar InicializarPecas */
 
-	/* Testar pegar peca da lista*/
+	/* Testar pegar peca do vetor*/
 
 	else if ( strcmp( ComandoTeste , PEGAR_PECA_CMD ) == 0 )
 	{
@@ -130,7 +129,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm ;
 		} /* if */
 
-		CondRet = PCA_PegarPecaDaLista (ListaPecasPossiveis ,&PecaCorrente, nomeDado, corDada);
+		CondRet = PCA_PegarPecaDoVetor (VetPecasPossiveis ,&PecaCorrente, nomeDado, corDada);
 
 		return TST_CompararInt(CondRetEsp, CondRet,
 			"Condicao de retorno errada ao obter peca.");
