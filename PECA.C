@@ -180,7 +180,7 @@ PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk)
 *
 *  ************************************************************************/
 
-PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista *Possiveis){
+PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista *Possiveis, FILE * teste){
 	FILE* ArqPecasPossiveis;
 	PCA_Peca *pecaTemp;
 	PCA_Mov *movTemp;
@@ -191,11 +191,12 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista *Possiveis){
 
 	temp = LIS_AlocarLista();
 	CondRet = LIS_CriarLista ( LiberarPeca , "Pecas Possiveis", temp);
-	/*if (CondRet!=0) return CondRet;
+	if (CondRet!=0) return CondRet;
 
 
 	ArqPecasPossiveis = fopen(filename, "r");
 	numLido=fscanf(ArqPecasPossiveis ,"%d%c", &pecasRestantes, &charTemp);
+	fprintf(teste, "Leu a primeira linha do arquivo, PecasRestantes:%d\n", pecasRestantes);
 	if (numLido!=2 || pecasRestantes<=0 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
 
 	while (pecasRestantes--){
@@ -205,20 +206,28 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista *Possiveis){
 
 		pecaTemp->movValido = LIS_AlocarLista();
 		CondRet = LIS_CriarLista (LiberarMovimento , "MovimentosValidos", pecaTemp->movValido);
+
 		if (CondRet!=0) return CondRet;
-
 		numLido = fscanf(ArqPecasPossiveis, "%c",&charTemp);
+		fprintf(teste, "Leu o enter %d\n", charTemp);
 		if (numLido != 1 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
+		numLido = fscanf(ArqPecasPossiveis, "%c%c%c", &pecaTemp->nomePeca, &charTemp, &pecaTemp->corPeca);
 
-		numLido = fscanf(ArqPecasPossiveis, "%c%c%c", pecaTemp->nomePeca, &charTemp, pecaTemp->corPeca);
+		fprintf(teste, "Leu o nome (%c), o chartemp (%c) e cor da peca (%c)\n", pecaTemp->nomePeca, charTemp, pecaTemp->corPeca);
+		
 		if (numLido != 3 || charTemp != ' ') return PCA_CondRetErroNaLeituraDoArquivo;
-
 		do {
+			
 			movTemp = (PCA_Mov*) malloc (sizeof(PCA_Mov));
+			
 			if (movTemp==NULL) return PCA_CondRetFaltouMemoria;
-
-			numLido = fscanf(ArqPecasPossiveis, "%d%d%d%c", movTemp->dx, movTemp->dy, movTemp->atk, &charTemp);
-			if (numLido != 3) return PCA_CondRetErroNaLeituraDoArquivo;
+			numLido = fscanf(ArqPecasPossiveis, "%d%d%d%c", &movTemp->dx, &movTemp->dy, &movTemp->atk, &charTemp);
+			fprintf(teste, "Leu o movimento (%d %d %d)\n", movTemp->dx, movTemp->dy, movTemp->atk);
+			if (numLido != 4)
+				return PCA_CondRetErroNaLeituraDoArquivo;
+			fprintf(teste,"%c\n",charTemp);
+			if(charTemp != ',' )
+				return PCA_CondRetErroNaLeituraDoArquivo;
 
 			LIS_InserirNo (pecaTemp->movValido, movTemp);
 
@@ -228,7 +237,7 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, LIS_tppLista *Possiveis){
 		LIS_InserirNo (*Possiveis, pecaTemp);
 	}
 
-		*/
+		
 	return PCA_CondRetOK;
 }
 

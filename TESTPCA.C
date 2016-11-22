@@ -108,7 +108,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 		fprintf(aux, "Numero certo de parametros\n");
 
-		CondRet = PCA_InicializarPecas(FILENAME, ListaPecasPossiveis);
+		CondRet = PCA_InicializarPecas(FILENAME, ListaPecasPossiveis, aux);
 
 		fprintf(aux, "InicializarPecas retornou %d\n", CondRet);
 
