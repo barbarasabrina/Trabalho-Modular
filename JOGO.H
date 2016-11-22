@@ -96,8 +96,9 @@ typedef enum {
 	JGO_CondRetNoCorrenteEhPrimeiro = 5,
 	/* Nó corrente é o primeiro elemento da jogo*/
 
-	JGO_CondRetFaltouMemoria = 6
+	JGO_CondRetFaltouMemoria = 6,
 	/* Faltou memória ao tentar criar um elemento de jogo */
+	JGO_CondRetTabuleiroNaoExiste = 7
 
 } JGO_tpCondRet;
 
@@ -221,7 +222,7 @@ JGO_tpCondRet JGO_FinalizarJogo(JGO_tppJogo pJogo);
 *
 ***********************************************************************/
 
-JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check);
+JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check, char* cor);
 
 /***********************************************************************
 *

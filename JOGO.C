@@ -78,7 +78,7 @@ JGO_tpCondRet JGO_MostrarTabuleiro (TAB_tpTabuleiro ptabuleiro)
 	char j;
 	
 	if (ptabuleiro == NULL)
-		return JGO_CondRetTabuleiroNaoExiste
+		return JGO_CondRetTabuleiroNaoExiste;
 
 	for (i=1; i<=8; i++){
 		printf("|");
@@ -95,7 +95,7 @@ JGO_tpCondRet JGO_MostrarTabuleiro (TAB_tpTabuleiro ptabuleiro)
 		printf("\n");
 	}
 	
-	return JGO_CondRetOK
+	return JGO_CondRetOK;
 		
 }/* Fim função: TAB &Mostrar Tabuleiro*/
 
@@ -262,9 +262,84 @@ void JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, LIS_tppLista pecas)
 	TAB_InserirPeca(ptabuleiro, 8, 'D', peca);		
 }/* Fim função: JGO &Montar Tabuleiro Padrão */
 
-JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check)
+JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check,char *pCor)
 {
+	int LIN,j,cont=0;
+	char COL;
+	char *nome;
+	char * cor,*corp;
+	PCA_tpPeca *peca, *p;
+	LIS_tppLista *ameacantes, *ameacados;
 
+	if(pTabuleiro==NULL)
+		JGO_CondRetTabuleiroNaoExiste;
+
+	for(LIN=1;LIN<=8;LIN++)
+	{
+		for(COL = 'A';COL<='H';COL++)
+		{
+			j=TAB_ObterPeca(pTabuleiro,LIN,COL,peca);
+			j = PCA_ObterNome((*peca), nome);
+			j = PCA_ObterCor((*peca),cor);
+			if(nome == "R" && cor == pCor)
+			break;
+		}
+	}
+	TAB_ObterListaAmeacantes(pTabuleiro,LIN,COL,ameacantes);
+	if(ameacantes == NULL)
+	{
+		*check = 0;
+	}
+
+	if(ameacantes != NULL)
+	{
+		TAB_ObterListaAmeacados(pTabuleiro,LIN,COL,ameacados);
+		if(ameacados == NULL)
+			*check = 1;
+
+			TAB_ObterPeca(pTabuleiro,LIN+1,COL,p);
+			PCA_ObterCor((*p),corp);
+			if(corp != pCor)
+				cont++;
+			TAB_ObterPeca(pTabuleiro,LIN,COL+1,p);
+			PCA_ObterCor((*p),corp);
+			if(corp != pCor)
+				cont++;
+			TAB_ObterPeca(pTabuleiro,LIN+1,COL+1,p);
+			PCA_ObterCor((*p),corp);
+			if(corp != pCor)
+				cont++;
+			TAB_ObterPeca(pTabuleiro,LIN,COL-1,p);
+			PCA_ObterCor((*p),corp);
+			if(corp != pCor)
+				cont++;
+			TAB_ObterPeca(pTabuleiro,LIN+1,COL-1,p);
+			PCA_ObterCor((*p),corp);
+			if(corp != pCor)
+				cont++;
+			TAB_ObterPeca(pTabuleiro,LIN-1,COL,p);
+			PCA_ObterCor((*p),corp);
+			if(corp != pCor)
+				cont++;
+			TAB_ObterPeca(pTabuleiro,LIN-1,COL+1,p);
+			PCA_ObterCor((*p),corp);
+			if(corp != pCor)
+				cont++;
+			TAB_ObterPeca(pTabuleiro,LIN-1,COL-1,p);
+			PCA_ObterCor((*p),corp);
+			if(corp != pCor)
+				cont++;
+
+			if(cont >0)
+				*check = 1;
+			else if (cont==0)
+				*check = 2;
+		
+
+	}
+
+	
+	return JGO_CondRetOK;
 }
 
 JGO_tpCondRet JGO_FinalizarJogo(JGO_tppJogo pJogo)
