@@ -252,9 +252,9 @@ void JGO_LerComando(TAB_tpTabuleiro ptabuleiro, int* linhaOrigem, char* colunaOr
 *  Função: TAB  &Montar Tabuleiro Modificado
 *
 *  ****/
-void JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_VetPeca pecas)
+JGO_tpCondRet JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_VetPeca pecas)
 {
-	int i,k;
+	int i,CondRet;
 	char  j, nome, cor;
 	PCA_tpPeca *peca = (PCA_tpPeca *)malloc(sizeof(PCA_tpPeca));	
 
@@ -267,23 +267,26 @@ void JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_VetPeca pecas)
 		{
 			printf("onde por a peça %c de cor %c", cor, nome);
 			scanf("%d %c", &i, &j);
-			k = TAB_InserirPeca(ptabuleiro, i, j, peca);
-			while (k != 0) {
-				if (k == 1)
+			CondRet = TAB_InserirPeca(ptabuleiro, i, j, peca);
+			while (CondRet != 0) {
+				if (CondRet == 1)
 				{
 					printf("casa ocupada tente novamente\n");
 					scanf("%d %c", &i, &j);
-					k = TAB_InserirPeca(ptabuleiro, i, j, peca);
+					CondRet = TAB_InserirPeca(ptabuleiro, i, j, peca);
 				}
-				else if (k == 4)
+				else if (CondRet == 4)
 				{
 					printf("coordenada nao existe tente novamente\n");
 					scanf("%d %c", &i, &j);
-					k = TAB_InserirPeca(ptabuleiro, i, j, peca);
+					CondRet = TAB_InserirPeca(ptabuleiro, i, j, peca);
 				}
 			}
 		}
-		LIS_IrProximoElemento(pecas);
+		CondRet = LIS_IrProximoElemento(pecas);
+		if (CondRet != 0)
+			return CondRet;
+		return JGO_CondRetOK;
 	}
 }/* Fim função: JGO &Montar Tabuleiro Modificado */
 
