@@ -23,36 +23,19 @@
 *     1       avs   16/abr/2003 início desenvolvimento
 *
 *  $ED Descrição do módulo
-*		Implementa jogos de tabuleiro.
-*		Podem existir n jogos em operação simultaneamente.
-*		As jogos possuem uma cabeça encapsulando o seu estado.
+*		Implementa um jogo de xadrez num tabuleiro 8x8.
+*		Este tabuleiro possui 64 casas.
+*		Sendo as linhas representadas por números de 1-8.
+*		E as colunas representadas por caracteres de A-H.
+*		A contagem para as coordenadas começa na posição linha 1 coluna A,
+*		que será representada exatamente na parte inferior esquerda, sendo assim,
+*		a posição linha 8 coluna H será representada na parte superior direita.
 *
-*		Cada jogo é homogêneo quanto ao tipo dos dados que armazena.
-*		Cada elemento da jogo referencia o valor que contém.
-*
-*		Os ponteiros para os dados são copiados para elementos da jogo.
-*       Não é copiado o valor apontado por estes ponteiros.
-*
-*		O controle da destruição do valor de um elemento a ser excluído
-*       é realizado por uma função fornecida pelo usuário.
-*
-*		Cada jogo referencia uma função que determina como devem ser
-*       desalocados os dados nela contidos.
-*
-*		A função de liberação dos valores contidos nos elementos deve
-*       assegurar a liberação de todos os espaços referênciados pelo
-*       valor contido em um elemento.
-*       Esta função é chamada antes de se desalocar um elemento
-*       de uma jogo.
-*       Caso não seja necessário desalocar o valor referenciado pelo
-*       elemento, o ponteiro para a função de liberação poderá ser NULL .
-*       Caso o elemento da jogo seja a única âncora do valor referenciado,
-*       esta função deve promover a destruição (free) desse valor e
-*       de todos os dados nele ancorados.
 *
 ***************************************************************************/
 #include "LISTA.H"
 #include "TABULEIRO.H"
+#include "PECA.H"
 
 #if defined( JOGO_OWN )
 #define JOGO_EXT
@@ -60,19 +43,13 @@
 #define JOGO_EXT extern
 #endif
 
-/***** Declarações exportadas pelo módulo *****/
-
-/* Tipo referência para uma jogo */
-
-typedef struct JGO_tagJogo * JGO_tppJogo;
-
 /***********************************************************************
 *
-*  $TC Tipo de dados: JGO Condições de retorno
+*  $TC Tipo de dados: JGO Condições de retorno de um jogo
 *
 *
 *  $ED Descrição do tipo
-*		Condições de retorno das funções da jogo
+*		Condições de retorno das funções do jogo
 *
 ***********************************************************************/
 
@@ -82,93 +59,49 @@ typedef enum {
 	/* Concluiu corretamente */
 
 	JGO_CondRetNoNaoExiste = 1,
-	/* Foi atingido o fim de jogo */
+	/* Tabuleiro não existe */
 
-	JGO_CondRetJogoVazia = 2,
-	/* A jogo não contém elementos */
+	JGO_CondRetListaVazia = 2,
+	/* A lista está vazia */
 
-	JGO_CondRetJogoNaoExiste = 3,
-	/* Jogo não existe*/
+	JGO_CondRetTabuleiroNaoExiste = 3,
+	/* Tabuleiro não existe*/
 
-	JGO_CondRetNoCorrenteEhUltimo = 4,
-	/* Nó corrente é o ultimo elemento da jogo*/
+	JGO_CondRetListaNaoExiste = 4,
+	/* Lista não existe */
 
 	JGO_CondRetNoCorrenteEhPrimeiro = 5,
 	/* Nó corrente é o primeiro elemento da jogo*/
 
-	JGO_CondRetFaltouMemoria = 6,
+	JGO_CondRetFaltouMemoria = 6
 	/* Faltou memória ao tentar criar um elemento de jogo */
-	JGO_CondRetTabuleiroNaoExiste = 7
 
 } JGO_tpCondRet;
-
-
-/***********************************************************************
-*
-*  $FC Função: JGO  &Criar jogo
-*
-*  $ED Descrição da função
-*		Cria uma jogo duplamente encadeada.
-*		É fornecido um identificador e este é associado à jogo.
-*
-*  $AS Assertiva de Saida
-*		O ponteiro para jogo fornecida como parametro passa a apontar para a jogo criada
-*		cujo identificador são os caracteres que foram fornecidos também como parametro.
-*		Em caso de falta de memória, o ponteiro apontará para um ponteiro nulo.
-*
-*  $EP Parâmetros
-*		ExcluirValor  - ponteiro para a função que processa a
-*                     exclusão do valor referenciado pelo elemento
-*                     a ser excluído.
-*                     Ver descrição do módulo.
-*
-*  $FV Valor retornado
-*		Se executou corretamente retorna o ponteiro para a jogo e a condição de retorno de movimentação bem sucedida.
-*		Este ponteiro será utilizado pelas funções que manipulem esta jogo.
-*
-*		Se ocorreu algum erro, por exemplo falta de memória ou dados errados,
-*		a função retornará NULL e a condição de retorno faltou memória.
-*		Não será dada mais informação quanto ao problema ocorrido.
-*
-*  $FV Valor retornado
-*		JGO_CondRetOK				- criação de jogo bem sucedida
-*		JGO_CondRetFaltouMemoria	- faltou memoria
-*
-***********************************************************************/
-
-JGO_tpCondRet JGO_CriarJogo(
-	void(*ExcluirValor) (char * pDado), char * idJogo, JGO_tppJogo pJogo);
 
 /***********************************************************************
 *
 *  $FC Função: JGO  &Iniciar Jogo
 *
 *  $ED Descrição da função
-*		Avança o elemento corrente para o próximo elemento na jogo
-*		Se existir um próximo elemento, o ponteiro corrente avança.
-*		Se não existir um próximo elemento, o ponteiro corrente permanece como ultimo
-*		Se nó corrente não existir, a jogo está vazia
+*		Dá inicio ao jogo, criando o tabuleiro e posicionando as peças nas casas corretamente.
+*
 *
 *  $AE Assertiva de Entrada
-*		A jogo existe.
-*		A jogo deve ter pelo menos um elemento.
-*		Caso contrário, a jogo está vazia.
 *		Nó corrente deve apontar para pelo menos um elemento anterior ao último.
 *		Caso contrário, nó corrente aponta para último elemento da jogo.
 *		Valem as assertivas estruturais de jogo duplamente encadeada com cabeça.
 *
 *  $AS Assertiva de Saida
-*		Valem as assertivas estruturais de jogo duplamente encadeada com cabeça.
-*		Nos casos onde há mais de um elemento na jogo e o nó estiver em qualquer posição
-*		exceto o último, a movimentação foi bem sucedida.
-*		Caso esteja no último elemento ou a jogo apenas possuia um elemento, não houve movimentação
-*		e nó é o último elemento da jogo.
-*		Caso não possua elementos, a jogo estava vazia e também não houve movimentação.
+*		Valem as assertivas de tabuleiro e de lista duplamente encadeada.
+*		Uma lista de peças disponíveis estará disponível para o jogador.
+*		Um arquivo com as peças e seus movimentos será disponibilizado pelo parametro filename.
+*		Um tabuleiro estará preenchido para iniciar o jogo.
 *
 *
 *  $EP Parâmetros
-*		pJogo  - ponteiro para a jogo a ser manipulada
-*		numElem - o número de elementos a andar
+*		filename						- nome do arquivo que contém as informações das peças e seus movimentos.
+*		listaPecasPossiveis				- vetor com as peças disponíveis para o jogo.
+*		pTabuleiro						- ponteiro para o tabuleiro do jogo
 *
 *  $FV Valor retornado
 *		CondRetOK						- movimentação bem sucedida
@@ -177,7 +110,7 @@ JGO_tpCondRet JGO_CriarJogo(
 *
 ***********************************************************************/
 
-JGO_tpCondRet JGO_IniciarJogo(char * filename, LIS_tppLista listaPecasPossiveis, TAB_tpTabuleiro pTabuleiro);
+JGO_tpCondRet JGO_IniciarJogo(char * filename, PCA_tpVetPeca listaPecasPossiveis, TAB_tpTabuleiro pTabuleiro);
 
 
 /***********************************************************************
@@ -185,22 +118,21 @@ JGO_tpCondRet JGO_IniciarJogo(char * filename, LIS_tppLista listaPecasPossiveis,
 *  $FC Função: JGO  &Finalizar jogo
 *
 *  $ED Descrição da função
-*		Destrói o jogo fornecido.
-*		O parâmetro ponteiro para a jogo não é modificado.
-*		Se ocorrer algum erro durante a destruição, a jogo resultará
-*		estruturalmente incorreta.
+*		Finaliza o jogo de tabuleiro.
+*		O parâmetro ponteiro para o tabuleiro não é modificado.
+*		Se ocorrer algum erro durante a destruição, o tabuleiro resultará
+*		estruturalmente incorreto.
 *		OBS. não existe previsão para possíveis falhas de execução.
 *
 *  $AE Assertiva de Entrada
-*		O ponteiro para a jogo fornecida como parametro deve conter uma jogo para ser excluida.
+*		Pode existir um tabuleiro.
 *		Caso contrário o ponteiro para jogo não deve ser tratado para destruição.
 *
 *  $AS Assertiva de Saida
-*		A jogo fornecida como parametro se existia, foi destruída. Caso contrário,
-*		a jogo já não existe.
+*		As peças e casa do tabuleiro são liberados e o tabuleiro destruído.
 *
 *  $EP Parâmetros
-*		pJogo  - ponteiro para a jogo a ser manipulada
+*		ptabuleiro  - ponteiro para o tabuleiro a ser manipulado
 *
 *  $FV Valor retornado
 *		JGO_CondRetOK				- exclusão OK
@@ -208,35 +140,59 @@ JGO_tpCondRet JGO_IniciarJogo(char * filename, LIS_tppLista listaPecasPossiveis,
 *
 ***********************************************************************/
 
-JGO_tpCondRet JGO_FinalizarJogo(JGO_tppJogo pJogo);
+JGO_tpCondRet JGO_FinalizarJogo(TAB_tpTabuleiro ptabuleiro);
 
 /***********************************************************************
 *
 *  $FC Função: JGO  &Verifica se o jogo está em check
 *
 *  $ED Descrição da função
-*     Elimina todos os elementos, sem contudo eliminar a jogo
+*     Verifica se o jogo está check ou check mate.
+*
+*
+*  $AE Assertiva de Entrada
+*		Deve existir um tabuleiro válido.
+*		Valem as assertivas estruturais de tabuleiro.
+*
+*  $AS Assertiva de Saida
+*		Valem as assertivas estruturais de tabuleiro.
+*		Será obtida informação de check(1), check mate(2) ou nulo(0) em relação ao estado do jogo.
+*
 *
 *  $EP Parâmetros
-*     pJogo - ponteiro para a jogo a ser esvaziada
+*		pTabuleiro			- ponteiro para o tabuleiro
+*		check				- ponteiro para informação de check(1), check mate(2) ou nulo(0)
 *
 ***********************************************************************/
 
-JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check, char* cor);
+JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check);
 
 /***********************************************************************
 *
 *  $FC Função: JGO  &Realizar o movimento do jogo no Tabuleiro
 *
 *  $ED Descrição da função
-*     Elimina todos os elementos, sem contudo eliminar a jogo
+*     O módulo de jogo irá obter do jogador informação do movimento que ele deseja e
+*	  realizar o movimento caso o movimento seja válido.
+*
+*
+*  $AE Assertiva de Entrada
+*		Deve existir uma lista de peças disponíveis no jogo.
+*		Deve existir um tabuleiro válido.
+*		Valem as assertivas estruturais de tabuleiro e de lista.
+*
+*  $AS Assertiva de Saida
+*		Valem as assertivas estruturais de tabuleiro e de lista.
+*		Um movimento pode ser ou não realizado.
+*
 *
 *  $EP Parâmetros
-*     pJogo - ponteiro para a jogo a ser esvaziada
+*		listaPecasDisponiveis	- vetor com as peças disponíveis
+*		pTabuleiro				- ponteiro para o tabuleiro do jogo
 *
 ***********************************************************************/
 
-JGO_tpCondRet JGO_RealizarMovimento(LIS_tppLista listaPecasPossiveis, TAB_tpTabuleiro pTabuleiro);
+JGO_tpCondRet JGO_RealizarMovimento(PCA_tpVetPeca listaPecasDisponiveis, TAB_tpTabuleiro pTabuleiro);
 
 
 /***********************************************************************
@@ -244,20 +200,20 @@ JGO_tpCondRet JGO_RealizarMovimento(LIS_tppLista listaPecasPossiveis, TAB_tpTabu
 *  $FC Função: JGO  &Mostrar Tabuleiro padrão
 *
 *  $ED Descrição da função
-*     Apresenta, na tela do jogador, o tabuleiro.
+*     Apresenta, na tela do jogador, o estado atual do tabuleiro do jogo.
 *
 *
 *  $AE Assertiva de Entrada
-*		Um tabuleiro existe.
+*		Ou tabuleiro existe ou é nulo.
 *		Valem as assertivas estruturais de tabuleiro.
 *
 *  $AS Assertiva de Saida
 *		Valem as assertivas estruturais de tabuleiro.
-*		Será exibido um tabuleiro na tela do jogador.
-*       
+*		Pode ou não ser exibido um tabuleiro na tela do jogador.
+*
 *
 *  $EP Parâmetros
-*        ptabuleiro - ponteiro para o tabuleiro do jogo (?PODE SER NULL?)
+*        ptabuleiro - ponteiro para o tabuleiro do jogo.
 *
 *
 *  $FV Valor retornado

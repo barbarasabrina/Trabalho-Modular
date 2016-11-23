@@ -45,6 +45,7 @@
 *       de todos os dados nela ancorados.
 *
 ***************************************************************************/
+#include <stdio.h>
 
 #if defined( PECA_OWN )
 #define PECA_EXT
@@ -56,8 +57,8 @@
 
 /* Tipo referência para uma peca */
 
-typedef struct PCA_peca * PCA_tpPeca ;
-typedef struct PCA_vetPeca * PCA_tpVetPeca ;
+typedef struct PCA_peca * PCA_tpPeca;
+typedef struct PCA_vetPeca * PCA_tpVetPeca;
 
 /***********************************************************************
 *
@@ -87,7 +88,7 @@ typedef enum {
 	/* Peca passada como parametro não pode realizar o movimento pedido */
 
 
-} PCA_tpCondRet ;
+} PCA_tpCondRet;
 
 /***********************************************************************
 *
@@ -115,7 +116,7 @@ typedef enum {
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_PegarPecaDoVetor (PCA_tpVetPeca Possiveis, PCA_tpPeca * peca, char nome, char cor);
+PCA_tpCondRet PCA_PegarPecaDoVetor(PCA_tpVetPeca Possiveis, PCA_tpPeca * peca, char nome, char cor);
 
 /***********************************************************************
 *
@@ -141,7 +142,7 @@ PCA_tpCondRet PCA_PegarPecaDoVetor (PCA_tpVetPeca Possiveis, PCA_tpPeca * peca, 
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_ObterCor (PCA_tpPeca peca, char* c);
+PCA_tpCondRet PCA_ObterCor(PCA_tpPeca peca, char* c);
 
 
 /***********************************************************************
@@ -168,7 +169,7 @@ PCA_tpCondRet PCA_ObterCor (PCA_tpPeca peca, char* c);
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_ObterNome (PCA_tpPeca peca, char* n);
+PCA_tpCondRet PCA_ObterNome(PCA_tpPeca peca, char* n);
 
 
 /***********************************************************************
@@ -198,7 +199,7 @@ PCA_tpCondRet PCA_ObterNome (PCA_tpPeca peca, char* n);
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk);
+PCA_tpCondRet PCA_ValidarMovimento(PCA_tpPeca peca, int dx, int dy, int atk);
 
 
 /***********************************************************************
@@ -228,7 +229,7 @@ passar para a anterior uma lista devidamente alocada e preenchida com todas as p
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_tpVetPeca *Possiveis, FILE * teste);
+PCA_tpCondRet PCA_InicializarPecas(char * filename, PCA_tpVetPeca * Possiveis);
 
 /***********************************************************************
 *
@@ -251,7 +252,7 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_tpVetPeca *Possiveis, FI
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_DestruirVetPecas (PCA_tpVetPeca Possiveis);
+PCA_tpCondRet PCA_DestruirVetPecas(PCA_tpVetPeca Possiveis);
 
 #undef PECA_EXT
 

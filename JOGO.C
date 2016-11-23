@@ -53,15 +53,15 @@ JGO_tpCondRet JGO_IniciarJogo(char * filename, PCA_tpVetPeca vetPecasPossiveis, 
 	char resp = '\0';
 
 	pTabuleiro = TAB_AlocarTabuleiro(8, 'H');
-	
+
 	TAB_CriarTabuleiro(pTabuleiro);
 
 	PCA_InicializarPecas(filename, &vetPecasPossiveis);
 
 	printf("\nJogo Padrão? S:N\n");
-	
+
 	scanf(" %d", resp);
-	
+
 	if (resp == 'S')
 		return JGO_MontarTabPadrao(pTabuleiro, vetPecasPossiveis);//Sabrina
 	else
@@ -98,7 +98,7 @@ JGO_tpCondRet JGO_MostrarTabuleiro(TAB_tpTabuleiro ptabuleiro)
 		}
 		printf("\n");
 	}
-	
+
 	return JGO_CondRetOK;
 
 }/* Fim função: TAB &Mostrar Tabuleiro*/
@@ -147,56 +147,56 @@ JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check, char *p
 				break;
 		}
 	}
-	TAB_ObterListaAmeacantes(pTabuleiro,LIN,COL,ameacantes);
-	if(ameacantes == NULL)
+	TAB_ObterListaAmeacantes(pTabuleiro, LIN, COL, ameacantes);
+	if (ameacantes == NULL)
 	{
 		*check = 0;
 	}
 
-	if(ameacantes != NULL)
+	if (ameacantes != NULL)
 	{
-		TAB_ObterListaAmeacados(pTabuleiro,LIN,COL,ameacados);
-		if(ameacados == NULL)
+		TAB_ObterListaAmeacados(pTabuleiro, LIN, COL, ameacados);
+		if (ameacados == NULL)
 			*check = 1;
 
-			TAB_ObterPeca(pTabuleiro,LIN+1,COL,p);
-			PCA_ObterCor((*p),corp);
-			if(corp != pCor)
-				cont++;
-			TAB_ObterPeca(pTabuleiro,LIN,COL+1,p);
-			PCA_ObterCor((*p),corp);
-			if(corp != pCor)
-				cont++;
-			TAB_ObterPeca(pTabuleiro,LIN+1,COL+1,p);
-			PCA_ObterCor((*p),corp);
-			if(corp != pCor)
-				cont++;
-			TAB_ObterPeca(pTabuleiro,LIN,COL-1,p);
-			PCA_ObterCor((*p),corp);
-			if(corp != pCor)
-				cont++;
-			TAB_ObterPeca(pTabuleiro,LIN+1,COL-1,p);
-			PCA_ObterCor((*p),corp);
-			if(corp != pCor)
-				cont++;
-			TAB_ObterPeca(pTabuleiro,LIN-1,COL,p);
-			PCA_ObterCor((*p),corp);
-			if(corp != pCor)
-				cont++;
-			TAB_ObterPeca(pTabuleiro,LIN-1,COL+1,p);
-			PCA_ObterCor((*p),corp);
-			if(corp != pCor)
-				cont++;
-			TAB_ObterPeca(pTabuleiro,LIN-1,COL-1,p);
-			PCA_ObterCor((*p),corp);
-			if(corp != pCor)
-				cont++;
+		TAB_ObterPeca(pTabuleiro, LIN + 1, COL, p);
+		PCA_ObterCor((*p), corp);
+		if (corp != pCor)
+			cont++;
+		TAB_ObterPeca(pTabuleiro, LIN, COL + 1, p);
+		PCA_ObterCor((*p), corp);
+		if (corp != pCor)
+			cont++;
+		TAB_ObterPeca(pTabuleiro, LIN + 1, COL + 1, p);
+		PCA_ObterCor((*p), corp);
+		if (corp != pCor)
+			cont++;
+		TAB_ObterPeca(pTabuleiro, LIN, COL - 1, p);
+		PCA_ObterCor((*p), corp);
+		if (corp != pCor)
+			cont++;
+		TAB_ObterPeca(pTabuleiro, LIN + 1, COL - 1, p);
+		PCA_ObterCor((*p), corp);
+		if (corp != pCor)
+			cont++;
+		TAB_ObterPeca(pTabuleiro, LIN - 1, COL, p);
+		PCA_ObterCor((*p), corp);
+		if (corp != pCor)
+			cont++;
+		TAB_ObterPeca(pTabuleiro, LIN - 1, COL + 1, p);
+		PCA_ObterCor((*p), corp);
+		if (corp != pCor)
+			cont++;
+		TAB_ObterPeca(pTabuleiro, LIN - 1, COL - 1, p);
+		PCA_ObterCor((*p), corp);
+		if (corp != pCor)
+			cont++;
 
-			if(cont >0)
-				*check = 1;
-			else if (cont==0)
-				*check = 2;
-		
+		if (cont >0)
+			*check = 1;
+		else if (cont == 0)
+			*check = 2;
+
 
 	}
 	return JGO_CondRetOK;
@@ -254,17 +254,17 @@ void JGO_LerComando(TAB_tpTabuleiro ptabuleiro, int* linhaOrigem, char* colunaOr
 *  Função: TAB  &Montar Tabuleiro Modificado
 *
 *  ****/
-JGO_tpCondRet JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_VetPeca pecas)
+JGO_tpCondRet JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca pecas)
 {
-	int i,CondRet;
+	int i, CondRet;
 	char  j, nome, cor;
-	PCA_tpPeca *peca = (PCA_tpPeca *)malloc(sizeof(PCA_tpPeca));	
+	PCA_tpPeca *peca = (PCA_tpPeca *)malloc(sizeof(PCA_tpPeca));
 
-	while (pecas!=NULL)
+	while (pecas != NULL)
 	{
 		LIS_ObterNo(pecas, peca);
-		PCA_ObterCor(peca,&cor);
-		PCA_ObterNome(peca,&nome);
+		PCA_ObterCor(peca, &cor);
+		PCA_ObterNome(peca, &nome);
 		while (peca != NULL)
 		{
 			printf("onde por a peça %c de cor %c", cor, nome);
@@ -315,7 +315,7 @@ JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca peca
 	{
 		return CondRet;
 	}
-	
+
 	//Insere todos os peões pretos
 	CondRet = PCA_PegarPecaDoVetor(pecas, peca, 'P', 'P');
 	if (CondRet == JGO_CondRetOK)
