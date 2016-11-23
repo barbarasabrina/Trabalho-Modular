@@ -438,7 +438,7 @@ JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca peca
 		return CondRet;
 	}
 
-	system("PAUSE");
+	return JGO_CondRetOK;
 
 }/* Fim função: JGO &Montar Tabuleiro Padrão */
 
