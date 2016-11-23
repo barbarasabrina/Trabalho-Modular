@@ -126,7 +126,7 @@ PCA_tpCondRet PCA_PegarPecaDoVetor (PCA_tpVetPeca Possiveis, PCA_tpPeca * peca, 
 *		Obtem cor da peca passada como parâmetro
 *
 *  $AE Assertiva de Entrada
-*
+*		A peça passada é valida, ou NULL
 *
 *  $AS Assertiva de Saida
 *		Caso a peça exista, a cor da mesma é armazenada no endereço passado pela função anterior
@@ -153,7 +153,7 @@ PCA_tpCondRet PCA_ObterCor (PCA_tpPeca peca, char* c);
 *		Obtem nome da peca passada como parâmetro
 *
 *  $AE Assertiva de Entrada
-*
+*		A peça passada é valida, ou NULL
 *
 *  $AS Assertiva de Saida
 *		Caso a peça exista, a cor da mesma é armazenada no endereço passado pela função anterior
