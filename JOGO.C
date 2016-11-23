@@ -1,5 +1,5 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: JGO jogo de xadrez
+*  $MCI Módulo de implementação: JGO Jogo de Xadrez
 *
 *  Arquivo gerado:              JOGO.c
 *  Letras identificadoras:      JGO
@@ -33,12 +33,12 @@
 #include "JOGO.h"
 #undef JOGO_OWN
 
+
 /***** Protótipos das funções encapuladas no módulo *****/
 
 static void JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_VetPeca pecas);
-static void JGO_LerComando(TAB_tpTabuleiro ptabuleiro, int* linhaOrigem, char* colunaOrigem, int* linhaDestino, char* colunaDestinho);
 static void JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_VetPeca pecas);
-
+static void JGO_LerComando(TAB_tpTabuleiro ptabuleiro, int* linhaOrigem, char* colunaOrigem, int* linhaDestino, char* colunaDestinho);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -46,8 +46,8 @@ static void JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_VetPeca pecas);
 /***************************************************************************
 *
 *  Função: TAB  &Iniciar Jogo
+*
 *  ****/
-
 JGO_tpCondRet JGO_IniciarJogo (char* filename, PCA_VetPeca vetPecasPossiveis, TAB_tpTabuleiro pTabuleiro){
 
 	char resp = '\0';
@@ -68,8 +68,8 @@ JGO_tpCondRet JGO_IniciarJogo (char* filename, PCA_VetPeca vetPecasPossiveis, TA
 /***************************************************************************
 *
 *  Função: TAB  &Mostrar Tabuleiro
+*
 *  ****/
-
 JGO_tpCondRet JGO_MostrarTabuleiro (TAB_tpTabuleiro ptabuleiro)
 {
 	PCA_tpPeca peca;
@@ -101,51 +101,9 @@ JGO_tpCondRet JGO_MostrarTabuleiro (TAB_tpTabuleiro ptabuleiro)
 
 /***************************************************************************
 *
-*  Função: TAB  &Montar Tabuleiro Modificado
-*  ****/
-
-void JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_VetPeca pecas)
-{
-	int i,k;
-	char  j, nome, cor;
-	PCA_tpPeca *peca = (PCA_tpPeca *)malloc(sizeof(PCA_tpPeca));	
-
-	while (pecas!=NULL)
-	{
-		LIS_ObterNo(pecas, peca);
-		PCA_ObterCor(peca,&cor);
-		PCA_ObterNome(peca,&nome);
-		while (peca != NULL)
-		{
-			printf("onde por a peça %c de cor %c", cor, nome);
-			scanf("%d %c", &i, &j);
-			k = TAB_InserirPeca(ptabuleiro, i, j, peca);
-			while (k != 0) {
-				if (k == 1)
-				{
-					printf("casa ocupada tente novamente\n");
-					scanf("%d %c", &i, &j);
-					k = TAB_InserirPeca(ptabuleiro, i, j, peca);
-				}
-				else if (k == 4)
-				{
-					printf("coordenada nao existe tente novamente\n");
-					scanf("%d %c", &i, &j);
-					k = TAB_InserirPeca(ptabuleiro, i, j, peca);
-				}
-			}
-		}
-		LIS_IrProximoElemento(pecas);
-
-	}
-}/* Fim função: JGO &Montar Tabuleiro Modificado*/
-
-
-/***************************************************************************
-*
 *  Função: JGO  &Realizar movimento no Tabuleiro
+*
 *  ****/
-
 JGO_tpCondRet JGO_RealizarMovimento(PCA_VetPeca vetPecasPossiveis, TAB_tpTabuleiro pTabuleiro)
 {
 	int linhaOrigem = 0, linhaDestino = 0;
@@ -157,111 +115,11 @@ JGO_tpCondRet JGO_RealizarMovimento(PCA_VetPeca vetPecasPossiveis, TAB_tpTabulei
 
 }/* Fim função: JGO &Realizar movimento no Tabuleiro */
 
-
 /***************************************************************************
 *
-*  Função: TAB  &Montar Tabuleiro Modificado
-*  ****/
-
-void JGO_LerComando(TAB_tpTabuleiro ptabuleiro, int* linhaOrigem, char* colunaOrigem, int* linhaDestino, char* colunaDestinho)
-{
-	int linha = -1;
-	char coluna = '\0';
-
-	printf("\nInforme a linha da coordenada de Origem da peca:\n");
-
-	scanf(" %d", &linha);
-	*linhaOrigem = linha;
-
-	printf("\nInforme a coluna da coordenada de Origem da peca:\n");
-
-	scanf(" %c", &coluna);
-	*colunaOrigem = coluna;
-
-	printf("\nInforme a linha da coordenada de Destino da peca:\n");
-
-	scanf("%d", &linha);
-	*linhaDestino = linha;
-
-	printf("\nInforme a coluna da coordenada de Destino da peca:\n");
-
-	scanf(" %c", &coluna);
-	*colunaDestinho = coluna;
-
-	system("PAUSE");
-}
-
-/***************************************************************************
+*  Função: JGO  &Verificar check
 *
-*  Função: JGO  &Montar Tabuleiro Padrão
 *  ****/
-
-void JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_VetPeca pecas)
-{
-	int j;
-	PCA_tpPeca * peca = (PCA_tpPeca*)malloc(sizeof(PCA_tpPeca));
-
-	//Insere todos os peões brancos
-	PCA_PegarPecaDoVetor(pecas, peca, 'P', 'B');
-	for (j = 'A'; j < 'I';j++)
-	{
-		TAB_InserirPeca(ptabuleiro, 2, j, peca);
-	}
-
-	//Insere todos os peões pretos
-	PCA_PegarPecaDoVetor(pecas, peca, 'P', 'P');
-	for (j = 'A'; j < 'I'; j++)
-	{
-		TAB_InserirPeca(ptabuleiro, 7, j, peca);
-	}
-
-	//Insere todas as torres brancas
-	PCA_PegarPecaDoVetor(pecas, peca, 'T', 'B');
-	TAB_InserirPeca(ptabuleiro, 1, 'A', peca);
-	TAB_InserirPeca(ptabuleiro, 1, 'H', peca);
-
-	//Insere todas as torres pretas
-	PCA_PegarPecaDoVetor(pecas, peca, 'T', 'P');
-	TAB_InserirPeca(ptabuleiro, 8, 'A', peca);
-	TAB_InserirPeca(ptabuleiro, 8, 'H', peca);
-
-	//Insere todos os cavalos brancos
-	PCA_PegarPecaDoVetor(pecas, peca, 'C', 'B');
-	TAB_InserirPeca(ptabuleiro, 1, 'B', peca);
-	TAB_InserirPeca(ptabuleiro, 1, 'G', peca);
-
-	//Insere todos os cavalos pretos
-	PCA_PegarPecaDoVetor(pecas, peca, 'C', 'P');
-	TAB_InserirPeca(ptabuleiro, 8, 'B', peca);
-	TAB_InserirPeca(ptabuleiro, 8, 'G', peca);
-
-	//Insere todos os bispos brancos
-	PCA_PegarPecaDoVetor(pecas, peca, 'B', 'B');
-	TAB_InserirPeca(ptabuleiro, 1, 'C', peca);
-	TAB_InserirPeca(ptabuleiro, 1, 'F', peca);
-
-	//Insere todos os bispos pretos
-	PCA_PegarPecaDoVetor(pecas, peca, 'B', 'P');
-	TAB_InserirPeca(ptabuleiro, 8, 'C', peca);
-	TAB_InserirPeca(ptabuleiro, 8, 'F', peca);
-
-	//Insere a rainha branca
-	PCA_PegarPecaDoVetor(pecas, peca, 'D', 'B');
-	TAB_InserirPeca(ptabuleiro, 1, 'E', peca);
-
-	//Insere a rainha preta
-	PCA_PegarPecaDoVetor(pecas, peca, 'D', 'P');
-	TAB_InserirPeca(ptabuleiro, 8, 'E', peca);
-
-	//Insere o rei branco
-	PCA_PegarPecaDoVetor(pecas, peca, 'R', 'B');
-	TAB_InserirPeca(ptabuleiro, 1, 'D', peca);
-
-	//Insere o rei preto
-	PCA_PegarPecaDoVetor(pecas, peca, 'R', 'P');
-	TAB_InserirPeca(ptabuleiro, 8, 'D', peca);		
-}/* Fim função: JGO &Montar Tabuleiro Padrão */
-
 JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check,char *pCor)
 {
 	int LIN,j,cont=0;
@@ -340,14 +198,165 @@ JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check,char *pC
 
 	
 	return JGO_CondRetOK;
-}
+}/* Fim função: JGO &Verificar check */
 
-JGO_tpCondRet JGO_FinalizarJogo(JGO_tppJogo pJogo)
+
+/***************************************************************************
+*
+*  Função: JGO  &Finalizar Jogo
+*
+*  ****/
+JGO_tpCondRet JGO_FinalizarJogo(TAB_tpTabuleiro ptabuleiro)
 {
-
-}
+	return (JGO_tpCondRet)TAB_DestruirTabuleiro(ptabuleiro);
+}/* Fim função: JGO &Finalizar jogo */
 
 
 /*****  Código das funções encapsuladas no módulo  *****/
+
+
+/***************************************************************************
+*
+*  Função: TAB  &Ler Comando
+*
+*  ****/
+void JGO_LerComando(TAB_tpTabuleiro ptabuleiro, int* linhaOrigem, char* colunaOrigem, int* linhaDestino, char* colunaDestinho)
+{
+	int linha = -1;
+	char coluna = '\0';
+
+	printf("\nInforme a linha da coordenada de Origem da peca:\n");
+
+	scanf(" %d", &linha);
+	*linhaOrigem = linha;
+
+	printf("\nInforme a coluna da coordenada de Origem da peca:\n");
+
+	scanf(" %c", &coluna);
+	*colunaOrigem = coluna;
+
+	printf("\nInforme a linha da coordenada de Destino da peca:\n");
+
+	scanf("%d", &linha);
+	*linhaDestino = linha;
+
+	printf("\nInforme a coluna da coordenada de Destino da peca:\n");
+
+	scanf(" %c", &coluna);
+	*colunaDestinho = coluna;
+}/* Fim função: JGO &Ler Comando */
+
+
+/***************************************************************************
+*
+*  Função: TAB  &Montar Tabuleiro Modificado
+*
+*  ****/
+void JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_VetPeca pecas)
+{
+	int i,k;
+	char  j, nome, cor;
+	PCA_tpPeca *peca = (PCA_tpPeca *)malloc(sizeof(PCA_tpPeca));	
+
+	while (pecas!=NULL)
+	{
+		LIS_ObterNo(pecas, peca);
+		PCA_ObterCor(peca,&cor);
+		PCA_ObterNome(peca,&nome);
+		while (peca != NULL)
+		{
+			printf("onde por a peça %c de cor %c", cor, nome);
+			scanf("%d %c", &i, &j);
+			k = TAB_InserirPeca(ptabuleiro, i, j, peca);
+			while (k != 0) {
+				if (k == 1)
+				{
+					printf("casa ocupada tente novamente\n");
+					scanf("%d %c", &i, &j);
+					k = TAB_InserirPeca(ptabuleiro, i, j, peca);
+				}
+				else if (k == 4)
+				{
+					printf("coordenada nao existe tente novamente\n");
+					scanf("%d %c", &i, &j);
+					k = TAB_InserirPeca(ptabuleiro, i, j, peca);
+				}
+			}
+		}
+		LIS_IrProximoElemento(pecas);
+	}
+}/* Fim função: JGO &Montar Tabuleiro Modificado */
+
+/***************************************************************************
+*
+*  Função: JGO  &Montar Tabuleiro Padrão
+*
+*  ****/
+void JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_VetPeca pecas)
+{
+	int j;
+	PCA_tpPeca * peca = (PCA_tpPeca*)malloc(sizeof(PCA_tpPeca));
+
+	//Insere todos os peões brancos
+	PCA_PegarPecaDoVetor(pecas, peca, 'P', 'B');
+	for (j = 'A'; j < 'I';j++)
+	{
+		TAB_InserirPeca(ptabuleiro, 2, j, peca);
+	}
+
+	//Insere todos os peões pretos
+	PCA_PegarPecaDoVetor(pecas, peca, 'P', 'P');
+	for (j = 'A'; j < 'I'; j++)
+	{
+		TAB_InserirPeca(ptabuleiro, 7, j, peca);
+	}
+
+	//Insere todas as torres brancas
+	PCA_PegarPecaDoVetor(pecas, peca, 'T', 'B');
+	TAB_InserirPeca(ptabuleiro, 1, 'A', peca);
+	TAB_InserirPeca(ptabuleiro, 1, 'H', peca);
+
+	//Insere todas as torres pretas
+	PCA_PegarPecaDoVetor(pecas, peca, 'T', 'P');
+	TAB_InserirPeca(ptabuleiro, 8, 'A', peca);
+	TAB_InserirPeca(ptabuleiro, 8, 'H', peca);
+
+	//Insere todos os cavalos brancos
+	PCA_PegarPecaDoVetor(pecas, peca, 'C', 'B');
+	TAB_InserirPeca(ptabuleiro, 1, 'B', peca);
+	TAB_InserirPeca(ptabuleiro, 1, 'G', peca);
+
+	//Insere todos os cavalos pretos
+	PCA_PegarPecaDoVetor(pecas, peca, 'C', 'P');
+	TAB_InserirPeca(ptabuleiro, 8, 'B', peca);
+	TAB_InserirPeca(ptabuleiro, 8, 'G', peca);
+
+	//Insere todos os bispos brancos
+	PCA_PegarPecaDoVetor(pecas, peca, 'B', 'B');
+	TAB_InserirPeca(ptabuleiro, 1, 'C', peca);
+	TAB_InserirPeca(ptabuleiro, 1, 'F', peca);
+
+	//Insere todos os bispos pretos
+	PCA_PegarPecaDoVetor(pecas, peca, 'B', 'P');
+	TAB_InserirPeca(ptabuleiro, 8, 'C', peca);
+	TAB_InserirPeca(ptabuleiro, 8, 'F', peca);
+
+	//Insere a rainha branca
+	PCA_PegarPecaDoVetor(pecas, peca, 'D', 'B');
+	TAB_InserirPeca(ptabuleiro, 1, 'E', peca);
+
+	//Insere a rainha preta
+	PCA_PegarPecaDoVetor(pecas, peca, 'D', 'P');
+	TAB_InserirPeca(ptabuleiro, 8, 'E', peca);
+
+	//Insere o rei branco
+	PCA_PegarPecaDoVetor(pecas, peca, 'R', 'B');
+	TAB_InserirPeca(ptabuleiro, 1, 'D', peca);
+
+	//Insere o rei preto
+	PCA_PegarPecaDoVetor(pecas, peca, 'R', 'P');
+	TAB_InserirPeca(ptabuleiro, 8, 'D', peca);		
+}/* Fim função: JGO &Montar Tabuleiro Padrão */
+
 
 /********** Fim do módulo de implementação: JGO Jogo - Jogo de Xadrez  **********/
