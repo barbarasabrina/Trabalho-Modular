@@ -45,7 +45,7 @@
 *       de todos os dados nela ancorados.
 *
 ***************************************************************************/
-#include <stdio.h>
+
 
 #if defined( PECA_OWN )
 #define PECA_EXT
@@ -57,8 +57,8 @@
 
 /* Tipo referência para uma peca */
 
-typedef struct PCA_peca * PCA_tpPeca;
-typedef struct PCA_vetPeca * PCA_tpVetPeca;
+typedef struct PCA_peca * PCA_tpPeca ;
+typedef struct PCA_vetPeca * PCA_tpVetPeca ;
 
 /***********************************************************************
 *
@@ -88,7 +88,7 @@ typedef enum {
 	/* Peca passada como parametro não pode realizar o movimento pedido */
 
 
-} PCA_tpCondRet;
+} PCA_tpCondRet ;
 
 /***********************************************************************
 *
@@ -98,7 +98,7 @@ typedef enum {
 *		Obtem peça que possui nome e cor iguais aos passados como parametro
 *
 *  $AE Assertiva de Entrada
-*
+*		Possiveis é válido ou é NULL
 *
 *  $AS Assertiva de Saida
 *		Caso a peça exista, a mesma é armazenada no endereço passado pela função anterior
@@ -116,7 +116,7 @@ typedef enum {
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_PegarPecaDoVetor(PCA_tpVetPeca Possiveis, PCA_tpPeca * peca, char nome, char cor);
+PCA_tpCondRet PCA_PegarPecaDoVetor (PCA_tpVetPeca Possiveis, PCA_tpPeca * peca, char nome, char cor);
 
 /***********************************************************************
 *
@@ -142,7 +142,7 @@ PCA_tpCondRet PCA_PegarPecaDoVetor(PCA_tpVetPeca Possiveis, PCA_tpPeca * peca, c
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_ObterCor(PCA_tpPeca peca, char* c);
+PCA_tpCondRet PCA_ObterCor (PCA_tpPeca peca, char* c);
 
 
 /***********************************************************************
@@ -169,7 +169,7 @@ PCA_tpCondRet PCA_ObterCor(PCA_tpPeca peca, char* c);
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_ObterNome(PCA_tpPeca peca, char* n);
+PCA_tpCondRet PCA_ObterNome (PCA_tpPeca peca, char* n);
 
 
 /***********************************************************************
@@ -199,7 +199,7 @@ PCA_tpCondRet PCA_ObterNome(PCA_tpPeca peca, char* n);
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_ValidarMovimento(PCA_tpPeca peca, int dx, int dy, int atk);
+PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk);
 
 
 /***********************************************************************
@@ -224,12 +224,12 @@ passar para a anterior uma lista devidamente alocada e preenchida com todas as p
 *
 *  $FV Valor retornado
 *		PCA_CondRetOK				      - Executou OK
-*		PCA_CondRetFaltouMemoria	      - Nao ouve espaço suficiente para gerar no vetor
+*		PCA_CondRetFaltouMemoria	      - Nao ouve espaço suficiente para gerar o vetor
 *       PCA_CondRetErroNaLeituraDoArquivo - O arquivo nao existe ou nao esta organizado de forma correta
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_InicializarPecas(char * filename, PCA_tpVetPeca * Possiveis);
+PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_tpVetPeca * Possiveis);
 
 /***********************************************************************
 *
@@ -252,7 +252,7 @@ PCA_tpCondRet PCA_InicializarPecas(char * filename, PCA_tpVetPeca * Possiveis);
 *
 ***********************************************************************/
 
-PCA_tpCondRet PCA_DestruirVetPecas(PCA_tpVetPeca Possiveis);
+PCA_tpCondRet PCA_DestruirVetPecas (PCA_tpVetPeca Possiveis);
 
 #undef PECA_EXT
 
