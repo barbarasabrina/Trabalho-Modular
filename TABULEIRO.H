@@ -102,8 +102,11 @@ typedef enum {
 	TAB_CondRetCasaNaoExiste = 7,
 	/* Casa não existe, está nula */
 
-	TAB_CondRetListaAmeacanteVazia = 8
+	TAB_CondRetListaAmeacanteVazia = 8,
 	/* Lista de ameacante está nula*/
+		
+	TAB_CondRetMovimentoInvlaido = 9
+	/*Movimento não foi Validado*/
 
 
 } TAB_tpCondRet;
