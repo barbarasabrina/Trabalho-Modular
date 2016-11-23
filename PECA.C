@@ -101,7 +101,7 @@ PCA_tpCondRet PCA_PegarPecaDoVetor (PCA_VetPeca * Possiveis, PCA_tpPeca * peca, 
 
 PCA_tpCondRet PCA_ObterCor (PCA_tpPeca peca, char* c)
 {
-	if (peca=NULL)
+	if (peca==NULL)
 		return PCA_CondRetPecaNaoExiste;
 	*c = peca->corPeca;
 	return PCA_CondRetOK;
@@ -115,9 +115,9 @@ PCA_tpCondRet PCA_ObterCor (PCA_tpPeca peca, char* c)
 
 PCA_tpCondRet PCA_ObterNome (PCA_tpPeca peca, char* n)
 {
-	if (peca=NULL)
+	if (peca==NULL)
 		return PCA_CondRetPecaNaoExiste;
-	*n = peca->corPeca;
+	*n = peca->nomePeca;
 	return PCA_CondRetOK;
 }
 
@@ -132,7 +132,7 @@ PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk)
 	PCA_Mov mov;
 	int i;
 
-	if (peca=NULL)
+	if (peca==NULL)
 		return PCA_CondRetPecaNaoExiste;
 
 	mov.dx=dx;
