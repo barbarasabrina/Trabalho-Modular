@@ -104,7 +104,7 @@ o	 Para que AINV continue valendo, B deve garantir que a casa da coluna j da lin
 o	No último ciclo, j é maior do que ptabuleiro->coluna. Nesse caso, vale AS
 6 – Término
 o	Como a cada ciclo a casa da coluna j da linha i é inicializada, e o tabuleiro possui um número finito de colunas, a repetição termina em um número finito de passos
-
+ 
 •	Argumentação de Sequência:
 AI5
 - Pela AS da função TAB_IniciarCasa a casa da coluna j, da linha i foi inicializada.
