@@ -1,0 +1,66 @@
+// Script:    TesteLista.script
+// Autor:     BSHMC, RFV, LLAR
+// Data:      02/10/2016
+// Propósito: Testar o módulo tabuleiro genérico
+//
+
+== Inicializar valores
+=declararparm   tabuleiro0  int 0
+=declararparm   tabuleiro1  int 1
+
+=declararparm   lista0  int 0
+=declararparm   lista1  int 1
+
+=declararparm	linha9		int 0
+=declararparm	linha1		int 1
+=declararparm	linha2		int 2
+=declararparm	linha3		int 3
+=declararparm	linha4		int 4
+=declararparm	linha5		int 5
+=declararparm	linha6		int 6
+=declararparm	linha7		int 7
+=declararparm	linha8		int 8
+
+=declararparm	coluna9		string	"@"
+=declararparm	coluna1		string	"A"
+=declararparm	coluna2		string	"B"
+=declararparm	coluna3		string	"C"
+=declararparm	coluna4		string	"D"
+=declararparm	coluna5		string	"E"
+=declararparm	coluna6		string	"F"
+=declararparm	coluna7		string	"G"
+=declararparm	coluna8		string	"H"
+
+=declararparm   str0    string  "A"
+=declararparm   str1    string  "B"
+=declararparm   str2    string  "C"
+=declararparm   str3    string  "D"
+=declararparm   str4    string  "E"
+=declararparm	str5	string	"Ameacados"
+=declararparm	str6	string	"Ameacantes"
+=declararparm	str7	string	"PecasPossiveis.txt"
+
+=declararparm   OK             			int  0
+=declararparm   CasaOcupada	   			int  1
+=declararparm   TabuleiroVazio     		int  2
+=declararparm   TabuleiroNaoExiste 		int  3
+=declararparm	CoordNaoExiste			int  4
+=declararparm	PecaNaoExiste			int  5
+=declararparm   FaltouMemoria  			int  6
+
+=declararparm   pNULL          int  0
+=declararparm   pNaoNULL       int  1
+
+=resetteste
+
+==Iniciar Jogo
+=iniciarJogo		str7		lista0			tabuleiro0		OK
+
+==Mostrar Tabuleiro Padrao
+=mostrarTabuleiro	tabuleiro0		OK
+
+==Finalizar Jogo
+=finalizarJogo		tabuleiro0		OK
+
+
+// fim
