@@ -117,7 +117,7 @@ typedef enum {
 *		PCA_CondRetOK				- Executou OK
 *		PCA_CondRetPecaNaExiste  	- Peca não existe
 *
-***********************************************************************/
+***********************************************************************/ 
 
 PCA_tpCondRet PCA_PegarPecaDoVetor (PCA_tpVetPeca Possiveis, PCA_tpPeca * peca, char nome, char cor);
 
