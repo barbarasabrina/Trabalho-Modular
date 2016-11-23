@@ -42,7 +42,10 @@ static const char VALIDAR_MOVIMENTO_CMD  [ ] = "=validarMovimento"	;
 
 #define DIM_VALOR 100
 
-#define FILENAME "PecasPossiveis.txt"
+
+PCA_tpPeca PecaCorrente = NULL;
+
+PCA_tpVetPeca VetPecasPossiveis = NULL;
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
@@ -76,8 +79,9 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 	TST_tpCondRet CondRet ;
 
-	char   nomeDado, nomeRecebido ,
-		corDada,  corRecebida  ;
+	char StringDado [DIM_VALOR], *pDado ;
+	char	nomeDado, nomeRecebido ,
+			corDada,  corRecebida  ;
 
 	int dx, dy, atk;
 
@@ -85,30 +89,32 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 	int numElem = -1 ;
 
-	PCA_tpPeca PecaCorrente = NULL;
-
-	PCA_tpVetPeca VetPecasPossiveis = NULL;
 
 
 	/* Testar Inicializar Pecas */
 
 	if ( strcmp( ComandoTeste , INICIALIZAR_PECAS_CMD ) == 0 )
 	{
-		numLidos = LER_LerParametros( "i" ,
-			&CondRetEsp ) ;
+		numLidos = LER_LerParametros( "si" ,
+			StringDado, &CondRetEsp ) ;
 
-		fprintf(aux, "Entrou no inicializar peca\n");
-
-		if ( numLidos != 1 )
+		if ( numLidos != 2 )
 		{
 			return TST_CondRetParm ;
 		} /* if */
 
-		fprintf(aux, "Numero certo de parametros\n");
+		pDado = (char *)malloc(strlen(StringDado) + 1);
 
-		CondRet = PCA_InicializarPecas(FILENAME, &VetPecasPossiveis, aux);
+		if (pDado == NULL)
+		{
+			return TST_CondRetMemoria;
+		} /* if */
 
-		fprintf(aux, "InicializarPecas retornou %d\n", CondRet);
+		strcpy(pDado, StringDado);
+
+		CondRet = PCA_InicializarPecas(pDado, &VetPecasPossiveis);
+
+		free(pDado);
 
 		return TST_CompararInt(CondRetEsp, CondRet,
 			"Condicao de retorno errada ao inicializar pecas.");
@@ -120,8 +126,8 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	else if ( strcmp( ComandoTeste , PEGAR_PECA_CMD ) == 0 )
 	{
 
-		numLidos = LER_LerParametros( "icc" ,
-			&CondRetEsp, &nomeDado, &corDada ) ;
+		numLidos = LER_LerParametros( "cci" ,
+			 &nomeDado, &corDada, &CondRetEsp) ;
 
 		if ( numLidos != 3 )
 		{
