@@ -172,8 +172,8 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_tpVetPeca *Possiveis, FI
 
 	for (i=0; i<vetTemp->n; i++){	/* Para cada peca */
 
-		numLido = fscanf(ArqPecasPossiveis, "%c",&charTemp);																	/* Ler separador de pecas (\n) */
-		if (teste!=NULL) fprintf(teste, "Leu o enter %d\n", charTemp);
+		numLido = fscanf(ArqPecasPossiveis, "%c",&charTemp);																/* Ler separador de pecas (\n) */
+		if (teste!=NULL) fprintf(teste, "Leu o enter (%d - Em ASCII)\n", charTemp);
 		if (numLido != 1 || charTemp != '\n') return PCA_CondRetErroNaLeituraDoArquivo;
 
 		numLido = fscanf(ArqPecasPossiveis, "%c%c%c", &vetTemp->peca[i].nomePeca, &charTemp, &vetTemp->peca[i].corPeca);	/* Ler nome e cor da peca */
@@ -194,9 +194,12 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_tpVetPeca *Possiveis, FI
 			if (numLido != 4) return PCA_CondRetErroNaLeituraDoArquivo;
 
 		}
-	}		
+	}
+
 	fclose(ArqPecasPossiveis);
+
 	*Possiveis = vetTemp;
+
 	return PCA_CondRetOK;
 }
 
