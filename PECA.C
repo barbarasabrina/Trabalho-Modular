@@ -129,7 +129,7 @@ PCA_tpCondRet PCA_ObterNome (PCA_tpPeca peca, char* n)
 
 PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk)
 {
-	PCA_Mov mov, *aux;
+	PCA_Mov mov;
 	int i;
 
 	if (peca=NULL)
@@ -154,7 +154,6 @@ PCA_tpCondRet PCA_ValidarMovimento (PCA_tpPeca peca, int dx, int dy, int atk)
 
 PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_tpVetPeca *Possiveis, FILE * teste){
 	FILE* ArqPecasPossiveis;
-	PCA_tpCondRet CondRet;
 	int i, j, numLido;
 	char charTemp;
 	PCA_tpVetPeca vetTemp;
@@ -209,7 +208,7 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_tpVetPeca *Possiveis, FI
 *  ************************************************************************/
 
 PCA_tpCondRet PCA_DestruirVetPecas (PCA_VetPeca *Possiveis) {
-	int i, j;
+	int i;
 
 	for (i=0; i<Possiveis->n; i++)
 		free(Possiveis->peca[i].movValido);
@@ -221,16 +220,6 @@ PCA_tpCondRet PCA_DestruirVetPecas (PCA_VetPeca *Possiveis) {
 
 
 /*****  Código das funções encapsuladas no módulo  *****/
-
-void LiberarMovimento (PCA_Mov * mov){
-	free(mov);
-}
-
-void LiberarPeca (PCA_Peca* peca){
-	free(peca->movValido);
-	free(peca);
-}
-
 
 int ComparaMov (PCA_Mov m1, PCA_Mov m2)
 {
