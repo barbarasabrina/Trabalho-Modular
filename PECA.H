@@ -58,6 +58,9 @@
 /* Tipo referência para uma peca */
 
 typedef struct PCA_peca * PCA_tpPeca ;
+
+/* Tipo referência para um vetor de pecas*/
+
 typedef struct PCA_vetPeca * PCA_tpVetPeca ;
 
 /***********************************************************************
