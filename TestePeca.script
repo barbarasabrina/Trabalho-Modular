@@ -32,11 +32,15 @@
 == Inicializar pecas com arquivo nao existente
 =inicializarPecas	str1	ErrArquivo
 
-== Pegar peca OK
-=pegarPecaDoVetor	nome0	cor0	OK
-
 == Pegar peca não válida
 =pegarPecaDoVetor	nome1	cor1	PecaNaoExiste
+
+== Obter cor e nome de peça não existente
+=obterNome	nome0	PecaNaoExiste
+=obterCor	cor0	PecaNaoExiste
+
+== Pegar peca OK
+=pegarPecaDoVetor	nome0	cor0	OK
 
 == Obter nome OK
 =obterNome	nome0	OK
