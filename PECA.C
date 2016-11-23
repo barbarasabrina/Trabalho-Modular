@@ -161,6 +161,7 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_tpVetPeca *Possiveis, FI
 	vetTemp = (PCA_tpVetPeca)malloc(sizeof(PCA_VetPeca));
 
 	ArqPecasPossiveis = fopen(filename, "r");
+	if (ArqPecasPossiveis == NULL) return PCA_CondRetErroNaLeituraDoArquivo;
 	numLido = fscanf(ArqPecasPossiveis, "%d%c", &vetTemp->n, &charTemp  ); /* Ler numero de pecas */
 
 	if (teste!=NULL) fprintf(teste, "Leu a primeira linha do arquivo, Total de pecas:%d\n", vetTemp->n);
