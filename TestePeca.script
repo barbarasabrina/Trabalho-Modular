@@ -1,12 +1,21 @@
 // Script:    TestePeca.script
 // Autor:     BSHMC, RFV, LLAR
 // Data:      20/nov/2016
-// Propósito: Testar o módulo peca
+// Proposito: Testar o modulo peca
 //
 
 == Inicializar valores
 
-=declararparm   str0    string  "bshm"
+=declararparm   str0    string  "PecasPossiveis.txt"
+=declararparm   str1    string  "bshm"
+
+=declararparm   nome0   char  'D'
+=declararparm   nome1   char  'Z'
+=declararparm   nome2   char  'C'
+
+=declararparm   cor0   char  'P'
+=declararparm   cor1   char  'Z'
+=declararparm   cor2   char  'B'
 
 =declararparm   OK             			int  0
 =declararparm   PecaNaoExiste	   		int  1
@@ -17,8 +26,30 @@
 =declararparm   pNULL          int  0
 =declararparm   pNaoNULL       int  1
 
-== Pegar pecas do arquivo OK
-=inicializarPecas OK
+== Inicializar pecas com arquivo OK
+=inicializarPecas	str0	OK
 
+== Inicializar pecas com arquivo nao existente
+=inicializarPecas	str1	ErrArquivo
+
+== Pegar peca OK
+=pegarPecaDoVetor	nome0	cor0	OK
+
+== Pegar peca não válida
+=pegarPecaDoVetor	nome1	cor1	PecaNaoExiste
+
+== Obter nome OK
+=obterNome	nome0	OK
+
+==Obter nome errado
+=obterNome	nome2	OK
+=recuperar
+
+== Obter cor OK
+=obterCor	cor0	OK
+
+== Obter cor errado
+=obterCor	cor2	OK
+=recuperar
 
 // fim
