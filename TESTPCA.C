@@ -97,7 +97,6 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		numLidos = LER_LerParametros( "i" ,
 			&CondRetEsp ) ;
 
-
 		fprintf(aux, "Entrou no inicializar peca\n");
 
 		if ( numLidos != 1 )
@@ -107,7 +106,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 		fprintf(aux, "Numero certo de parametros\n");
 
-		CondRet = PCA_InicializarPecas(FILENAME, VetPecasPossiveis, aux);
+		CondRet = PCA_InicializarPecas(FILENAME, &VetPecasPossiveis, aux);
 
 		fprintf(aux, "InicializarPecas retornou %d\n", CondRet);
 
