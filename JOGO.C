@@ -52,15 +52,13 @@ JGO_tpCondRet JGO_IniciarJogo(char * filename, PCA_tpVetPeca vetPecasPossiveis, 
 {
 	char resp = '\0';
 
-	pTabuleiro = TAB_AlocarTabuleiro(8, 'H');
-
 	TAB_CriarTabuleiro(pTabuleiro);
 
 	PCA_InicializarPecas(filename, &vetPecasPossiveis);
 
 	printf("\nJogo Padrão? S:N\n");
 
-	scanf(" %d", resp);
+	scanf(" %c", &resp);
 
 	if (resp == 'S')
 		return JGO_MontarTabPadrao(pTabuleiro, vetPecasPossiveis);//Sabrina
