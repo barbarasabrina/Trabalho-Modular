@@ -50,11 +50,17 @@ static void JGO_LerComando(TAB_tpTabuleiro ptabuleiro, int* linhaOrigem, char* c
 *  ****/
 JGO_tpCondRet JGO_IniciarJogo(char * filename, PCA_tpVetPeca vetPecasPossiveis, TAB_tpTabuleiro pTabuleiro)
 {
+	JGO_tpCondRet CondRet;
+
 	char resp = '\0';
 
-	TAB_CriarTabuleiro(pTabuleiro);
+	CondRet = TAB_CriarTabuleiro(pTabuleiro);
+	if (CondRet != 0)
+		return CondRet;
 
-	PCA_InicializarPecas(filename, &vetPecasPossiveis);
+	CondRet = PCA_InicializarPecas(filename, &vetPecasPossiveis);
+	if (CondRet != 0)
+		return CondRet;
 
 	printf("\nJogo Padrao? S:N\n");
 

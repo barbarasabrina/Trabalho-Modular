@@ -53,9 +53,10 @@
 
 =resetteste
 
-==Iniciar Jogo
-=iniciarJogo		str7		lista0			tabuleiro0		OK
+== Iniciar Jogo
+=iniciarJogo		str7		lista0		tabuleiro0	OK
 
-
+== Mostrar Tabuleiro
+==mostrarTabuleiro	tabuleiro0	OK
 
 // fim

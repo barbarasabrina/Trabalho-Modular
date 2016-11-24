@@ -36,12 +36,12 @@
 #include	"PECA.H"
 
 
-static const char RESET_JOGO_CMD[] = "=resetteste";
-static const char INICIAR_JOGO_CMD[] = "=iniciarJogo";
-static const char MOSTRAR_TABULEIRO_CMD[] = "=mostrarTabuleiro";
-static const char REALIZAR_MOVIMENTO_CMD[] = "=realizarMovimento";
-static const char FINALIZAR_JOGO_CMD[] = "=finalizarJogo";
-static const char VERIFICAR_CHECK_CMD[] = "=verificarCheck";
+static const char RESET_JOGO_CMD[]			= "=resetteste";
+static const char INICIAR_JOGO_CMD[]		= "=iniciarJogo";
+static const char MOSTRAR_TABULEIRO_CMD[]	= "=mostrarTabuleiro";
+static const char REALIZAR_MOVIMENTO_CMD[]	= "=realizarMovimento";
+static const char FINALIZAR_JOGO_CMD[]		= "=finalizarJogo";
+static const char VERIFICAR_CHECK_CMD[]		= "=verificarCheck";
 
 
 
