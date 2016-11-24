@@ -122,14 +122,14 @@ JGO_tpCondRet JGO_RealizarMovimento(PCA_tpVetPeca vetPecasPossiveis, TAB_tpTabul
 *  Função: JGO  &Verificar check
 *
 *  ****/
-JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check, char *pCor)
+JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check, char pCor)
 {
 	int LIN, j, cont = 0;
 	char COL;
-	char *nome = (char*)malloc(sizeof(char));
-	char * cor = (char*)malloc(sizeof(char)), *corp = (char*)malloc(sizeof(char));
-	PCA_tpPeca *peca = (PCA_tpPeca*)malloc(sizeof(PCA_tpPeca)), *p = (PCA_tpPeca*)malloc(sizeof(PCA_tpPeca));
-	LIS_tppLista *ameacantes = LIS_AlocarLista(), *ameacados = LIS_AlocarLista();
+	char nome;
+	char cor, corp;
+	PCA_tpPeca peca, p;
+	LIS_tppLista ameacantes, ameacados;
 
 	if (pTabuleiro == NULL)
 		JGO_CondRetTabuleiroNaoExiste;
@@ -138,14 +138,14 @@ JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check, char *p
 	{
 		for (COL = 'A'; COL <= 'H'; COL++)
 		{
-			j = TAB_ObterPeca(pTabuleiro, LIN, COL, peca);
-			j = PCA_ObterNome((*peca), nome);
-			j = PCA_ObterCor((*peca), cor);
-			if (nome == "R" && cor == pCor)
+			j = TAB_ObterPeca(pTabuleiro, LIN, COL, &peca);
+			j = PCA_ObterNome(peca, &nome);
+			j = PCA_ObterCor(peca, &cor);
+			if (nome == 'R' && cor == pCor)
 				break;
 		}
 	}
-	TAB_ObterListaAmeacantes(pTabuleiro, LIN, COL, ameacantes);
+	TAB_ObterListaAmeacantes(pTabuleiro, LIN, COL, &ameacantes);
 	if (ameacantes == NULL)
 	{
 		*check = 0;
@@ -153,40 +153,40 @@ JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check, char *p
 
 	if (ameacantes != NULL)
 	{
-		TAB_ObterListaAmeacados(pTabuleiro, LIN, COL, ameacados);
+		TAB_ObterListaAmeacados(pTabuleiro, LIN, COL, &ameacados);
 		if (ameacados == NULL)
 			*check = 1;
 
-		TAB_ObterPeca(pTabuleiro, LIN + 1, COL, p);
-		PCA_ObterCor((*p), corp);
+		TAB_ObterPeca(pTabuleiro, LIN + 1, COL, &p);
+		PCA_ObterCor(p, &corp);
 		if (corp != pCor)
 			cont++;
-		TAB_ObterPeca(pTabuleiro, LIN, COL + 1, p);
-		PCA_ObterCor((*p), corp);
+		TAB_ObterPeca(pTabuleiro, LIN, COL + 1, &p);
+		PCA_ObterCor(p, &corp);
 		if (corp != pCor)
 			cont++;
-		TAB_ObterPeca(pTabuleiro, LIN + 1, COL + 1, p);
-		PCA_ObterCor((*p), corp);
+		TAB_ObterPeca(pTabuleiro, LIN + 1, COL + 1, &p);
+		PCA_ObterCor(p, &corp);
 		if (corp != pCor)
 			cont++;
-		TAB_ObterPeca(pTabuleiro, LIN, COL - 1, p);
-		PCA_ObterCor((*p), corp);
+		TAB_ObterPeca(pTabuleiro, LIN, COL - 1, &p);
+		PCA_ObterCor(p, &corp);
 		if (corp != pCor)
 			cont++;
-		TAB_ObterPeca(pTabuleiro, LIN + 1, COL - 1, p);
-		PCA_ObterCor((*p), corp);
+		TAB_ObterPeca(pTabuleiro, LIN + 1, COL - 1, &p);
+		PCA_ObterCor(p, &corp);
 		if (corp != pCor)
 			cont++;
-		TAB_ObterPeca(pTabuleiro, LIN - 1, COL, p);
-		PCA_ObterCor((*p), corp);
+		TAB_ObterPeca(pTabuleiro, LIN - 1, COL, &p);
+		PCA_ObterCor(p, &corp);
 		if (corp != pCor)
 			cont++;
-		TAB_ObterPeca(pTabuleiro, LIN - 1, COL + 1, p);
-		PCA_ObterCor((*p), corp);
+		TAB_ObterPeca(pTabuleiro, LIN - 1, COL + 1, &p);
+		PCA_ObterCor(p, &corp);
 		if (corp != pCor)
 			cont++;
-		TAB_ObterPeca(pTabuleiro, LIN - 1, COL - 1, p);
-		PCA_ObterCor((*p), corp);
+		TAB_ObterPeca(pTabuleiro, LIN - 1, COL - 1, &p);
+		PCA_ObterCor(p, &corp);
 		if (corp != pCor)
 			cont++;
 
