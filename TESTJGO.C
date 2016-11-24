@@ -1,23 +1,23 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: TJGO Teste Jogo
+*  $MCI MÃ³dulo de implementaÃ§Ã£o: TJGO Teste Jogo
 *
 *  Arquivo gerado:              TESTJGO.c
 *  Letras identificadoras:      TJGO
 *
-*  Nome da base de software:    Arcabouço para a automação de testes de programas redigidos em C
+*  Nome da base de software:    ArcabouÃ§o para a automaÃ§Ã£o de testes de programas redigidos em C
 *  Arquivo da base de software: D:\AUTOTEST\PROJETOS\JOGO.BSW
 *
-*  Projeto: INF 1301 / 1628 Automatização dos testes de módulos C
+*  Projeto: INF 1301 / 1628 AutomatizaÃ§Ã£o dos testes de mÃ³dulos C
 *  Gestor:  LES/DI/PUC-Rio
 *  Autores: avs, bshmc, rfv, llar
 *
-*  $HA Histórico de evolução:
-*     Versão  Autor    Data     Observações
-*	 5	bshmc,rfv,llar  10/10/2016 implementação do muodulo de jogo
-*     4       avs   01/fev/2006 criar linguagem script simbólica
-*     3       avs   08/dez/2004 uniformização dos exemplos
-*     2       avs   07/jul/2003 unificação de todos os módulos em um só projeto
-*     1       avs   16/abr/2003 início desenvolvimento
+*  $HA HistÃ³rico de evoluÃ§Ã£o:
+*     VersÃ£o  Autor    Data     ObservaÃ§Ãµes
+*	 5	bshmc,rfv,llar  10/10/2016 implementaÃ§Ã£o do muodulo de jogo
+*     4       avs   01/fev/2006 criar linguagem script simbÃ³lica
+*     3       avs   08/dez/2004 uniformizaÃ§Ã£o dos exemplos
+*     2       avs   07/jul/2003 unificaÃ§Ã£o de todos os mÃ³dulos em um sÃ³ projeto
+*     1       avs   16/abr/2003 inÃ­cio desenvolvimento
 *
 ***************************************************************************/
 
@@ -59,24 +59,24 @@ static const char VERIFICAR_CHECK_CMD[] = "=verificarCheck";
 PCA_tpVetPeca vtLista[DIM_VT_LISTA];
 TAB_tpTabuleiro vtTabuleiro[DIM_VT_TABULEIRO];
 
-/***** Protótipos das funções encapuladas no módulo *****/
+/***** ProtÃ³tipos das funÃ§Ãµes encapuladas no mÃ³dulo *****/
 
 static void DestruirValor(void * pValor);
 
-/*****  Código das funções exportadas pelo módulo  *****/
+/*****  CÃ³digo das funÃ§Ãµes exportadas pelo mÃ³dulo  *****/
 
 
 /***********************************************************************
 *
-*  $FC Função: TLIS &Testar Jogo
+*  $FC FunÃ§Ã£o: TLIS &Testar Jogo
 *
-*  $ED Descrição da função
-*     Podem ser criadas até 10 jogos, identificadas pelos índices 0 a 10
+*  $ED DescriÃ§Ã£o da funÃ§Ã£o
+*     Podem ser criadas atÃ© 10 jogos, identificadas pelos Ã­ndices 0 a 10
 *
-*     Comandos disponíveis:
+*     Comandos disponÃ­veis:
 *
 *     =resetteste
-*           - anula o vetor de jogos. Provoca vazamento de memória
+*           - anula o vetor de jogos. Provoca vazamento de memÃ³ria
 *     =criarJogo                   inxJogo	inxJogo	CondRetEsp
 *     =destroiJogo					inxJogo	CondRetEsp
 *     =esvaziarJogo                inxJogo
@@ -148,7 +148,7 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 		
 		vtTabuleiro[inxTabuleiro] = TAB_AlocarTabuleiro(8, 'H');
 
-		CondRet = JGO_IniciarJogo(StringDado, vtLista[inxLista], vtTabuleiro[inxTabuleiro]);
+		CondRet = JGO_IniciarJogo(StringDado, vtLista[inxLista], &vtTabuleiro[inxTabuleiro]);
 
 		return TST_CompararInt(CondRetEsp, CondRet,
 			"Condicao de retorno errada ao Iniciar Jogo.");
@@ -222,7 +222,7 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 		}
 
 		return TST_CompararInt(CondRetEsp, CondRet,
-			"Condicao de retorno errada ao tentar verificar se o jogo está em check/check mate.");
+			"Condicao de retorno errada ao tentar verificar se o jogo estÃ¡ em check/check mate.");
 
 	} /* fim ativa: Testar vrificar check em jogo */
 
@@ -249,15 +249,15 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 
 	return TST_CondRetNaoConhec;
 
-} /* Fim função: TLIS &Testar jogo */
+} /* Fim funÃ§Ã£o: TLIS &Testar jogo */
 
 
-/*****  Código das funções encapsuladas no módulo  *****/
+/*****  CÃ³digo das funÃ§Ãµes encapsuladas no mÃ³dulo  *****/
 
 
 /***********************************************************************
 *
-*  $FC Função: TTAB -Destruir valor
+*  $FC FunÃ§Ã£o: TTAB -Destruir valor
 *
 ***********************************************************************/
 
@@ -266,8 +266,8 @@ void DestruirValor(void * pValor)
 
 	free(pValor);
 
-} /* Fim função: TTAB -Destruir valor */
+} /* Fim funÃ§Ã£o: TTAB -Destruir valor */
 
 
-/********** Fim do módulo de implementação: TTAB Teste jogo  **********/
+/********** Fim do mÃ³dulo de implementaÃ§Ã£o: TTAB Teste jogo  **********/
 
