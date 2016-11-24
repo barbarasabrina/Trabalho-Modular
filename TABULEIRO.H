@@ -105,7 +105,7 @@ typedef enum {
 	TAB_CondRetListaAmeacanteVazia = 8,
 	/* Lista de ameacante está nula*/
 		
-	TAB_CondRetMovimentoInvlaido = 9
+	TAB_CondRetMovimentoInvalido = 9
 	/*Movimento não foi Validado*/
 
 
