@@ -1,0 +1,82 @@
+Data: 31/10/2016; 
+Tipo Tarefa: Projetar.
+Horas Trabalhadas: 2 horas; 
+Descrição: Inicio do trabalho. Começamos a divisão das tarefas e executamos a primeira parte do trabalho, Trab3-1.
+
+Data: 02/11/2016; 
+Horas Trabalhadas: 2 horas; 
+Tipo Tarefa: Especificar os módulos, especificar as funções, redigir os testes.
+Descrição: Iniciamos os métodos do módulo Peca de implementação e de definição do Trab3-1.
+
+Data: 04/11/2016; 
+Horas Trabalhadas: 3 horas; 
+Tipo Tarefa: Redigir script de teste, diagnosticar e corrigir os problemas encontrados.
+Descrição: Redigimos scripts de testes de acordo com o que foi modificado no módulo de implementação e incluído no módulo de definição. 
+Foi tentado diagnosticar o problema e foram feitas algumas tentativas para a solução do mesmo em vão.
+
+Data: 06/11/2016; 
+Horas Trabalhadas: 3 horas; 
+Tipo Tarefa: Diagnosticar e corrigir os problemas encontrados.
+Descrição: Foram constatados erros e alterados os modulos de definição e de implementação assim como os scripts a fim de corrigi-los.
+
+Data: 07/11/2016; 
+Horas Trabalhadas: 2 horas; 
+Tipo Tarefa: Revisar especificações.
+Descrição: Revisados todos os módulos alterados. Definidos os arquivos .bat do trabalho, Trab3-1. Primeira parte checada e finalizada.
+
+Data: 09/11/2016; 
+Tipo Tarefa: Projetar.
+Horas Trabalhadas: 2 horas; 
+Descrição: Inicio do trabalho. Começamos a divisão das tarefas e executamos a segunda parte do trabalho, Trab3-2.
+
+Data: 11/11/2016; 
+Horas Trabalhadas: 2 horas; 
+Tipo Tarefa: Especificar os módulos, especificar as funções, redigir os testes.
+Descrição: Iniciamos os métodos do módulo Jogo de implementação e de definição do Trab3-2.
+
+Data: 12/11/2016; 
+Horas Trabalhadas: 3 horas; 
+Tipo Tarefa: Redigir script de teste, diagnosticar e corrigir os problemas encontrados.
+Descrição: Redigimos scripts de testes de acordo com o que foi modificado no módulo de implementação e incluído no módulo de definição. 
+Foi tentado diagnosticar o problema e foram feitas algumas tentativas para a solução do mesmo em vão.
+
+Data: 13/11/2016; 
+Horas Trabalhadas: 3 horas; 
+Tipo Tarefa: Diagnosticar e corrigir os problemas encontrados.
+Descrição: Foram constatados erros e alterados os modulos de definição e de implementação assim como os scripts a fim de corrigi-los.
+
+Data: 14/11/2016; 
+Horas Trabalhadas: 2 horas; 
+Tipo Tarefa: Revisar especificações.
+Descrição: Revisados todos os módulos alterados. Definidos os arquivos .bat do trabalho, Trab3-2. Primeira parte checada e finalizada.
+
+Data: 15/10/2016; 
+Tipo Tarefa: Projetar.
+Horas Trabalhadas: 2 horas; 
+Descrição: Inicio do trabalho. Começamos a divisão das tarefas e executamos a terceira parte do trabalho, Trab3-3.
+
+Data: 16/11/2016; 
+Horas Trabalhadas: 2 horas; 
+Tipo Tarefa: Especificar os módulos, especificar as funções, redigir os testes.
+Descrição: Iniciamos os métodos do módulo Tabuleiro de implementação e de definição do Trab3-3.
+
+Data: 17/11/2016; 
+Horas Trabalhadas: 3 horas; 
+Tipo Tarefa: Redigir script de teste, diagnosticar e corrigir os problemas encontrados.
+Descrição: Redigimos scripts de testes de acordo com o que foi modificado no módulo de implementação e incluído no módulo de definição. 
+Foi tentado diagnosticar o problema e foram feitas algumas tentativas para a solução do mesmo em vão.
+
+Data: 18/11/2016; 
+Horas Trabalhadas: 3 horas; 
+Tipo Tarefa: Diagnosticar e corrigir os problemas encontrados.
+Descrição: Foram constatados erros e alterados os modulos de definição e de implementação assim como os scripts a fim de corrigi-los.
+
+Data: 20/11/2016; 
+Horas Trabalhadas: 2 horas; 
+Tipo Tarefa: Revisar especificações.
+Descrição: Revisados todos os módulos alterados. Definidos os arquivos .bat do trabalho, Trab3-3. Primeira parte checada e finalizada.
+
+Data: 21/11/2016; 
+Horas Trabalhadas: 5 horas; 
+Tipo Tarefa: Diagnosticar e corrigir os problemas encontrados. Revisar especificações.
+Descrição: Os erros foram corrigidos e alterados os métodos necessários. Criado o Leiame.txt.

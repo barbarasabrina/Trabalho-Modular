@@ -1,0 +1,62 @@
+Data: 22/09/2016; 
+Tipo Tarefa: Projetar.
+Horas Trabalhadas: 1 hora; 
+Descrição: Inicio do trabalho. Dividimos as funções das duas partes do trabalho entre os integrantes.
+
+Data: 31/09/2016; 
+Horas Trabalhadas: 3 horas; 
+Tipo Tarefa: Desenvolver
+Descrição: Iniciei o desenvolvimento das 3 funções da primeira parte do trabalho que me foram designadas.
+
+Data: 02/10/2016; 
+Horas Trabalhadas: 2 horas; 
+Tipo Tarefa: Desenvolver
+Descrição:Continuação do desenvolvimento da primeira parte do trabalho, implementando o modulo de testes
+
+
+Data: 03/10/2016; 
+Horas Trabalhadas: 4 horas; 
+Tipo Tarefa: Redigir Script
+Descrição:Escrevi os scripts de teste relacionados a minah parte da primeira prate do trabalho
+
+Data: 31/10/2016; 
+Horas Trabalhadas: 1 horas; 
+Tipo Tarefa: Divisao
+Descrição: foram divididas as tarefas entre os componentes do grupo
+
+Data: 5/11/2016; 
+Horas Trabalhadas: 2 horas; 
+Tipo Tarefa: Desenvolver
+Descrição: Desenvolvi a primeira função da segunda parte do trabalho que me foi designada
+
+Data: 7/11/2016; 
+Horas Trabalhadas: 2 horas; 
+Tipo Tarefa: Desenvolver
+Descrição: Desenvolvi a segundafunção da segunda parte do trabalho que me foi designada
+
+Data: 10/11/2016; 
+Horas Trabalhadas: 2 horas; 
+Tipo Tarefa: Desenvolver
+Descrição: Desenvolvi a terceira função da segunda parte do trabalho que me foi designada
+
+Data: 15/11/2016
+Horas Trabalhadas: 4 Horas
+Tipo Tarefa : Redigir Script de Teste
+Descrição: Testamos o program e corrigimos problemas
+
+Data: 17/11/2016
+Horas Trabalhadas: 4 Horas
+Tipo Tarefa: Correção de erros
+Descrição: correção de erros na implementeção
+
+
+Data: 18/11/2016
+Horas Trabalhadas: 4 Horas
+Tipo Tarefa: Correção de erros
+Descrição: correção de erros na implementeção
+
+
+Data: 21/11/2016
+Horas Trabalhadas: 4 Horas
+Tipo Tarefa: Correção de erros
+Descrição: correção de erros na implementeção

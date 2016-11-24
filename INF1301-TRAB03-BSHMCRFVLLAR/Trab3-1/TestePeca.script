@@ -1,0 +1,100 @@
+// Script:    TestePeca.script
+// Autor:     BSHMC, RFV, LLAR
+// Data:      20/nov/2016
+// Proposito: Testar o modulo peca
+//
+
+== Inicializar valores
+
+=declararparm   str0    string  "PecasPossiveis.txt"
+=declararparm   str1    string  "bshm"
+
+=declararparm   nome0   char  'P'
+=declararparm   nome1   char  'Z'
+=declararparm   nome2   char  'D'
+=declararparm   nome3   char  'C'
+=declararparm   nome4   char  'B'
+=declararparm   nome5   char  'R'
+=declararparm   nome6   char  'T'
+
+=declararparm   cor0   char  'P'
+=declararparm   cor1   char  'Z'
+=declararparm   cor2   char  'B'
+
+=declararparm   dx1   int  1
+=declararparm   dx2   int  0
+
+=declararparm   dy1   int  1
+=declararparm   dy2   int  0
+
+=declararparm   atk1   int  1
+=declararparm   atk2   int  0
+
+=declararparm   OK             			int  0
+=declararparm   PecaNaoExiste	   		int  1
+=declararparm   ErrArquivo     			int  2
+=declararparm   FaltouMemoria 			int  3
+=declararparm	MovimentoInvalido		int  4
+
+=declararparm   pNULL          int  0
+=declararparm   pNaoNULL       int  1
+
+== Inicializar pecas com arquivo OK
+=inicializarPecas	str0	OK
+
+== Inicializar pecas com arquivo nao existente
+=inicializarPecas	str1	ErrArquivo
+
+== Pegar peca não válida
+=pegarPecaDoVetor	nome1	cor1	PecaNaoExiste
+
+== Obter cor e nome de peça não existente
+=obterNome	nome0	PecaNaoExiste
+=obterCor	cor0	PecaNaoExiste
+
+== Pegar todas as pecas OK
+=pegarPecaDoVetor	nome6	cor0	OK
+=pegarPecaDoVetor	nome5	cor0	OK
+=pegarPecaDoVetor	nome4	cor0	OK
+=pegarPecaDoVetor	nome3	cor0	OK
+=pegarPecaDoVetor	nome2	cor0	OK
+=pegarPecaDoVetor	nome0	cor2	OK
+=pegarPecaDoVetor	nome6	cor2	OK
+=pegarPecaDoVetor	nome5	cor2	OK
+=pegarPecaDoVetor	nome4	cor2	OK
+=pegarPecaDoVetor	nome3	cor2	OK
+=pegarPecaDoVetor	nome2	cor2	OK
+=pegarPecaDoVetor	nome0	cor0	OK
+
+== Obter nome OK
+=obterNome	nome0	OK
+
+==Obter nome errado
+=obterNome	nome2	OK
+=recuperar
+
+== Obter cor OK
+=obterCor	cor0	OK
+
+== Obter cor errado
+=obterCor	cor2	OK
+=recuperar
+
+== Validar Movimento OK
+=validarMovimento	dx1	dy1	atk1	OK
+=pegarPecaDoVetor	nome2	cor2	OK
+=validarMovimento	dx1	dy1	atk1	OK
+=validarMovimento	dx1	dy1	atk1	OK
+=validarMovimento	dx1	dy1	atk1	OK
+=validarMovimento	dx1	dy1	atk1	OK
+
+== Validar Movimento inválido
+=validarMovimento	dx2	dy2	atk2	MovimentoInvalido
+=validarMovimento	dx1	dy1	atk1	OK
+=validarMovimento	dx1	dy1	atk1	OK
+=validarMovimento	dx1	dy1	atk1	OK
+
+
+
+
+// fim

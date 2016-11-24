@@ -1,0 +1,148 @@
+				
+			PECA
+
+---------------------------------------------
+
+!!!	Objetivo do programa Trab3-1: 
+	
+	Testar o módulo de Peca de um jogo de tabuleiro.
+
+---------------------------------------------
+
+!!! Modo de uso do programa
+	
+	Abra a pasta Trab3-1.
+	
+	Clicar no arquivo Peca.bat.
+	
+	O programa será executado gerando um arquivo logTrab3-1.txt onde poderão ser verificados os resultados dos testes feitos pelo arquivo TestePeca.script.
+ 
+	Caso o usuário deseje criar seu próprio script de teste, pode-se optar por 2 formas distintas de fazê-lo executar. Para isso, deve:
+		
+	1 - Alterar o nome do script que o usuário criou para TestePeca.script e então clicar duas vezes no arquivo Peca.bat.
+	2 - Ou, clicar com o lado direito do mouse no arquivo Peca.bat e selecionar a opção Edit (Editar) para alterar o conteúdo do arquivo. 
+	Alterar o trecho onde está o nome do arquivo contendo o script de teste, atualmente TestePeca.script, para o nome do seu script. 
+
+
+---------------------------------------------
+
+!!! Descrição do conteúdo do arquivo Peca.bat
+
+  Trab3-1 /sTestePeca.script >logTrab3-1.txt
+
+  <TestePeca.script>  		- nome do arquivo contendo o script de teste.
+							Parâmetro obrigatório, exceto se solicitado auxílio.
+  <logTrab3-1.txt>      	- nome do arquivo contendo o script de teste.
+							Parâmetro opcional. Se não fornecido exibe
+							o resultado do teste na tela (stdout)
+
+
+---------------------------------------------
+
+!!! Observações sobre o arquivo PecasPossiveis.txt
+
+  O arquivo PecasPossiveis.txt possui uma organização específica que, caso não respeitada causará erro na leitura do mesmo, essa organização é:
+
+tot
+
+nome cor n
+dx1 dy1 atk1, dx2 dy2 atk2, ... dxn dyn atkn
+
+nome cor n
+dx1 dy1 atk1,...
+
+  sendo:
+
+  tot: Número total de peças diferentes possíveis
+
+  nome: O nome da peça em questão, representado por um caracter
+
+  cor:  O nome da peça em questão, representado por um caracter	
+
+  n:    O número de movimentos diferentes possíveis para aquela peça
+
+  dx: O deslocamento horizontal da peça no movimento representado por um inteiro
+
+  dy: O deslocamento vertical da peça no movimento representado por um inteiro
+
+  atk: Número que representa se a peça está ou não atacando outra no seu movimento, 1 caso esteja e 0 caso contrário
+
+-------------------------------------------------------------------------
+
+				
+			Jogo
+
+---------------------------------------------
+
+!!!	Objetivo do programa Trab3-2: 
+	
+	Testar o módulo de Jogo de tabuleiro.
+
+---------------------------------------------
+
+!!! Modo de uso do programa
+	
+	Abra a pasta Trab3-2.
+	
+	Clicar no arquivo Jogo.bat.
+	
+	O programa será executado gerando um arquivo logTrab3-2.txt onde poderão ser verificados os resultados dos testes feitos pelo arquivo TesteJogo.script.
+ 
+	Caso o usuário deseje criar seu próprio script de teste, pode-se optar por 2 formas distintas de fazê-lo executar. Para isso, deve:
+		
+	1 - Alterar o nome do script que o usuário criou para TesteJogo.script e então clicar duas vezes no arquivo Jogo.bat.
+	2 - Ou, clicar com o lado direito do mouse no arquivo Jogo.bat e selecionar a opção Edit (Editar) para alterar o conteúdo do arquivo. 
+	Alterar o trecho onde está o nome do arquivo contendo o script de teste, atualmente TesteJogo.script, para o nome do seu script. 
+
+
+---------------------------------------------
+
+!!! Descrição do conteúdo do arquivo Jogo.bat
+
+  Trab3-2 /sTesteJogo.script >logTrab3-2.txt
+
+  <TesteJogo.script>  			- nome do arquivo contendo o script de teste.
+								Parâmetro obrigatório, exceto se solicitado auxílio.
+  <logTrab3-2.txt>      		- nome do arquivo contendo o script de teste.
+								Parâmetro opcional. Se não fornecido exibe
+								o resultado do teste na tela (stdout)
+
+-------------------------------------------------------------------------
+
+				
+			TABULEIRO
+
+---------------------------------------------
+
+!!!	Objetivo do programa Trab3-3: 
+	
+	Testar o módulo de Tabuleiro genérico.
+
+---------------------------------------------
+
+!!! Modo de uso do programa
+	
+	Abra a pasta Trab3-3.
+	
+	Clicar no arquivo Tabuleiro.bat.
+	
+	O programa será executado gerando um arquivo logTrab3-3.txt onde poderão ser verificados os resultados dos testes feitos pelo arquivo TesteTabuleiro.script.
+ 
+	Caso o usuário deseje criar seu próprio script de teste, pode-se optar por 2 formas distintas de fazê-lo executar. Para isso, deve:
+		
+	1 - Alterar o nome do script que o usuário criou para TesteTabuleiro.script e então clicar duas vezes no arquivo Tabuleiro.bat.
+	2 - Ou, clicar com o lado direito do mouse no arquivo Tabuleiro.bat e selecionar a opção Edit (Editar) para alterar o conteúdo do arquivo. 
+	Alterar o trecho onde está o nome do arquivo contendo o script de teste, atualmente TesteTabuleiro.script, para o nome do seu script. 
+
+
+---------------------------------------------
+
+!!! Descrição do conteúdo do arquivo Tabuleiro.bat
+
+  Trab3-3 /sTesteTabuleiro.script >logTrab3-3.txt
+
+  <TesteTabuleiro.script>  		- nome do arquivo contendo o script de teste.
+								Parâmetro obrigatório, exceto se solicitado auxílio.
+  <logTrab3-3.txt>      		- nome do arquivo contendo o script de teste.
+								Parâmetro opcional. Se não fornecido exibe
+								o resultado do teste na tela (stdout)
