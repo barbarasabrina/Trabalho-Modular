@@ -316,15 +316,12 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 		numLidos = LER_LerParametros("iisi",
 			&inxTabuleiro, &Linha, Coluna, &CondRetEsp);
 
-		if (numLidos != 5)
+		if (numLidos != 4)
 		{
 			return TST_CondRetParm;
 		} /* if */
 
 		CondRet = TAB_ExibirListaAmeacados(vtTabuleiro[inxTabuleiro], Linha, Coluna[0]);
-		
-		if (CondRet!=0)
-			return CondRet;
 
 
 
@@ -341,15 +338,12 @@ TST_tpCondRet TST_EfetuarComando(char * ComandoTeste)
 		numLidos = LER_LerParametros("iisi",
 			&inxTabuleiro, &Linha, Coluna, &CondRetEsp);
 
-		if (numLidos != 5)
+		if (numLidos != 4)
 		{
 			return TST_CondRetParm;
 		} /* if */
 
 		CondRet = TAB_ExibirListaAmeacantes(vtTabuleiro[inxTabuleiro], Linha, Coluna[0]);
-		
-		if (CondRet!=0)
-			return CondRet;
 
 
 
