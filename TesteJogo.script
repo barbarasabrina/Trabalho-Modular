@@ -1,7 +1,7 @@
 // Script:    TesteLista.script
 // Autor:     BSHMC, RFV, LLAR
 // Data:      02/10/2016
-// PropÃ³sito: Testar o mÃ³dulo tabuleiro genÃ©rico
+// Propósito: Testar o módulo tabuleiro genérico
 //
 
 == Inicializar valores
@@ -56,11 +56,6 @@
 ==Iniciar Jogo
 =iniciarJogo		str7		lista0			tabuleiro0		OK
 
-==Mostrar Tabuleiro Padrao
-=mostrarTabuleiro	tabuleiro0		OK
-
-==Finalizar Jogo
-=finalizarJogo		tabuleiro0		OK
 
 
 // fim
