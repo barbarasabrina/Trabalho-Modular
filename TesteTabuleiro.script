@@ -74,6 +74,26 @@
 
 ==Obter Peca coord nao existe
 =obterPeca			tabuleiro0	linha9	coluna9		str0	CoordNaoExiste
+==Exibir lista ameacados
+=exibirAmeacados tabuleiro0 linha1 coluna1 OK
+
+==Exibir lista ameacantes
+=exibirAmeacantes tabuleiro0 linha1 coluna1 OK
+
+==Mover peca tabuleiro inexistente
+=moverPeca tabuleiro1 linha1 coluna1 linha2 coluna3 TabuleiroNaoExiste
+
+==Mover peca OK
+=moverPeca 			tabuleiro0 	linha1 coluna1 	linha2 	coluna2 	OK
+
+==Mover peca inexistente
+=moverPeca 			tabuleiro0 	linha1 coluna1 linha1 	coluna2 	PecaNaoExiste
+
+==Mover peca pra fora do tabuleiro
+=moverPeca			tabuleiro0	linha2 coluna2 linha9 coluna9	CoordNaoExiste
+
+==Mover peca capturando outra OK
+=moverPeca			tabuleiro0	linha2 coluna2 linha3 coluna3 OK
 
 ==Retirar peca OK
 =retirarPeca		tabuleiro0	linha3 coluna3	OK
