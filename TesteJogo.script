@@ -62,7 +62,7 @@
 =iniciarJogo		str7		lista0			tabuleiro0		OK
 
 ==Mostrar Tabuleiro
-=mostrarTabuleiro	tabuleiro0
+=mostrarTabuleiro	tabuleiro0  OK
 
 ==Realizar movimento
 =realizarMovimento	lista0		tabuleiro0		OK
