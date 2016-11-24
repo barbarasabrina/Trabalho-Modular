@@ -56,7 +56,7 @@ JGO_tpCondRet JGO_IniciarJogo(char * filename, PCA_tpVetPeca vetPecasPossiveis, 
 
 	PCA_InicializarPecas(filename, &vetPecasPossiveis);
 
-	printf("\nJogo Padrão? S:N\n");
+	printf("\nJogo Padrao? S:N\n");
 
 	scanf(" %c", &resp);
 
@@ -64,6 +64,8 @@ JGO_tpCondRet JGO_IniciarJogo(char * filename, PCA_tpVetPeca vetPecasPossiveis, 
 		return JGO_MontarTabPadrao(pTabuleiro, vetPecasPossiveis);//Sabrina
 	else
 		return JGO_MontarTabMod(pTabuleiro, vetPecasPossiveis);//RUDA 
+
+	return JGO_CondRetOK;
 
 }/* Fim função: TAB &Iniciar Jogo*/
 
@@ -254,24 +256,19 @@ void JGO_LerComando(TAB_tpTabuleiro ptabuleiro, int* linhaOrigem, char* colunaOr
 *  ****/
 JGO_tpCondRet JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca pecas)
 {
-	int i, CondRet,resp=-1;
+	int i, CondRet;
 	char  j, nome, cor;
-	PCA_tpPeca peca;
-		while (resp != 0)
+	PCA_tpPeca *peca = (PCA_tpPeca *)malloc(sizeof(PCA_tpPeca));
+
+	while (pecas != NULL)
+	{
+		LIS_ObterNo(pecas, peca);
+		PCA_ObterCor(peca, &cor);
+		PCA_ObterNome(peca, &nome);
+		while (peca != NULL)
 		{
-			do {
-				printf("Qual é a peça?(Nome e cor)");
-				scanf("%c %c", &nome, &cor);
-				CondRet = PCA_PegarPecaDoVetor(pecas, &peca, nome, cor);
-				if (CondRet != 0)
-				{
-					printf("peça não existe tente novamente\n");
-				}
-			} while (CondRet != 0);
-			
-			printf("Onde por a peça");
-			scanf("%d %c",&i,&j);
-			
+			printf("onde por a peça %c de cor %c", cor, nome);
+			scanf("%d %c", &i, &j);
 			CondRet = TAB_InserirPeca(ptabuleiro, i, j, peca);
 			while (CondRet != 0) {
 				if (CondRet == 1)
@@ -287,12 +284,12 @@ JGO_tpCondRet JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca pecas)
 					CondRet = TAB_InserirPeca(ptabuleiro, i, j, peca);
 				}
 			}
-			printf("Digite 0, se NÃO quiser inserir mais peças \n");
-			scanf("%d", &resp);
-
 		}
-	
-	return  JGO_CondRetOK;
+		CondRet = LIS_IrProximoElemento(pecas);
+		if (CondRet != 0)
+			return CondRet;
+		return JGO_CondRetOK;
+	}
 }/* Fim função: JGO &Montar Tabuleiro Modificado */
 
 /***************************************************************************
