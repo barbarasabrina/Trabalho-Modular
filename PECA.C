@@ -159,6 +159,7 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_tpVetPeca *Possiveis){
 	PCA_tpVetPeca vetTemp;
 
 	ArqPecasPossiveis = fopen(filename, "r");
+	
 	if (ArqPecasPossiveis == NULL) return PCA_CondRetErroNaLeituraDoArquivo;
 	
 	vetTemp = (PCA_tpVetPeca)malloc(sizeof(PCA_VetPeca));
@@ -170,6 +171,7 @@ PCA_tpCondRet PCA_InicializarPecas (char* filename, PCA_tpVetPeca *Possiveis){
 
 	vetTemp->peca= (PCA_Peca*)malloc(vetTemp->n*sizeof(PCA_Peca));
 	if (vetTemp->peca==NULL) return PCA_CondRetFaltouMemoria;
+
 
 
 	for (i=0; i<vetTemp->n; i++){	/* Para cada peca */
