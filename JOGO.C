@@ -126,9 +126,9 @@ JGO_tpCondRet JGO_VerificaCheck(TAB_tpTabuleiro pTabuleiro, int * check, char *p
 {
 	int LIN, j, cont = 0;
 	char COL;
-	char *nome = malloc(sizeof(char));
-	char * cor = malloc(sizeof(char)), *corp = malloc(sizeof(char));
-	PCA_tpPeca *peca = malloc(sizeof(PCA_tpPeca)), *p = malloc(sizeof(PCA_tpPeca));
+	char *nome = (char*)malloc(sizeof(char));
+	char * cor = (char*)malloc(sizeof(char)), *corp = (char*)malloc(sizeof(char));
+	PCA_tpPeca *peca = (PCA_tpPeca*)malloc(sizeof(PCA_tpPeca)), *p = (PCA_tpPeca*)malloc(sizeof(PCA_tpPeca));
 	LIS_tppLista *ameacantes = LIS_AlocarLista(), *ameacados = LIS_AlocarLista();
 
 	if (pTabuleiro == NULL)
