@@ -303,10 +303,10 @@ JGO_tpCondRet JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca pecas)
 JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca pecas)
 {
 	int j;
-	PCA_tpPeca * peca = (PCA_tpPeca*)malloc(sizeof(PCA_tpPeca));
+	PCA_tpPeca peca;
 	JGO_tpCondRet CondRet;
 	//Insere todos os peões brancos
-	CondRet = PCA_PegarPecaDoVetor(pecas, peca, 'P', 'B');
+	CondRet = PCA_PegarPecaDoVetor(pecas, &peca, 'P', 'B');
 	if (CondRet == JGO_CondRetOK)
 	{
 		for (j = 'A'; j < 'I'; j++)
@@ -320,7 +320,7 @@ JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca peca
 	}
 
 	//Insere todos os peões pretos
-	CondRet = PCA_PegarPecaDoVetor(pecas, peca, 'P', 'P');
+	CondRet = PCA_PegarPecaDoVetor(pecas, &peca, 'P', 'P');
 	if (CondRet == JGO_CondRetOK)
 	{
 		for (j = 'A'; j < 'I'; j++)
@@ -334,7 +334,7 @@ JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca peca
 	}
 
 	//Insere todas as torres brancas
-	CondRet = PCA_PegarPecaDoVetor(pecas, peca, 'T', 'B');
+	CondRet = PCA_PegarPecaDoVetor(pecas, &peca, 'T', 'B');
 	if (CondRet == JGO_CondRetOK)
 	{
 		TAB_InserirPeca(ptabuleiro, 1, 'A', peca);
@@ -345,7 +345,7 @@ JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca peca
 		return CondRet;
 	}
 	//Insere todas as torres pretas
-	CondRet = PCA_PegarPecaDoVetor(pecas, peca, 'T', 'P');
+	CondRet = PCA_PegarPecaDoVetor(pecas, &peca, 'T', 'P');
 	if (CondRet == JGO_CondRetOK)
 	{
 		TAB_InserirPeca(ptabuleiro, 8, 'A', peca);
@@ -357,7 +357,7 @@ JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca peca
 	}
 
 	//Insere todos os cavalos brancos
-	CondRet = PCA_PegarPecaDoVetor(pecas, peca, 'C', 'B');
+	CondRet = PCA_PegarPecaDoVetor(pecas, &peca, 'C', 'B');
 	if (CondRet == JGO_CondRetOK)
 	{
 		TAB_InserirPeca(ptabuleiro, 1, 'B', peca);
@@ -368,7 +368,7 @@ JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca peca
 		return CondRet;
 	}
 	//Insere todos os cavalos pretos
-	CondRet = PCA_PegarPecaDoVetor(pecas, peca, 'C', 'P');
+	CondRet = PCA_PegarPecaDoVetor(pecas, &peca, 'C', 'P');
 	if (CondRet == JGO_CondRetOK)
 	{
 		TAB_InserirPeca(ptabuleiro, 8, 'B', peca);
@@ -379,7 +379,7 @@ JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca peca
 		return CondRet;
 	}
 	//Insere todos os bispos brancos
-	CondRet = PCA_PegarPecaDoVetor(pecas, peca, 'B', 'B');
+	CondRet = PCA_PegarPecaDoVetor(pecas, &peca, 'B', 'B');
 	if (CondRet == JGO_CondRetOK)
 	{
 		TAB_InserirPeca(ptabuleiro, 1, 'C', peca);
@@ -390,7 +390,7 @@ JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca peca
 		return CondRet;
 	}
 	//Insere todos os bispos pretos
-	CondRet = PCA_PegarPecaDoVetor(pecas, peca, 'B', 'P');
+	CondRet = PCA_PegarPecaDoVetor(pecas, &peca, 'B', 'P');
 	if (CondRet == JGO_CondRetOK)
 	{
 		TAB_InserirPeca(ptabuleiro, 8, 'C', peca);
@@ -401,7 +401,7 @@ JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca peca
 		return CondRet;
 	}
 	//Insere a rainha branca
-	CondRet = PCA_PegarPecaDoVetor(pecas, peca, 'D', 'B');
+	CondRet = PCA_PegarPecaDoVetor(pecas, &peca, 'D', 'B');
 	if (CondRet == JGO_CondRetOK)
 	{
 		TAB_InserirPeca(ptabuleiro, 1, 'E', peca);
@@ -411,7 +411,7 @@ JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca peca
 		return CondRet;
 	}
 	//Insere a rainha preta
-	CondRet = PCA_PegarPecaDoVetor(pecas, peca, 'D', 'P');
+	CondRet = PCA_PegarPecaDoVetor(pecas, &peca, 'D', 'P');
 	if (CondRet == JGO_CondRetOK)
 	{
 		TAB_InserirPeca(ptabuleiro, 8, 'E', peca);
@@ -421,7 +421,7 @@ JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca peca
 		return CondRet;
 	}
 	//Insere o rei branco
-	CondRet = PCA_PegarPecaDoVetor(pecas, peca, 'R', 'B');
+	CondRet = PCA_PegarPecaDoVetor(pecas, &peca, 'R', 'B');
 	if (CondRet == JGO_CondRetOK)
 	{
 		TAB_InserirPeca(ptabuleiro, 1, 'D', peca);
@@ -431,7 +431,7 @@ JGO_tpCondRet JGO_MontarTabPadrao(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca peca
 		return CondRet;
 	}
 	//Insere o rei preto
-	CondRet = PCA_PegarPecaDoVetor(pecas, peca, 'R', 'P');
+	CondRet = PCA_PegarPecaDoVetor(pecas, &peca, 'R', 'P');
 	if (CondRet == JGO_CondRetOK)
 	{
 		TAB_InserirPeca(ptabuleiro, 8, 'D', peca);
