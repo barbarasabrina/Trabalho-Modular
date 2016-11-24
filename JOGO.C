@@ -254,19 +254,24 @@ void JGO_LerComando(TAB_tpTabuleiro ptabuleiro, int* linhaOrigem, char* colunaOr
 *  ****/
 JGO_tpCondRet JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca pecas)
 {
-	int i, CondRet;
+	int i, CondRet,resp=-1;
 	char  j, nome, cor;
 	PCA_tpPeca *peca = (PCA_tpPeca *)malloc(sizeof(PCA_tpPeca));
-
-	while (pecas != NULL)
-	{
-		LIS_ObterNo(pecas, peca);
-		PCA_ObterCor(peca, &cor);
-		PCA_ObterNome(peca, &nome);
-		while (peca != NULL)
+		while (resp != 0)
 		{
-			printf("onde por a peça %c de cor %c", cor, nome);
-			scanf("%d %c", &i, &j);
+			do {
+				printf("Qual é a peça?(Nome e cor)");
+				scanf("%c %c", &nome, &cor);
+				CondRet = PCA_PegarPecaDoVetor(pecas, peca, nome, cor);
+				if (CondRet != 0)
+				{
+					printf("peça não existe tente novamente\n");
+				}
+			} while (CondRet != 0);
+			
+			printf("Onde por a peça");
+			scanf("%d %c",&i,&j);
+			
 			CondRet = TAB_InserirPeca(ptabuleiro, i, j, peca);
 			while (CondRet != 0) {
 				if (CondRet == 1)
@@ -282,12 +287,12 @@ JGO_tpCondRet JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca pecas)
 					CondRet = TAB_InserirPeca(ptabuleiro, i, j, peca);
 				}
 			}
+			printf("Digite 0, se NÃO quiser inserir mais peças \n");
+			scanf("%d", &resp);
+
 		}
-		CondRet = LIS_IrProximoElemento(pecas);
-		if (CondRet != 0)
-			return CondRet;
-		return JGO_CondRetOK;
-	}
+	
+	return  JGO_CondRetOK;
 }/* Fim função: JGO &Montar Tabuleiro Modificado */
 
 /***************************************************************************
