@@ -1,7 +1,7 @@
 // Script:    TesteLista.script
 // Autor:     BSHMC, RFV, LLAR
 // Data:      02/10/2016
-// Propósito: Testar o módulo tabuleiro genérico
+// PropÃ³sito: Testar o mÃ³dulo tabuleiro genÃ©rico
 //
 
 == Inicializar valores
@@ -51,25 +51,22 @@
 ==Criar o tabuleiro
 =criarTabuleiro		tabuleiro0	linha8	coluna8		OK
 
-==Inserir Peça bem sucedida
+
+
+==Inserir PeÃ§a bem sucedida
 =inserirPeca		tabuleiro0	linha1	coluna1		str0	OK
 =inserirPeca		tabuleiro0	linha3  coluna3		str1	OK
-
-==Inserir Peça E tentar obter peça diferente do que foi inserido
-=inserirPeca		tabuleiro0	linha2	coluna2		str4	OK
-=obterPeca			tabuleiro0	linha2	coluna2		str0	OK
-=recuperar
 
 ==Inserir Peca onde nao ha tabuleiro criado
 =inserirPeca		tabuleiro1	linha1	coluna1		str0	TabuleiroNaoExiste
 
-==Inserir Peca onde uma das coordenadas não existe
+==Inserir Peca onde uma das coordenadas nÃ£o existe
 =inserirPeca		tabuleiro0	linha9	coluna1		str0	CoordNaoExiste
 
-==Inserir Peça Casa Ocupada
+==Inserir PeÃ§a Casa Ocupada
 =inserirPeca		tabuleiro0	linha1	coluna1		str0	CasaOcupada
 
-==Obter Peça bem sucedida
+==Obter PeÃ§a bem sucedida
 =obterPeca			tabuleiro0	linha1	coluna1		str0	OK
 
 ==Obter Peca tabuleiro nao existe
@@ -79,9 +76,33 @@
 =obterPeca			tabuleiro0	linha9	coluna9		str0	CoordNaoExiste
 
 ==Retirar peca OK
-=retirarPeca		tabuleiro0	linha1 coluna1	OK
+=retirarPeca		tabuleiro0	linha3 coluna3	OK
 
-==Destruir tabuleiro
-=destroiTabuleiro	tabuleiro0	OK
+==Retirar peca nao existe
+=retirarPeca		tabuleiro0 linha3 coluna3 PecaNaoExiste
+
+==Retirar coord nao existe
+=retirarPeca		tabuleiro0 linha9 coluna9 CoordNaoExiste
+
+==Destruir tabuleiro inexistente
+=destroiTabuleiro tabuleiro1 TabuleiroNaoExiste
+
+==Destruir tabuleiro ok
+=destroiTabuleiro tabuleiro0 OK
+
+==Inserir para obter lista ameacados OK
+=criarTabuleiro tabuleiro0 linha8 coluna8 OK
+=obterAmeacados		tabuleiro0 linha4 coluna4 str5 OK
+
+==Obter amecados string errada
+=obterAmeacados tabuleiro0 linha3 coluna3 str4 OK
+=recuperar
+
+==Obter lista amecantes OK
+=obterAmeacantes		tabuleiro0	linha4 coluna4	str6 OK
+
+==Obter amecantes string errada
+=obterAmeacantes tabuleiro0 linha3 coluna3 str4 OK
+=recuperar
 
 // fim
