@@ -256,13 +256,13 @@ JGO_tpCondRet JGO_MontarTabMod(TAB_tpTabuleiro ptabuleiro, PCA_tpVetPeca pecas)
 {
 	int i, CondRet,resp=-1;
 	char  j, nome, cor;
-	PCA_tpPeca *peca = (PCA_tpPeca *)malloc(sizeof(PCA_tpPeca));
+	PCA_tpPeca peca;
 		while (resp != 0)
 		{
 			do {
 				printf("Qual é a peça?(Nome e cor)");
 				scanf("%c %c", &nome, &cor);
-				CondRet = PCA_PegarPecaDoVetor(pecas, peca, nome, cor);
+				CondRet = PCA_PegarPecaDoVetor(pecas, &peca, nome, cor);
 				if (CondRet != 0)
 				{
 					printf("peça não existe tente novamente\n");
